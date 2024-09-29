@@ -8,6 +8,13 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     database: postgresql
     show-sql: true
+open:
+  api:
+    title: EasyHostel API
+    version: v0.1
+    description: API Documentation for EasyHostel Application
+    serverUrl: http://localhost:8080
+    serverName: Test Server

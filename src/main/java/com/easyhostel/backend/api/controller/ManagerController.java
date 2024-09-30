@@ -1,5 +1,6 @@
 package com.easyhostel.backend.api.controller;
 
+import com.easyhostel.backend.infrastructure.configuration.Translator;
 import com.easyhostel.backend.infrastructure.util.response.FormatedResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,7 +19,7 @@ public class ManagerController {
                 true,
                 HttpStatus.OK.value(),
                 null,
-                "GET",
+                Translator.toLocale("manager.read.success"),
                 null
         );
     }
@@ -29,7 +30,7 @@ public class ManagerController {
                 true,
                 HttpStatus.CREATED.value(),
                 null,
-                "POST",
+                Translator.toLocale("manager.create.success"),
                 null
         );
     }
@@ -40,7 +41,7 @@ public class ManagerController {
                 true,
                 HttpStatus.OK.value(),
                 null,
-                "PUT",
+                Translator.toLocale("manager.update.success"),
                 null
         );    }
 
@@ -50,7 +51,7 @@ public class ManagerController {
                 true,
                 HttpStatus.OK.value(),
                 null,
-                "DELETE",
+                Translator.toLocale("manager.delete.success"),
                 null
         );    }
 

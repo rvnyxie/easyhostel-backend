@@ -1,5 +1,6 @@
 package com.easyhostel.backend.infrastructure.configuration;
 
+import com.easyhostel.backend.domain.enums.ErrorCode;
 import com.easyhostel.backend.domain.exception.UnauthorizedAccessException;
 import com.easyhostel.backend.infrastructure.util.response.ApiResponse;
 import org.slf4j.Logger;
@@ -28,8 +29,8 @@ public class GlobalExceptionHandler {
         var errorResponse = new ApiResponse<>(
                 false,
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "UNEXPECTED_EXCEPTION",
-                "An unexpected error occurred",
+                ErrorCode.INTERNAL_SERVER_ERROR.getCode(),
+                ErrorCode.INTERNAL_SERVER_ERROR.getMessage(),
                 null
         );
 
@@ -42,8 +43,8 @@ public class GlobalExceptionHandler {
         var errorResponse = new ApiResponse<>(
                 false,
                 HttpStatus.NOT_FOUND.value(),
-                "RESOURCE_NOT_FOUND",
-                "Resource not found",
+                ErrorCode.RESOURCE_NOT_FOUND.getCode(),
+                ErrorCode.RESOURCE_NOT_FOUND.getMessage(),
                 null
         );
 
@@ -56,8 +57,8 @@ public class GlobalExceptionHandler {
         var errorResponse = new ApiResponse<>(
                 false,
                 HttpStatus.UNAUTHORIZED.value(),
-                "UNAUTHORIZED_ACCESS",
-                "Unauthorized access",
+                ErrorCode.FORBIDDEN_ACCESS.getCode(),
+                ErrorCode.FORBIDDEN_ACCESS.getMessage(),
                 null
         );
 
@@ -77,8 +78,8 @@ public class GlobalExceptionHandler {
         var errorResponse = new ApiResponse<>(
                 false,
                 HttpStatus.BAD_REQUEST.value(),
-                "FAILED_VALIDATION",
-                "Validation failed",
+                ErrorCode.VALIDATION_ERROR.getCode(),
+                ErrorCode.VALIDATION_ERROR.getMessage(),
                 errors
         );
 
@@ -90,8 +91,8 @@ public class GlobalExceptionHandler {
         var errorResponse = new ApiResponse<>(
                 false,
                 HttpStatus.FORBIDDEN.value(),
-                "ACCESS_DENIED",
-                "Access denied",
+                ErrorCode.FORBIDDEN_ACCESS.getCode(),
+                ErrorCode.FORBIDDEN_ACCESS.getMessage(),
                 null
         );
 
@@ -103,8 +104,8 @@ public class GlobalExceptionHandler {
         var errorResponse = new ApiResponse<>(
                 false,
                 HttpStatus.UNAUTHORIZED.value(),
-                "UNAUTHORIZED",
-                "Unauthorized access",
+                ErrorCode.UNAUTHORIZED_ACCESS.getCode(),
+                ErrorCode.UNAUTHORIZED_ACCESS.getMessage(),
                 null
         );
 

@@ -1,18 +1,23 @@
 package com.easyhostel.backend.domain.exception;
 
-import lombok.AllArgsConstructor;
+import com.easyhostel.backend.domain.enums.ErrorCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-@AllArgsConstructor
 @Getter
 public abstract class ApplicationException extends RuntimeException {
 
-    private final String errorCode;
+    private final ErrorCode errorCode;
 
     private final HttpStatus httpStatus;
 
-    public ApplicationException(String message, String errorCode, HttpStatus httpStatus) {
+    public ApplicationException(ErrorCode errorCode, HttpStatus httpStatus) {
+        super(errorCode.getMessage());
+        this.errorCode = errorCode;
+        this.httpStatus = httpStatus;
+    }
+
+    public ApplicationException(String message, ErrorCode errorCode, HttpStatus httpStatus) {
         super(message);
         this.errorCode = errorCode;
         this.httpStatus = httpStatus;

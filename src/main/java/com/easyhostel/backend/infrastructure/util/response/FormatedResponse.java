@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ApiResponse<T> {
+public class FormatedResponse<T> {
 
     private boolean success;
 

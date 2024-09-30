@@ -1,6 +1,6 @@
 package com.easyhostel.backend.api.controller;
 
-import com.easyhostel.backend.infrastructure.util.response.ApiResponse;
+import com.easyhostel.backend.infrastructure.util.response.FormatedResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -13,8 +13,8 @@ public class ManagerController {
 
     @GetMapping
     @Operation(summary = "Get manager's information", description = "")
-    public ApiResponse<Integer> getManager() {
-        return new ApiResponse<>(
+    public FormatedResponse<Integer> getManager() {
+        return new FormatedResponse<>(
                 true,
                 HttpStatus.OK.value(),
                 null,
@@ -24,8 +24,8 @@ public class ManagerController {
     }
 
     @PostMapping
-    public ApiResponse<String> addManager() {
-        return new ApiResponse<>(
+    public FormatedResponse<String> addManager() {
+        return new FormatedResponse<>(
                 true,
                 HttpStatus.CREATED.value(),
                 null,
@@ -35,8 +35,8 @@ public class ManagerController {
     }
 
     @PutMapping
-    public ApiResponse<Integer> updateManager() {
-        return new ApiResponse<>(
+    public FormatedResponse<Integer> updateManager() {
+        return new FormatedResponse<>(
                 true,
                 HttpStatus.OK.value(),
                 null,
@@ -45,8 +45,8 @@ public class ManagerController {
         );    }
 
     @DeleteMapping
-    public ApiResponse<Integer> deleteManager() {
-        return new ApiResponse<>(
+    public FormatedResponse<Integer> deleteManager() {
+        return new FormatedResponse<>(
                 true,
                 HttpStatus.OK.value(),
                 null,

@@ -3,16 +3,14 @@ package com.easyhostel.backend.api.controller.base;
 import com.easyhostel.backend.application.service.interfaces.base.IBaseReadonlyService;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
 import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
+import jakarta.validation.constraints.Min;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Base controller for readonly operations
@@ -23,6 +21,7 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("${api.base-path}/readonly")
+@Validated
 public class BaseReadOnlyController<TDtoEntity, TId> {
 
     protected final IBaseReadonlyService<TDtoEntity, TId> baseReadOnlyService;
@@ -84,8 +83,10 @@ public class BaseReadOnlyController<TDtoEntity, TId> {
      * @return Full formatted response
      * @author Nyx
      */
-    @GetMapping("/{offset}&{limit}")
-    public ResponseEntity<FormattedResponse<List<TDtoEntity>>> getManyWithPagination(@PathVariable int offset,@PathVariable int limit) {
+    @GetMapping("/list")
+    public ResponseEntity<FormattedResponse<List<TDtoEntity>>> getManyWithPagination(
+            @RequestParam(defaultValue = "0") @Min(value = 0, message = "{requestParam.invalid.offset}") int offset,
+            @RequestParam(defaultValue = "1") @Min(value = 1, message = "{requestParam.invalid.limit}") int limit) {
         var futureDtoEntity = baseReadOnlyService.getManyWithPaginationAsync(offset, limit);
 
         var dtoEntities = futureDtoEntity.join();

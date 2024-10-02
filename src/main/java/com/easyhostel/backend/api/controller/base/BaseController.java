@@ -3,8 +3,10 @@ package com.easyhostel.backend.api.controller.base;
 import com.easyhostel.backend.application.service.interfaces.base.IBaseService;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
 import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("${api.base-path}/modification")
+@Validated
 public class BaseController<TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TId> extends BaseReadOnlyController<TDtoEntity, TId>{
 
     protected final IBaseService<TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TId> baseService;
@@ -37,7 +40,7 @@ public class BaseController<TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TI
      * @author Nyx
      */
     @PostMapping
-    public ResponseEntity<FormattedResponse<TDtoEntity>> insertAsync(@RequestBody TCreationDtoEntity creationDto) {
+    public ResponseEntity<FormattedResponse<TDtoEntity>> insertAsync(@Valid @RequestBody TCreationDtoEntity creationDto) {
         var futureDtoEntity = baseService.insertAsync(creationDto);
 
         var dtoEntity = futureDtoEntity.join();
@@ -60,7 +63,7 @@ public class BaseController<TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TI
      * @author Nyx
      */
     @PutMapping
-    public ResponseEntity<FormattedResponse<TDtoEntity>> updateAsync(@RequestBody TUpdateDtoEntity updateDto) {
+    public ResponseEntity<FormattedResponse<TDtoEntity>> updateAsync(@Valid @RequestBody TUpdateDtoEntity updateDto) {
         var futureDtoEntity = baseService.updateAsync(updateDto);
 
         var dtoEntity = futureDtoEntity.join();
@@ -104,7 +107,7 @@ public class BaseController<TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TI
      * @author Nyx
      */
     @DeleteMapping
-    public ResponseEntity<FormattedResponse<Void>> deleteManyByIdsAsync(@RequestBody List<TId> ids) {
+    public ResponseEntity<FormattedResponse<Void>> deleteManyByIdsAsync(@Valid @RequestBody List<TId> ids) {
         baseService.deleteManyByIdsAsync(ids).join();
 
         var response = new FormattedResponse<Void>(

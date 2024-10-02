@@ -1,6 +1,5 @@
 package com.easyhostel.backend.application.dto.base;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;

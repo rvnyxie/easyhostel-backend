@@ -43,6 +43,7 @@ public class OpenApiConfig {
         return GroupedOpenApi.builder()
                 .group("API Service")
                 .packagesToScan("com.easyhostel.backend.api.controller")
+                .packagesToExclude("com.easyhostel.backend.api.controller.base")
                 .build();
     }
 

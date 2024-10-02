@@ -21,8 +21,8 @@ import java.util.List;
  * @author Nyx
  */
 @RestController
-@RequestMapping("${api.base-path}/modification")
 @Validated
+@RequestMapping("${api.base-path}/modification")
 public class BaseController<TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TId> extends BaseReadOnlyController<TDtoEntity, TId>{
 
     protected final IBaseService<TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TId> baseService;
@@ -85,6 +85,7 @@ public class BaseController<TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TI
      * @return Full formatted response
      * @author Nyx
      */
+
     @DeleteMapping("/{id}")
     public ResponseEntity<FormattedResponse<Void>> deleteByIdAsync(@PathVariable TId id) {
         baseService.deleteByIdAsync(id).join();

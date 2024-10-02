@@ -20,8 +20,8 @@ import java.util.Optional;
  * @author Nyx
  */
 @RestController
-@RequestMapping("${api.base-path}/readonly")
 @Validated
+@RequestMapping("${api.base-path}/readonly")
 public class BaseReadOnlyController<TDtoEntity, TId> {
 
     protected final IBaseReadonlyService<TDtoEntity, TId> baseReadOnlyService;

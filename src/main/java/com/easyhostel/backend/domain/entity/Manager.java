@@ -23,8 +23,10 @@ public class Manager extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(updatable = false)
     private UUID managerId;
 
+//    @Column(updatable = false, unique = true)
     private String username;
 
     private String email;

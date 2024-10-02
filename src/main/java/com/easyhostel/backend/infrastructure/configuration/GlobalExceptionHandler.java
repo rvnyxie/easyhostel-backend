@@ -2,7 +2,7 @@ package com.easyhostel.backend.infrastructure.configuration;
 
 import com.easyhostel.backend.domain.enums.ErrorCode;
 import com.easyhostel.backend.domain.exception.UnauthorizedAccessException;
-import com.easyhostel.backend.infrastructure.util.response.FormatedResponse;
+import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,9 +24,9 @@ public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<FormatedResponse<Object>> handleGlobalException(final Exception ex) {
+    public ResponseEntity<FormattedResponse<Object>> handleGlobalException(final Exception ex) {
         log.error(ex.getMessage(), ex);
-        var errorResponse = new FormatedResponse<>(
+        var errorResponse = new FormattedResponse<>(
                 false,
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 ErrorCode.INTERNAL_SERVER_ERROR.getCode(),
@@ -38,9 +38,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
-    public ResponseEntity<FormatedResponse<Object>> handleResourceNotFoundException(final Exception ex) {
+    public ResponseEntity<FormattedResponse<Object>> handleResourceNotFoundException(final Exception ex) {
         log.error(ex.getMessage(), ex);
-        var errorResponse = new FormatedResponse<>(
+        var errorResponse = new FormattedResponse<>(
                 false,
                 HttpStatus.NOT_FOUND.value(),
                 ErrorCode.RESOURCE_NOT_FOUND.getCode(),
@@ -52,9 +52,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UnauthorizedAccessException.class)
-    public ResponseEntity<FormatedResponse<Object>> handleUnauthorizedAccessException(final Exception ex) {
+    public ResponseEntity<FormattedResponse<Object>> handleUnauthorizedAccessException(final Exception ex) {
         log.error(ex.getMessage(), ex);
-        var errorResponse = new FormatedResponse<>(
+        var errorResponse = new FormattedResponse<>(
                 false,
                 HttpStatus.UNAUTHORIZED.value(),
                 ErrorCode.FORBIDDEN_ACCESS.getCode(),
@@ -66,7 +66,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<FormatedResponse<Map<String, String>>> handleValidationException(final MethodArgumentNotValidException ex) {
+    public ResponseEntity<FormattedResponse<Map<String, String>>> handleValidationException(final MethodArgumentNotValidException ex) {
 
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
@@ -75,7 +75,7 @@ public class GlobalExceptionHandler {
             errors.put(fieldName, errorMessage);
         });
 
-        var errorResponse = new FormatedResponse<>(
+        var errorResponse = new FormattedResponse<>(
                 false,
                 HttpStatus.BAD_REQUEST.value(),
                 ErrorCode.VALIDATION_ERROR.getCode(),
@@ -87,8 +87,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<FormatedResponse<Object>> handleAccessDeniedException(AccessDeniedException ex) {
-        var errorResponse = new FormatedResponse<>(
+    public ResponseEntity<FormattedResponse<Object>> handleAccessDeniedException(AccessDeniedException ex) {
+        var errorResponse = new FormattedResponse<>(
                 false,
                 HttpStatus.FORBIDDEN.value(),
                 ErrorCode.FORBIDDEN_ACCESS.getCode(),
@@ -100,8 +100,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<FormatedResponse<Object>> handledAuthenticationException(AuthenticationException ex) {
-        var errorResponse = new FormatedResponse<>(
+    public ResponseEntity<FormattedResponse<Object>> handledAuthenticationException(AuthenticationException ex) {
+        var errorResponse = new FormattedResponse<>(
                 false,
                 HttpStatus.UNAUTHORIZED.value(),
                 ErrorCode.UNAUTHORIZED_ACCESS.getCode(),

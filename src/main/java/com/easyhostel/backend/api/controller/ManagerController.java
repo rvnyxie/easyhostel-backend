@@ -1,58 +1,31 @@
 package com.easyhostel.backend.api.controller;
 
-import com.easyhostel.backend.infrastructure.configuration.Translator;
-import com.easyhostel.backend.infrastructure.util.response.FormatedResponse;
-import io.swagger.v3.oas.annotations.Operation;
+import com.easyhostel.backend.api.controller.base.BaseController;
+import com.easyhostel.backend.application.dto.manager.ManagerCreationDto;
+import com.easyhostel.backend.application.dto.manager.ManagerDto;
+import com.easyhostel.backend.application.dto.manager.ManagerUpdateDto;
+import com.easyhostel.backend.application.service.interfaces.manager.IManagerService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
+/**
+ * Controller for Manager
+ *
+ * @author Nyx
+ */
 @RestController
 @RequestMapping("/api/v0.1/manager")
 @Tag(name = "Manager Controller")
-public class ManagerController {
+public class ManagerController extends BaseController<ManagerDto, ManagerCreationDto, ManagerUpdateDto, UUID> {
 
-    @GetMapping
-    @Operation(summary = "Get manager's information", description = "")
-    public FormatedResponse<Integer> getManager() {
-        return new FormatedResponse<>(
-                true,
-                HttpStatus.OK.value(),
-                null,
-                Translator.toLocale("manager.read.success"),
-                null
-        );
+    private final IManagerService _managerService;
+
+    public ManagerController(IManagerService managerService) {
+        super(managerService);
+        _managerService = managerService;
     }
-
-    @PostMapping
-    public FormatedResponse<String> addManager() {
-        return new FormatedResponse<>(
-                true,
-                HttpStatus.CREATED.value(),
-                null,
-                Translator.toLocale("manager.create.success"),
-                null
-        );
-    }
-
-    @PutMapping
-    public FormatedResponse<Integer> updateManager() {
-        return new FormatedResponse<>(
-                true,
-                HttpStatus.OK.value(),
-                null,
-                Translator.toLocale("manager.update.success"),
-                null
-        );    }
-
-    @DeleteMapping
-    public FormatedResponse<Integer> deleteManager() {
-        return new FormatedResponse<>(
-                true,
-                HttpStatus.OK.value(),
-                null,
-                Translator.toLocale("manager.delete.success"),
-                null
-        );    }
 
 }

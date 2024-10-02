@@ -3,6 +3,7 @@ package com.easyhostel.backend.application.service.implementations.manager;
 import com.easyhostel.backend.application.dto.manager.ManagerCreationDto;
 import com.easyhostel.backend.application.dto.manager.ManagerDto;
 import com.easyhostel.backend.application.dto.manager.ManagerUpdateDto;
+import com.easyhostel.backend.application.mapping.interfaces.IManagerMapper;
 import com.easyhostel.backend.application.service.implementations.base.BaseService;
 import com.easyhostel.backend.application.service.interfaces.manager.IManagerService;
 import com.easyhostel.backend.domain.entity.Manager;
@@ -20,58 +21,26 @@ import java.util.UUID;
 public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCreationDto, ManagerUpdateDto, UUID> implements IManagerService {
 
     private final IManagerRepository _managerRepository;
+    private final IManagerMapper _managerMapper;
 
-    public ManagerService(IManagerRepository managerRepository) {
+    public ManagerService(IManagerRepository managerRepository, IManagerMapper managerMapper) {
         super(managerRepository);
         _managerRepository = managerRepository;
+        _managerMapper = managerMapper;
     }
 
     @Override
     public Manager mapCreationDtoToEntity(ManagerCreationDto creationDtoEntity) {
-        var manager = new Manager();
-        manager.setUsername(creationDtoEntity.getUsername());
-        manager.setEmail(creationDtoEntity.getEmail());
-        manager.setPassword(creationDtoEntity.getPassword());
-        manager.setAvatar(creationDtoEntity.getAvatar());
-        manager.setCreatedBy(creationDtoEntity.getCreatedBy());
-
-//        if (creationDtoEntity.getManagerRoles() != null) {
-//            manager.setManagerRoles(creationDtoEntity.getManagerRoles());
-//        }
-
-        return manager;
+        return _managerMapper.MAPPER.mapCreationDtoToManager(creationDtoEntity);
     }
 
     @Override
     public Manager mapUpdateDtoToEntity(ManagerUpdateDto updateDtoEntity) {
-        Manager manager = new Manager();
-        manager.setManagerId(updateDtoEntity.getManagerId());
-        manager.setUsername(updateDtoEntity.getUsername());
-        manager.setEmail(updateDtoEntity.getEmail());
-        manager.setPassword(updateDtoEntity.getPassword());
-        manager.setAvatar(updateDtoEntity.getAvatar());
-        manager.setModifiedBy(updateDtoEntity.getModifiedBy());
-
-        // Update roles if present
-//        if (updateDtoEntity.getManagerRoles() != null) {
-//            manager.setManagerRoles(updateDtoEntity.getManagerRoles());
-//        }
-
-        return manager;
+        return _managerMapper.MAPPER.mapUpdateDtoToManager(updateDtoEntity);
     }
 
     @Override
     public ManagerDto mapEntityToDto(Manager manager) {
-        return ManagerDto.builder()
-                .managerId(manager.getManagerId())
-                .username(manager.getUsername())
-                .email(manager.getEmail())
-                .avatar(manager.getAvatar())
-                .createdBy(manager.getCreatedBy())
-                .modifiedBy(manager.getModifiedBy())
-                .createdDate(manager.getCreatedDate())
-                .modifiedDate(manager.getModifiedDate())
-//                .managerRoles(manager.getManagerRoles())
-                .build();
+        return _managerMapper.MAPPER.mapManagerToDto(manager);
     }
 }

@@ -19,7 +19,7 @@ import java.util.List;
  * @author Nyx
  */
 @RestController
-@RequestMapping("/api/v0.1/modification")
+@RequestMapping("${api.base-path}/modification")
 public class BaseController<TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TId> extends BaseReadOnlyController<TDtoEntity, TId>{
 
     protected final IBaseService<TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TId> baseService;

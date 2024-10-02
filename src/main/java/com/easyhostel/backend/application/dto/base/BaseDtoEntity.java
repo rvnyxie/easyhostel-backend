@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+
 /**
  * Abstract class base DTO entity
  *
@@ -15,9 +17,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class BaseDtoEntity {
 
-    @Column(updatable = false)
     private String createdBy;
 
     private String modifiedBy;
+
+    private LocalDateTime createdDate;
+
+    private LocalDateTime modifiedDate;
 
 }

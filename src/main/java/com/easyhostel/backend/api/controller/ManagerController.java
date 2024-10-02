@@ -17,7 +17,7 @@ import java.util.UUID;
  * @author Nyx
  */
 @RestController
-@RequestMapping("/api/v0.1/manager")
+@RequestMapping("${api.base-path}/manager")
 @Tag(name = "Manager Controller")
 public class ManagerController extends BaseController<ManagerDto, ManagerCreationDto, ManagerUpdateDto, UUID> {
 

@@ -22,7 +22,7 @@ import java.util.UUID;
  * @author Nyx
  */
 @RestController
-@RequestMapping("/api/v0.1/readonly")
+@RequestMapping("${api.base-path}/readonly")
 public class BaseReadOnlyController<TDtoEntity, TId> {
 
     protected final IBaseReadonlyService<TDtoEntity, TId> baseReadOnlyService;
@@ -61,8 +61,8 @@ public class BaseReadOnlyController<TDtoEntity, TId> {
      * @author Nyx
      */
     @GetMapping("/{id}")
-    public ResponseEntity<FormattedResponse<Optional<TDtoEntity>>> getByIdAsync(@PathVariable String id) {
-        var futureDtoEntity = baseReadOnlyService.getByIdAsync((TId) UUID.fromString(id));
+    public ResponseEntity<FormattedResponse<Optional<TDtoEntity>>> getByIdAsync(@PathVariable TId id) {
+        var futureDtoEntity = baseReadOnlyService.getByIdAsync(id);
 
         var dtoEntity = futureDtoEntity.join();
 

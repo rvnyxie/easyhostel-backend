@@ -34,7 +34,6 @@ public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCrea
         manager.setPassword(creationDtoEntity.getPassword());
         manager.setAvatar(creationDtoEntity.getAvatar());
         manager.setCreatedBy(creationDtoEntity.getCreatedBy());
-        manager.setModifiedBy(creationDtoEntity.getModifiedBy());
 
 //        if (creationDtoEntity.getManagerRoles() != null) {
 //            manager.setManagerRoles(creationDtoEntity.getManagerRoles());
@@ -70,6 +69,8 @@ public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCrea
                 .avatar(manager.getAvatar())
                 .createdBy(manager.getCreatedBy())
                 .modifiedBy(manager.getModifiedBy())
+                .createdDate(manager.getCreatedDate())
+                .modifiedDate(manager.getModifiedDate())
 //                .managerRoles(manager.getManagerRoles())
                 .build();
     }

@@ -29,6 +29,8 @@ public abstract class BaseService<TEntity, TDtoEntity, TCreationDtoEntity, TUpda
     @Override
     @Async
     public CompletableFuture<TDtoEntity> insertAsync(TCreationDtoEntity creationDtoEntity) {
+        CompletableFuture.runAsync(() -> validateCreationBusiness(creationDtoEntity));
+
         return CompletableFuture.supplyAsync(() ->
                 mapEntityToDto(_baseRepository.save(mapCreationDtoToEntity(creationDtoEntity)))
         );
@@ -37,6 +39,8 @@ public abstract class BaseService<TEntity, TDtoEntity, TCreationDtoEntity, TUpda
     @Override
     @Async
     public CompletableFuture<TDtoEntity> updateAsync(TUpdateDtoEntity updateDtoEntity) {
+        CompletableFuture.runAsync(() -> validateUpdateBusiness(updateDtoEntity));
+
         return CompletableFuture.supplyAsync(() ->
                 mapEntityToDto(_baseRepository.save(mapUpdateDtoToEntity(updateDtoEntity)))
         );
@@ -73,4 +77,28 @@ public abstract class BaseService<TEntity, TDtoEntity, TCreationDtoEntity, TUpda
      * @author Nyx
      */
     public abstract TEntity mapUpdateDtoToEntity(TUpdateDtoEntity updateDtoEntity);
+
+    /**
+     * Validate creation business on specified entity
+     *
+     * @param creationDtoEntity Creation DTO Entity
+     * @return A CompletableFuture with no data
+     * @author Nyx
+     */
+    @Async
+    public CompletableFuture<Void> validateCreationBusiness(TCreationDtoEntity creationDtoEntity) {
+        return CompletableFuture.runAsync(() -> { });
+    }
+
+    /**
+     * Validate update business on specified entity
+     *
+     * @param updateDtoEntity Update DTO entity
+     * @return A CompletableFuture with no data
+     * @author Nyx
+     */
+    @Async
+    public CompletableFuture<Void> validateUpdateBusiness(TUpdateDtoEntity updateDtoEntity) {
+        return CompletableFuture.runAsync(() -> { });
+    }
 }

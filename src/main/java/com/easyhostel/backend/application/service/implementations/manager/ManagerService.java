@@ -8,9 +8,11 @@ import com.easyhostel.backend.application.service.implementations.base.BaseServi
 import com.easyhostel.backend.application.service.interfaces.manager.IManagerService;
 import com.easyhostel.backend.domain.entity.Manager;
 import com.easyhostel.backend.domain.repository.interfaces.manager.IManagerRepository;
+import com.easyhostel.backend.domain.service.interfaces.manager.IManagerBusinessValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Manager service for implementing abstract methods and define dedicated methods
@@ -21,11 +23,13 @@ import java.util.UUID;
 public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCreationDto, ManagerUpdateDto, UUID> implements IManagerService {
 
     private final IManagerRepository _managerRepository;
+    private final IManagerBusinessValidator _managerBusinessValidator;
     private final IManagerMapper _managerMapper;
 
-    public ManagerService(IManagerRepository managerRepository, IManagerMapper managerMapper) {
+    public ManagerService(IManagerRepository managerRepository, IManagerBusinessValidator managerBusinessValidator, IManagerMapper managerMapper) {
         super(managerRepository);
         _managerRepository = managerRepository;
+        _managerBusinessValidator = managerBusinessValidator;
         _managerMapper = managerMapper;
     }
 
@@ -42,5 +46,17 @@ public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCrea
     @Override
     public ManagerDto mapEntityToDto(Manager manager) {
         return _managerMapper.MAPPER.mapManagerToDto(manager);
+    }
+
+    // TODO: Add business creation validation for Manager
+    @Override
+    public CompletableFuture<Void> validateCreationBusiness(ManagerCreationDto managerCreationDto) {
+        return super.validateCreationBusiness(managerCreationDto);
+    }
+
+    // TODO: Add business update validation for Manager
+    @Override
+    public CompletableFuture<Void> validateUpdateBusiness(ManagerUpdateDto managerUpdateDto) {
+        return super.validateUpdateBusiness(managerUpdateDto);
     }
 }

@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class ManagerUpdateDto extends BaseDtoEntity {
 
-    @NotNull(message = "{validation.managerId.notNull}")
+    @NotBlank(message = "{validation.managerId.notBlank}")
     private String managerId;
 
     @NotBlank(message = "{validation.username.notBlank}")

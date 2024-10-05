@@ -3,11 +3,13 @@ package com.easyhostel.backend.infrastructure.configuration;
 import com.easyhostel.backend.domain.enums.ErrorCode;
 import com.easyhostel.backend.domain.exception.UnauthorizedAccessException;
 import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -128,7 +130,7 @@ public class GlobalExceptionHandler {
      * @return Formatted response entity
      * @author Nyx
      */
-    @ExceptionHandler(ConstraintViolationException.class)
+    @ExceptionHandler(value = {ConstraintViolationException.class})
     public ResponseEntity<FormattedResponse<Map<String, String>>> handleConstraintViolationException(final ConstraintViolationException ex) {
         log.error(ex.getMessage(), ex);
 
@@ -192,6 +194,45 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    /**
+     * Handle HttpMessageNotReadableException (e.g.failed to deserialize boolean field type)
+     *
+     * @param ex HttpMessageNotReadableException
+     * @return Formatted response entity
+     * @author Nyx
+     */
+    @ExceptionHandler(value = {HttpMessageNotReadableException.class})
+    public ResponseEntity<FormattedResponse<Map<String, String>>> handleHttpMessageNotReadableException(final HttpMessageNotReadableException ex) {
+        log.error(ex.getCause().getMessage(), ex);
+
+        Map<String, String> errors = new HashMap<>();
+
+        var cause = ex.getCause();
+        if (cause instanceof JsonMappingException jsonMappingException) {
+            // Extract the field name that caused the error
+            String fieldName = jsonMappingException.getPath().stream()
+                    .map(JsonMappingException.Reference::getFieldName)
+                    .findFirst()
+                    .orElse("Unknown field");
+
+            // Add the error message related to boolean parsing
+            errors.put(fieldName, Translator.toLocale("validation.onlyBooleanAllowed"));
+        } else {
+            // Fallback error if it's a different type of parsing error
+            errors.put("error", Translator.toLocale("validation.invalidRequestFormat"));
+        }
+
+        var errorResponse = new FormattedResponse<>(
+                false,
+                HttpStatus.BAD_REQUEST.value(),
+                ErrorCode.VALIDATION_ERROR.getCode(),
+                ErrorCode.VALIDATION_ERROR.getMessage(),
+                errors
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -59,7 +59,7 @@ public class InteriorService extends BaseService<Interior, InteriorDto, Interior
         return super.validateCreationBusiness(interiorCreationDto);
     }
 
-    // TODO: Add business creation validation for Interior
+    // TODO: Add business update validation for Interior
     @Override
     public CompletableFuture<Void> validateUpdateBusiness(InteriorUpdateDto interiorUpdateDto) {
         return super.validateUpdateBusiness(interiorUpdateDto);

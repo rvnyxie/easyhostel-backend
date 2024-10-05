@@ -26,7 +26,7 @@ public class RentPayment extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String rentPaymentId;
 
-    private boolean isPaid;
+    private Boolean isPaid;
 
     private float totalPrice;
 

@@ -9,8 +9,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.util.UUID;
-
 /**
  * DTO for update Manager entity
  *
@@ -23,7 +21,7 @@ import java.util.UUID;
 public class ManagerUpdateDto extends BaseDtoEntity {
 
     @NotNull(message = "{validation.managerId.notNull}")
-    private UUID managerId;
+    private String managerId;
 
     @NotBlank(message = "{validation.username.notBlank}")
     private String username;

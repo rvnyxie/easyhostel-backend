@@ -6,8 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.util.UUID;
-
 /**
  * DTO for Manager entity
  *
@@ -19,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ManagerDto extends BaseDtoEntity {
 
-    private UUID managerId;
+    private String managerId;
 
     private String username;
 

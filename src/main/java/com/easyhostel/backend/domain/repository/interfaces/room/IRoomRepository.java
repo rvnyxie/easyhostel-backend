@@ -4,8 +4,6 @@ import com.easyhostel.backend.domain.entity.Room;
 import com.easyhostel.backend.domain.repository.interfaces.base.IBaseRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 /**
  * Repository interface for Room related modification methods
  *

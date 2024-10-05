@@ -11,7 +11,6 @@ import com.easyhostel.backend.domain.repository.interfaces.manager.IManagerRepos
 import com.easyhostel.backend.domain.service.interfaces.manager.IManagerBusinessValidator;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -20,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
  * @author Nyx
  */
 @Service
-public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCreationDto, ManagerUpdateDto, UUID> implements IManagerService {
+public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCreationDto, ManagerUpdateDto, String> implements IManagerService {
 
     private final IManagerRepository _managerRepository;
     private final IManagerBusinessValidator _managerBusinessValidator;

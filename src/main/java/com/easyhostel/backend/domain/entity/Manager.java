@@ -10,7 +10,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * Manager entity
@@ -29,7 +28,7 @@ public class Manager extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(updatable = false)
-    private UUID managerId;
+    private String managerId;
 
 //    @Column(updatable = false, unique = true)
     private String username;

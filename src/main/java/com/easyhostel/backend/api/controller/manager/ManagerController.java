@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
-
 /**
  * Controller for Manager
  *
@@ -20,7 +18,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("${api.base-path}/manager")
 @Tag(name = "Manager Controller")
-public class ManagerController extends BaseController<ManagerDto, ManagerCreationDto, ManagerUpdateDto, UUID> {
+public class ManagerController extends BaseController<ManagerDto, ManagerCreationDto, ManagerUpdateDto, String> {
 
     private final IManagerService _managerService;
 

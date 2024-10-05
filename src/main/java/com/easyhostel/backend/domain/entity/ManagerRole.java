@@ -9,6 +9,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Manager-Role entity
+ *
+ * @author Nyx
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

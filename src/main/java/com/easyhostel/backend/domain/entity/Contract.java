@@ -13,6 +13,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Contract entity
+ *
+ * @author Nyx
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -24,7 +29,7 @@ public class Contract extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID contractId;
+    private String contractId;
 
     private int peopleQuantity;
 

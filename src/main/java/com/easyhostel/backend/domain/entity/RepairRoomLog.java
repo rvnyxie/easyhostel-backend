@@ -10,8 +10,12 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
+/**
+ * Repair room log entity
+ *
+ * @author Nyx
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -23,7 +27,7 @@ public class RepairRoomLog extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID repairRoomLogId;
+    private String repairRoomLogId;
 
     private LocalDate repairDate;
 

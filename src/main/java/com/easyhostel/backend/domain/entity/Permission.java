@@ -10,8 +10,12 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
+/**
+ * Permission entity
+ *
+ * @author Nyx
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -23,7 +27,7 @@ public class Permission extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID permissionId;
+    private String permissionId;
 
     private String permissionName;
 

@@ -10,8 +10,12 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
+/**
+ * Vehicle entity
+ *
+ * @author Nyx
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -23,7 +27,7 @@ public class Vehicle extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID vehicleId;
+    private String vehicleId;
 
     private String vehicleType;
 

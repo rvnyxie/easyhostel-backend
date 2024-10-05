@@ -3,20 +3,23 @@ package com.easyhostel.backend.domain.entity.embedded;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.UUID;
 
+/**
+ * Embedded Role-Permission ID entity
+ *
+ * @author Nyx
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Embeddable
 public class RolePermissionId implements Serializable {
 
-    private UUID roleId;
+    private String roleId;
 
-    private UUID permissionId;
+    private String permissionId;
 
 }

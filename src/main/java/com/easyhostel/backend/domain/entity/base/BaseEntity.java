@@ -9,6 +9,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
+/**
+ * Base entity
+ *
+ * @author Nyx
+ */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

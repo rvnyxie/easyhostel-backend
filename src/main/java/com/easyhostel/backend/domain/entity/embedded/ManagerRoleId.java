@@ -6,16 +6,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.UUID;
 
+/**
+ * Embedded Manager-Role ID entity
+ *
+ * @author Nyx
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Embeddable
 public class ManagerRoleId implements Serializable {
 
-    private UUID managerId;
+    private String managerId;
 
-    private UUID roleId;
+    private String roleId;
 
 }

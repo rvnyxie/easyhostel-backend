@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Room-service entity
+ * RoomAmenity entity
  *
  * @author Nyx
  */
@@ -22,18 +22,18 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @Entity
-@Table(name = "room_service")
-public class RoomService extends BaseEntity {
+@Table(name = "room_amenity")
+public class RoomAmenity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String roomServiceId;
+    private String roomAmenityId;
 
-    private String roomServiceType;
+    private String roomAmenityType;
 
-    private String roomServiceName;
+    private String roomAmenityName;
 
-    @OneToMany(mappedBy = "roomService", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<ContractRoomService> contractRoomServices = new HashSet<>();
+    @OneToMany(mappedBy = "roomAmenity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ContractRoomAmenity> contractRoomAmenities = new HashSet<>();
 
 }

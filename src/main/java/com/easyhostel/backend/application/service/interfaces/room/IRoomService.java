@@ -6,7 +6,7 @@ import com.easyhostel.backend.application.dto.room.RoomUpdateDto;
 import com.easyhostel.backend.application.service.interfaces.base.IBaseService;
 
 /**
- * Interface for Manager service, extends base GET, INSERT, UPDATE, DELETE methods
+ * Interface for Room service, extends base GET, INSERT, UPDATE, DELETE methods
  *
  * @author Nyx
  */

@@ -5,15 +5,15 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
- * Embedded Contract-Room service ID entity
+ * Embedded Contract-RoomAmenity ID entity
  *
  * @author Nyx
  */
 @Embeddable
-public class ContractRoomServiceId implements Serializable {
+public class ContractRoomAmenityId implements Serializable {
 
     private String contractId;
 
-    private String roomServiceId;
+    private String roomAmenityId;
 
 }

@@ -43,7 +43,7 @@ public class Contract extends BaseEntity {
     private Room room;
 
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<ContractRoomService> contractRoomServices = new HashSet<>();
+    private Set<ContractRoomAmenity> contractRoomAmenities = new HashSet<>();
 
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ContractInterior> contractInteriors = new HashSet<>();

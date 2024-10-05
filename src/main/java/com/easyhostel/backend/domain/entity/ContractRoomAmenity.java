@@ -1,7 +1,7 @@
 package com.easyhostel.backend.domain.entity;
 
 import com.easyhostel.backend.domain.entity.base.BaseEntity;
-import com.easyhostel.backend.domain.entity.embedded.ContractRoomServiceId;
+import com.easyhostel.backend.domain.entity.embedded.ContractRoomAmenityId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Contract-Room service entity
+ * Contract-RoomAmenity entity
  *
  * @author Nyx
  */
@@ -20,17 +20,17 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @Entity
-@Table(name = "contract_has_room_service",
+@Table(name = "contract_has_room_amenity",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"contract_id", "room_service_id"})
+                @UniqueConstraint(columnNames = {"contract_id", "room_amenity_id"})
 
         })
-public class ContractRoomService extends BaseEntity {
+public class ContractRoomAmenity extends BaseEntity {
 
     @EmbeddedId
-    private ContractRoomServiceId contractRoomServiceId = new ContractRoomServiceId();
+    private ContractRoomAmenityId contractRoomAmenityId = new ContractRoomAmenityId();
 
-    private float roomServicePrice;
+    private float roomAmenityPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contract_id")
@@ -38,8 +38,8 @@ public class ContractRoomService extends BaseEntity {
     private Contract contract;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_service_id")
-    @MapsId("roomServiceId")
-    private RoomService roomService;
+    @JoinColumn(name = "room_amenity_id")
+    @MapsId("roomAmenityId")
+    private RoomAmenity roomAmenity;
 
 }

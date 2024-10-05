@@ -4,7 +4,7 @@ import com.easyhostel.backend.domain.service.interfaces.manager.IManagerBusiness
 import org.springframework.stereotype.Service;
 
 /**
- * Implementation for manager's business validator
+ * Implementation for Manager's business validator
  *
  * @author Nyx
  */

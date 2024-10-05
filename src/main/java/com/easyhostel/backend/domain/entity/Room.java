@@ -24,7 +24,7 @@ public class Room extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID roomId;
+    private String roomId;
 
     private String roomNumber;
 

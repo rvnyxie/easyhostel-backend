@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Nyx
  */
 @RestController
-@RequestMapping("${api.base-path}/room-amenity")
+@RequestMapping("${api.base-path}/room-amenities")
 @Tag(name = "RoomAmenity Controller")
 public class RoomAmenityController extends BaseController<RoomAmenityDto, RoomAmenityCreationDto, RoomAmenityUpdateDto, String> {
 

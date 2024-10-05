@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Nyx
  */
 @RestController
-@RequestMapping("${api.base-path}/manager")
+@RequestMapping("${api.base-path}/managers")
 @Tag(name = "Manager Controller")
 public class ManagerController extends BaseController<ManagerDto, ManagerCreationDto, ManagerUpdateDto, String> {
 

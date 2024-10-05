@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Nyx
  */
 @RestController
-@RequestMapping("${api.base-path}/contract")
+@RequestMapping("${api.base-path}/contracts")
 @Tag(name = "Contract Controller")
 public class ContractController extends BaseController<ContractDto, ContractCreationDto, ContractUpdateDto, String> {
 

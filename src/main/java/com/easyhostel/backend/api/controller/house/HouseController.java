@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Nyx
  */
 @RestController
-@RequestMapping("${api.base-path}/house")
+@RequestMapping("${api.base-path}/houses")
 @Tag(name = "House Controller")
 public class HouseController extends BaseController<HouseDto, HouseCreationDto, HouseUpdateDto, String> {
 

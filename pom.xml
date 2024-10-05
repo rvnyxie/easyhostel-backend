@@ -124,6 +124,7 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
+					<parameters>true</parameters>
 					<!-- Important annotation processor path, it makes plugins working together -->
 					<annotationProcessorPaths>
 						<path>

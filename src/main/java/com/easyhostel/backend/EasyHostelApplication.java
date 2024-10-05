@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableAsync
-@EnableJpaRepositories(basePackages = "com.easyhostel.backend.domain.repository.interfaces.manager")
+@EnableJpaRepositories(basePackages = "com.easyhostel.backend.domain.repository.interfaces")
 public class EasyHostelApplication {
 
 	public static void main(String[] args) {

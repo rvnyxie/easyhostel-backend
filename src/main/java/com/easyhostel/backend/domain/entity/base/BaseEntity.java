@@ -10,7 +10,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -26,8 +25,10 @@ public class BaseEntity {
     private LocalDateTime modifiedDate;
 
     @Column(updatable = false)
+    @Setter
     private String createdBy;
 
+    @Setter
     private String modifiedBy;
 
 }

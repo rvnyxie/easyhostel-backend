@@ -10,8 +10,12 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
+/**
+ * House entity
+ *
+ * @author Nyx
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -23,7 +27,7 @@ public class House extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID houseId;
+    private String houseId;
 
     private String houseName;
 

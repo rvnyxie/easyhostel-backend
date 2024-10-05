@@ -1,6 +1,7 @@
 package com.easyhostel.backend.domain.repository.interfaces.base;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * @param <TId> Abstract type of ID
  * @author Nyx
  */
-@Repository
+@NoRepositoryBean
 public interface IBaseReadonlyRepository<TEntity, TId> extends JpaRepository<TEntity, TId> {
 }

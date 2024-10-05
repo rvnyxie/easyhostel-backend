@@ -12,6 +12,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Manager entity
+ *
+ * @author Nyx
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

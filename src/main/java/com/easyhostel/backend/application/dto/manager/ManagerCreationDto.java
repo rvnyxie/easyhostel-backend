@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * DTO for creation Manager entity
+ * DTO for creating Manager entity
  *
  * @author Nyx
  */

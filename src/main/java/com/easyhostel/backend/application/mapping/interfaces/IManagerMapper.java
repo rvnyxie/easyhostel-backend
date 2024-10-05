@@ -7,6 +7,11 @@ import com.easyhostel.backend.domain.entity.Manager;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+/**
+ * Mapper for Manager entity
+ *
+ * @author Nyx
+ */
 @Mapper(componentModel = "spring")
 public interface IManagerMapper {
 
@@ -14,10 +19,10 @@ public interface IManagerMapper {
 
     // TODO: for mapping, need to consider the case of manager-role
 
-    ManagerDto mapManagerToDto(Manager manager);
+    ManagerDto mapManagerToManagerDto(Manager manager);
 
-    Manager mapCreationDtoToManager(ManagerCreationDto managerCreationDto);
+    Manager mapManagerCreationDtoToManager(ManagerCreationDto managerCreationDto);
 
-    Manager mapUpdateDtoToManager(ManagerUpdateDto managerUpdateDto);
+    Manager mapManagerUpdateDtoToManager(ManagerUpdateDto managerUpdateDto);
 
 }

@@ -35,17 +35,17 @@ public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCrea
 
     @Override
     public Manager mapCreationDtoToEntity(ManagerCreationDto creationDtoEntity) {
-        return _managerMapper.MAPPER.mapCreationDtoToManager(creationDtoEntity);
+        return _managerMapper.MAPPER.mapManagerCreationDtoToManager(creationDtoEntity);
     }
 
     @Override
     public Manager mapUpdateDtoToEntity(ManagerUpdateDto updateDtoEntity) {
-        return _managerMapper.MAPPER.mapUpdateDtoToManager(updateDtoEntity);
+        return _managerMapper.MAPPER.mapManagerUpdateDtoToManager(updateDtoEntity);
     }
 
     @Override
     public ManagerDto mapEntityToDto(Manager manager) {
-        return _managerMapper.MAPPER.mapManagerToDto(manager);
+        return _managerMapper.MAPPER.mapManagerToManagerDto(manager);
     }
 
     // TODO: Add business creation validation for Manager

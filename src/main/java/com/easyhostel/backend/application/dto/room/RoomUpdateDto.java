@@ -1,6 +1,7 @@
 package com.easyhostel.backend.application.dto.room;
 
 import com.easyhostel.backend.application.dto.base.BaseDtoEntity;
+import com.easyhostel.backend.application.dto.house.HouseUpdateDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -27,5 +28,7 @@ public class RoomUpdateDto extends BaseDtoEntity {
 
     @NotBlank(message = "{validation.rentPaymentStatus.notBlank}")
     private String rentPaymentStatus;
+
+    private HouseUpdateDto house;
 
 }

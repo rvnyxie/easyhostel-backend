@@ -21,4 +21,7 @@ public class RoomCreationDto extends BaseDtoEntity {
     @NotBlank(message = "{validation.roomNumber.notBlank}")
     private String roomNumber;
 
+    @NotBlank(message = "{validation.rentPaymentStatus.notBlank}")
+    private String rentPaymentStatus;
+
 }

@@ -35,6 +35,23 @@ public class HouseService extends BaseService<House, HouseDto, HouseCreationDto,
     }
 
     @Override
+    public CompletableFuture<HouseDto> insertAsync(HouseCreationDto houseCreationDto) {
+        CompletableFuture.runAsync(() -> validateCreationBusiness(houseCreationDto));
+
+        return CompletableFuture.supplyAsync(() -> {
+            var house = mapCreationDtoToEntity(houseCreationDto);
+
+            // Set the parent house reference for each room
+//            house.getRooms().forEach(room -> room.setHouse(house));
+
+            var savedHouse = _houseRepository.save(house);
+            var houseDto = mapEntityToDto(savedHouse);
+
+            return houseDto;
+        });
+    }
+
+    @Override
     public House mapCreationDtoToEntity(HouseCreationDto houseCreationDto) {
         var house = _houseMapper.MAPPER.mapHouseCreationDtoToHouse(houseCreationDto);
 

@@ -32,6 +32,9 @@ public class RoomService extends BaseService<Room, RoomDto, RoomCreationDto, Roo
         _roomMapper = roomMapper;
     }
 
+    // TODO: Add logic to delete a room belonged to a house
+    // TODO: Add logic to delete many rooms belonged to a house
+
     @Override
     public Room mapCreationDtoToEntity(RoomCreationDto roomCreationDto) {
         var room = _roomMapper.mapRoomCreationDtoToRoom(roomCreationDto);
@@ -64,4 +67,5 @@ public class RoomService extends BaseService<Room, RoomDto, RoomCreationDto, Roo
     public CompletableFuture<Void> validateUpdateBusiness(RoomUpdateDto roomUpdateDto) {
         return super.validateUpdateBusiness(roomUpdateDto);
     }
+
 }

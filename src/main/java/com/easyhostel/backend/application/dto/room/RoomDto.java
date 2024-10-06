@@ -1,8 +1,7 @@
 package com.easyhostel.backend.application.dto.room;
 
 import com.easyhostel.backend.application.dto.base.BaseDtoEntity;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.easyhostel.backend.application.dto.house.HouseDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,13 +18,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class RoomDto extends BaseDtoEntity {
 
-    @NotNull(message = "{validation.roomId.notNull}")
     private String roomId;
 
-    @NotBlank(message = "{validation.roomNumber.notBlank}")
     private String roomNumber;
 
-    @NotBlank(message = "{validation.rentPaymentStatus.notBlank}")
     private String rentPaymentStatus;
+
+    private HouseDto house;
 
 }

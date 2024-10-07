@@ -1,6 +1,7 @@
 package com.easyhostel.backend.infrastructure.configuration;
 
 import com.easyhostel.backend.domain.enums.ErrorCode;
+import com.easyhostel.backend.domain.exception.EntityNotFoundException;
 import com.easyhostel.backend.domain.exception.UnauthorizedAccessException;
 import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -233,6 +234,27 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle custom EntityNotFoundException (e.g.can not find entity with ID)
+     *
+     * @param ex EntityNotFoundException
+     * @return Formatted response entity
+     * @author Nyx
+     */
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<FormattedResponse<Object>> handleResourceNotFoundException(final EntityNotFoundException ex) {
+        log.error(ex.getMessage(), ex);
+        var errorResponse = new FormattedResponse<>(
+                false,
+                HttpStatus.NOT_FOUND.value(),
+                ErrorCode.ENTITY_NOT_FOUND.getCode(),
+                !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.ENTITY_NOT_FOUND.getMessage(),
+                null
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
 }

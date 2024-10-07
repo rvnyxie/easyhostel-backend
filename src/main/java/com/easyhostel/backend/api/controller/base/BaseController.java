@@ -85,7 +85,6 @@ public class BaseController<TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TI
      * @return Full formatted response
      * @author Nyx
      */
-
     @DeleteMapping("/{id}")
     public ResponseEntity<FormattedResponse<Void>> deleteByIdAsync(@PathVariable TId id) {
         baseService.deleteByIdAsync(id).join();

@@ -4,6 +4,11 @@ import com.easyhostel.backend.domain.enums.ErrorCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+/**
+ * Base custom exception
+ *
+ * @author Nyx
+ */
 @Getter
 public abstract class ApplicationException extends RuntimeException {
 

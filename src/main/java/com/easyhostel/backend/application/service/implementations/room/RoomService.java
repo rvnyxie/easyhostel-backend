@@ -7,10 +7,12 @@ import com.easyhostel.backend.application.mapping.interfaces.IRoomMapper;
 import com.easyhostel.backend.application.service.implementations.base.BaseService;
 import com.easyhostel.backend.application.service.interfaces.room.IRoomService;
 import com.easyhostel.backend.domain.entity.Room;
+import com.easyhostel.backend.domain.repository.interfaces.house.IHouseRepository;
 import com.easyhostel.backend.domain.repository.interfaces.room.IRoomRepository;
 import com.easyhostel.backend.domain.service.interfaces.room.IRoomBusinessValidator;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -31,9 +33,6 @@ public class RoomService extends BaseService<Room, RoomDto, RoomCreationDto, Roo
         _roomBusinessValidator = roomBusinessValidator;
         _roomMapper = roomMapper;
     }
-
-    // TODO: Add logic to delete a room belonged to a house
-    // TODO: Add logic to delete many rooms belonged to a house
 
     @Override
     public Room mapCreationDtoToEntity(RoomCreationDto roomCreationDto) {

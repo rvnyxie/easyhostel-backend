@@ -9,6 +9,8 @@ public enum ErrorCode {
 
     RESOURCE_NOT_FOUND("RESOURCE_NOT_FOUND", "Resource with ID {0} not found"),
 
+    ENTITY_NOT_FOUND("ENTITY_NOT_FOUND", "Entity with ID {0} not found"),
+
     VALIDATION_ERROR("VALIDATION_ERROR", "Validation failed for {0}"),
 
     FORBIDDEN_ACCESS("FORBIDDEN_ACCESS", "You are not forbidden to access this resource"),

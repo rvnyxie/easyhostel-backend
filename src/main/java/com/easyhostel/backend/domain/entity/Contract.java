@@ -38,8 +38,9 @@ public class Contract extends BaseEntity {
 
     private LocalDate expirationDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id")
+    @EqualsAndHashCode.Exclude
     private Room room;
 
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -20,4 +20,14 @@ public interface IRoomBusinessValidator {
      */
     CompletableFuture<Room> checkIfRoomExistedFromId(String roomId);
 
+    /**
+     * Asynchronously check if Contract belonged to Room by ID
+     *
+     * @param roomId Room's ID
+     * @param contractId Contract's ID
+     * @return CompletableFuture Void object
+     * @author Nyx
+     */
+    CompletableFuture<Void> checkIsContractBelongedToRoom(String roomId, String contractId);
+
 }

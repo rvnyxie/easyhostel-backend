@@ -31,10 +31,23 @@ public interface IHouseMapper {
     //region General
 
     // Room need to ignore house to avoid circular dependency
-    @Mapping(target = "rooms", qualifiedByName = "mapRoomsWithoutHouse")
+    @Mapping(target = "rooms", qualifiedByName = "mapRoomsToRoomDtosWithoutHouse")
     HouseDto mapHouseToHouseDto(House house);
 
     //endregion
+
+    //region Map Room to RoomDto without house to avoid circular dependency
+
+    @Named("mapRoomsToRoomDtosWithoutHouse")
+    @Mapping(target = "house", ignore = true)
+    default Set<RoomDto> mapRoomsToRoomDtosWithoutHouse(Set<Room> rooms) {
+        return rooms.stream().map(room -> {
+            RoomDto roomDto = IRoomMapper.MAPPER.mapRoomToRoomDtoWithoutHouse(room);
+            return roomDto;
+        }).collect(Collectors.toSet());
+    }
+
+    // endregion
 
     //region Map creation
 
@@ -56,23 +69,14 @@ public interface IHouseMapper {
 
     //endregion
 
-    //region Map Room to RoomDto without house to avoid circular dependency
+    //region Map House to HouseDto without Rooms to avoid circular dependency
 
-    @Named("mapRoomsWithoutHouse")
-    @Mapping(target = "house", ignore = true)
-    default Set<RoomDto> mapRoomsWithoutHouse(Set<Room> rooms) {
-        return rooms.stream().map(room -> {
-            RoomDto roomDto = mapRoomToRoomDtoWithoutHouse(room);
-            return roomDto;
-        }).collect(Collectors.toSet());
-    }
+    @Mapping(target = "rooms", ignore = true)
+    HouseDto mapHouseToHouseDtoWithoutRooms(House house);
 
-    @Mapping(target = "house", ignore = true)
-    RoomDto mapRoomToRoomDtoWithoutHouse(Room room);
+    //endregion
 
-    // endregion
-
-    //region Set room references back to house after mapping from types (creation, update) to House
+    //region Set Room references back to House after mapping from types (creation, update)
 
     @AfterMapping
     default void setHouseReferencesFromRooms(@MappingTarget House house) {

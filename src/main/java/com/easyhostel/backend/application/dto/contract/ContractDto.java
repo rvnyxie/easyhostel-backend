@@ -1,6 +1,7 @@
 package com.easyhostel.backend.application.dto.contract;
 
 import com.easyhostel.backend.application.dto.base.BaseDtoEntity;
+import com.easyhostel.backend.application.dto.room.RoomDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,7 @@ public class ContractDto extends BaseDtoEntity {
     private LocalDate signingDate;
 
     private LocalDate expirationDate;
+
+    private RoomDto room;
 
 }

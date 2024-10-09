@@ -39,4 +39,23 @@ public class RoomBusinessValidator implements IRoomBusinessValidator {
         });
     }
 
+    @Override
+    @Async
+    public CompletableFuture<Void> checkIsContractBelongedToRoom(String roomId, String contractId) {
+        return CompletableFuture.runAsync(() -> {
+            var room = checkIfRoomExistedFromId(roomId).join();
+
+            var isContractBelongedToRoom = room.getContracts().stream()
+                    .anyMatch(contract -> contract.getContractId().equals(contractId));
+
+            if (!isContractBelongedToRoom) {
+                throw new EntityNotFoundException(
+                        Translator.toLocale("exception.contractFromRoom.notFound"),
+                        ErrorCode.RESOURCE_NOT_FOUND,
+                        HttpStatus.NOT_FOUND
+                );
+            }
+        });
+    }
+
 }

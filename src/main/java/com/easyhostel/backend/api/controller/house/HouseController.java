@@ -35,9 +35,8 @@ public class HouseController extends BaseController<HouseDto, HouseCreationDto, 
         _houseService = houseService;
     }
 
-
     /**
-     * Delete Room from House by ID
+     * Asynchronously delete Room from House by ID
      *
      * @param houseId House's ID
      * @param roomId Room's ID

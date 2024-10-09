@@ -1,7 +1,6 @@
 package com.easyhostel.backend.api.controller.room;
 
 import com.easyhostel.backend.api.controller.base.BaseController;
-import com.easyhostel.backend.application.dto.house.HouseDto;
 import com.easyhostel.backend.application.dto.room.RoomCreationDto;
 import com.easyhostel.backend.application.dto.room.RoomDto;
 import com.easyhostel.backend.application.dto.room.RoomUpdateDto;
@@ -34,6 +33,31 @@ public class RoomController extends BaseController<RoomDto, RoomCreationDto, Roo
     public RoomController(@Qualifier("roomService") IRoomService roomService) {
         super(roomService);
         _roomService = roomService;
+    }
+
+    /**
+     * Asynchronously delete Contract from Room by ID
+     *
+     * @param roomId Room's ID
+     * @param contractId Contract's ID
+     * @return Full formatted response
+     * @author Nyx
+     */
+    @DeleteMapping("/{roomId}/contracts/{contractId}")
+    public CompletableFuture<ResponseEntity<FormattedResponse<Void>>> deleteContractFromRoomAsync(
+            @PathVariable String roomId,
+            @PathVariable String contractId) {
+        return _roomService.deleteContractFromRoomByIdAsync(roomId, contractId)
+                .thenApply(result -> {
+                    var response = new FormattedResponse<>(
+                            true,
+                            HttpStatus.OK.value(),
+                            null,
+                            Translator.toLocale("delete.contractFromRoom.success"),
+                            result
+                    );
+                    return ResponseEntity.ok(response);
+                });
     }
 
 }

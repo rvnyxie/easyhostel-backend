@@ -7,9 +7,14 @@ import com.easyhostel.backend.application.mapping.interfaces.IRoomMapper;
 import com.easyhostel.backend.application.service.implementations.base.BaseService;
 import com.easyhostel.backend.application.service.interfaces.room.IRoomService;
 import com.easyhostel.backend.domain.entity.Room;
+import com.easyhostel.backend.domain.enums.ErrorCode;
+import com.easyhostel.backend.domain.exception.EntityNotFoundException;
+import com.easyhostel.backend.domain.repository.interfaces.contract.IContractRepository;
 import com.easyhostel.backend.domain.repository.interfaces.house.IHouseRepository;
 import com.easyhostel.backend.domain.repository.interfaces.room.IRoomRepository;
 import com.easyhostel.backend.domain.service.interfaces.room.IRoomBusinessValidator;
+import com.easyhostel.backend.infrastructure.configuration.Translator;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,12 +31,32 @@ public class RoomService extends BaseService<Room, RoomDto, RoomCreationDto, Roo
     private final IRoomRepository _roomRepository;
     private final IRoomBusinessValidator _roomBusinessValidator;
     private final IRoomMapper _roomMapper;
+    private final IContractRepository _contractRepository;
 
-    public RoomService(IRoomRepository roomRepository, IRoomBusinessValidator roomBusinessValidator, IRoomMapper roomMapper) {
+    public RoomService(IRoomRepository roomRepository, IRoomBusinessValidator roomBusinessValidator, IRoomMapper roomMapper, IContractRepository contractRepository) {
         super(roomRepository);
         _roomRepository = roomRepository;
         _roomBusinessValidator = roomBusinessValidator;
         _roomMapper = roomMapper;
+        _contractRepository = contractRepository;
+    }
+
+    @Override
+    public CompletableFuture<Void> deleteContractFromRoomByIdAsync(String roomId, String contractId) {
+        return CompletableFuture.runAsync(() -> {
+           _roomBusinessValidator.checkIsContractBelongedToRoom(roomId, contractId);
+
+           var contract = _contractRepository.findById(contractId).orElseThrow(() -> new EntityNotFoundException(
+                   Translator.toLocale("exception.contractFromRoom.notFound"),
+                   ErrorCode.RESOURCE_NOT_FOUND,
+                   HttpStatus.NOT_FOUND
+           ));
+
+           // Delete contract
+           contract.setRoom(null);
+           _contractRepository.save(contract);
+           _contractRepository.delete(contract);
+        });
     }
 
     @Override

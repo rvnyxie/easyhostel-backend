@@ -33,14 +33,14 @@ public class ContractRoomAmenity extends BaseEntity {
     private float roomAmenityPrice;
 
     @ManyToOne
-    @JoinColumn(name = "contract_id")
+    @JoinColumn(name = "contract_id", insertable = false, updatable = false)
     @MapsId("contractId")
     // This one annotation to avoid circular dependency with toString() and hashcode()
     @EqualsAndHashCode.Exclude
     private Contract contract;
 
     @ManyToOne
-    @JoinColumn(name = "room_amenity_id")
+    @JoinColumn(name = "room_amenity_id", insertable = false, updatable = false)
     @MapsId("roomAmenityId")
     // This one annotation to avoid circular dependency with toString() and hashcode()
     @EqualsAndHashCode.Exclude

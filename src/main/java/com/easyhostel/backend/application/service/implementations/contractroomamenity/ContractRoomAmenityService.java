@@ -12,6 +12,7 @@ import com.easyhostel.backend.domain.repository.interfaces.contract.IContractRep
 import com.easyhostel.backend.domain.repository.interfaces.contractroomamenity.IContractRoomAmenityRepository;
 import com.easyhostel.backend.domain.repository.interfaces.roomamenity.IRoomAmenityRepository;
 import com.easyhostel.backend.domain.service.interfaces.contractroomamenity.IContractRoomAmenityBusinessValidator;
+import jakarta.transaction.Transactional;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -99,6 +100,27 @@ public class ContractRoomAmenityService
     }
 
     @Override
+    @Transactional
+    public CompletableFuture<Void> deleteContractRoomAmenityByIdsAsync(String contractId, String roomAmenityId) {
+        return validateDeleteBusiness(contractId, roomAmenityId)
+                .thenComposeAsync(v -> CompletableFuture.runAsync(() -> {
+                    // Create ContractRoomAmenityId object to search
+                    var contractRoomAmenityId = new ContractRoomAmenityId();
+                    contractRoomAmenityId.setContractId(contractId);
+                    contractRoomAmenityId.setRoomAmenityId(roomAmenityId);
+
+                    // Search
+                    var contractRoomAmenity = _contractRoomAmenityRepository.findById(contractRoomAmenityId).orElseThrow();
+
+                    // Saved changes
+                    var savedContractRoomAmenity = _contractRoomAmenityRepository.save(contractRoomAmenity);
+
+                    // Delete ContractRoomAmenity
+                    _contractRoomAmenityRepository.delete(savedContractRoomAmenity);
+                }));
+    }
+
+    @Override
     public ContractRoomAmenity mapCreationDtoToEntity(ContractRoomAmenityCreationDto contractRoomAmenityCreationDto) {
         return _contractRoomAmenityMapper.MAPPER.mapContractRoomAmenityCreationDtoToContractRoomAmenity(contractRoomAmenityCreationDto);
     }
@@ -130,4 +152,10 @@ public class ContractRoomAmenityService
 
             return _contractRoomAmenityBusinessValidator.checkIfContractAndRoomAmenityExistedByIdsAsync(contractId, roomAmenityId);
     }
+
+    @Async
+    public CompletableFuture<Void> validateDeleteBusiness(String contractId, String roomAmenityId) {
+        return _contractRoomAmenityBusinessValidator.checkIfContractAndRoomAmenityExistedByIdsAsync(contractId, roomAmenityId);
+    }
+
 }

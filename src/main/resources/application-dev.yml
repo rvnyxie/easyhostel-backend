@@ -10,7 +10,7 @@ spring:
     hibernate:
       ddl-auto: update
     database: postgresql
-    show-sql: true
+    show-sql: false
 open:
   api:
     title: EasyHostel API
@@ -21,3 +21,12 @@ open:
 api:
   version: v0.1
   base-path: /api/${api.version}
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

@@ -1,6 +1,6 @@
 package com.easyhostel.backend.application.service.interfaces.roomamenity;
 
-import com.easyhostel.backend.application.dto.roomservice.RoomAmenityDto;
+import com.easyhostel.backend.application.dto.roomamenity.RoomAmenityDto;
 import com.easyhostel.backend.application.service.interfaces.base.IBaseReadonlyService;
 
 /**

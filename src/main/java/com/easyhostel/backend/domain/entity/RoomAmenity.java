@@ -33,7 +33,9 @@ public class RoomAmenity extends BaseEntity {
 
     private String roomAmenityName;
 
-    @OneToMany(mappedBy = "roomAmenity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "roomAmenity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private Set<ContractRoomAmenity> contractRoomAmenities = new HashSet<>();
 
 }

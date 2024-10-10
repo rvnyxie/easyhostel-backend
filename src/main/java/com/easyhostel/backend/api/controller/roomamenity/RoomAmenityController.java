@@ -1,11 +1,12 @@
 package com.easyhostel.backend.api.controller.roomamenity;
 
 import com.easyhostel.backend.api.controller.base.BaseController;
-import com.easyhostel.backend.application.dto.roomservice.RoomAmenityCreationDto;
-import com.easyhostel.backend.application.dto.roomservice.RoomAmenityDto;
-import com.easyhostel.backend.application.dto.roomservice.RoomAmenityUpdateDto;
+import com.easyhostel.backend.application.dto.roomamenity.RoomAmenityCreationDto;
+import com.easyhostel.backend.application.dto.roomamenity.RoomAmenityDto;
+import com.easyhostel.backend.application.dto.roomamenity.RoomAmenityUpdateDto;
 import com.easyhostel.backend.application.service.interfaces.roomamenity.IRoomAmenityService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,7 @@ public class RoomAmenityController extends BaseController<RoomAmenityDto, RoomAm
 
     private final IRoomAmenityService _roomAmenityService;
 
-    public RoomAmenityController(IRoomAmenityService roomAmenityService) {
+    public RoomAmenityController(@Qualifier("roomAmenityService") IRoomAmenityService roomAmenityService) {
         super(roomAmenityService);
         _roomAmenityService = roomAmenityService;
     }

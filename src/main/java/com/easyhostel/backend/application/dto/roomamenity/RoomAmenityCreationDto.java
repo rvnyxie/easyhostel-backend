@@ -1,4 +1,4 @@
-package com.easyhostel.backend.application.dto.roomservice;
+package com.easyhostel.backend.application.dto.roomamenity;
 
 import com.easyhostel.backend.application.dto.base.BaseDtoEntity;
 import jakarta.validation.constraints.NotBlank;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * DTO for RoomAmenity entity
+ * DTO for creating RoomAmenity entity
  *
  * @author Nyx
  */
@@ -16,12 +16,12 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @NoArgsConstructor
-public class RoomAmenityDto extends BaseDtoEntity {
+public class RoomAmenityCreationDto extends BaseDtoEntity {
 
-    private String roomAmenityId;
-
+    @NotBlank(message = "{validation.roomAmenityType.notBlank}")
     private String roomAmenityType;
 
+    @NotBlank(message = "{validation.roomAmenityName.notBlank}")
     private String roomAmenityName;
 
 }

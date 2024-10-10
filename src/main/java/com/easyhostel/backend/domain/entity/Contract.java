@@ -43,7 +43,9 @@ public class Contract extends BaseEntity {
     @EqualsAndHashCode.Exclude
     private Room room;
 
-    @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private Set<ContractRoomAmenity> contractRoomAmenities = new HashSet<>();
 
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -21,6 +21,7 @@ import javax.naming.AuthenticationException;
 import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletionException;
 
 /**
  * Global exception handler which catches most important exceptions and returns formatted response
@@ -255,6 +256,24 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CompletionException.class)
+    public ResponseEntity<FormattedResponse<Object>> handleCompletionException(final CompletionException ex) {
+        log.error(ex.getMessage(), ex);
+        if (ex.getCause() instanceof EntityNotFoundException) {
+            var errorResponse = new FormattedResponse<>(
+                    false,
+                    HttpStatus.NOT_FOUND.value(),
+                    ErrorCode.ENTITY_NOT_FOUND.getCode(),
+                    !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.ENTITY_NOT_FOUND.getMessage(),
+                    null
+            );
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        }
+
+        return null;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.easyhostel.backend.application.service.implementations.base;
 
 import com.easyhostel.backend.application.service.interfaces.base.IBaseService;
+import com.easyhostel.backend.domain.exception.EntityNotFoundException;
 import com.easyhostel.backend.domain.repository.interfaces.base.IBaseRepository;
 import org.springframework.scheduling.annotation.Async;
 
@@ -29,21 +30,35 @@ public abstract class BaseService<TEntity, TDtoEntity, TCreationDtoEntity, TUpda
     @Override
     @Async
     public CompletableFuture<TDtoEntity> insertAsync(TCreationDtoEntity creationDtoEntity) {
-        CompletableFuture.runAsync(() -> validateCreationBusiness(creationDtoEntity));
-
-        return CompletableFuture.supplyAsync(() ->
-                mapEntityToDto(_baseRepository.save(mapCreationDtoToEntity(creationDtoEntity)))
-        );
+        return validateCreationBusiness(creationDtoEntity)
+                .thenComposeAsync(v -> CompletableFuture.supplyAsync(() ->
+                    mapEntityToDto(_baseRepository.save(mapCreationDtoToEntity(creationDtoEntity)))
+                ));
+//                .exceptionally(ex -> {
+//                    if (ex.getCause() instanceof EntityNotFoundException) {
+//                        throw (EntityNotFoundException) ex.getCause();
+//                    }
+//                    return null;
+//                });
+//        CompletableFuture.runAsync(() -> validateCreationBusiness(creationDtoEntity).join());
+//
+//        return CompletableFuture.supplyAsync(() ->
+//                mapEntityToDto(_baseRepository.save(mapCreationDtoToEntity(creationDtoEntity)))
+//        );
     }
 
     @Override
     @Async
     public CompletableFuture<TDtoEntity> updateAsync(TUpdateDtoEntity updateDtoEntity) {
-        CompletableFuture.runAsync(() -> validateUpdateBusiness(updateDtoEntity));
-
-        return CompletableFuture.supplyAsync(() ->
-                mapEntityToDto(_baseRepository.save(mapUpdateDtoToEntity(updateDtoEntity)))
-        );
+        return validateUpdateBusiness(updateDtoEntity)
+                .thenComposeAsync(v -> CompletableFuture.supplyAsync(() ->
+                                mapEntityToDto(_baseRepository.save(mapUpdateDtoToEntity(updateDtoEntity)))
+                        ));
+//        CompletableFuture.runAsync(() -> validateUpdateBusiness(updateDtoEntity));
+//
+//        return CompletableFuture.supplyAsync(() ->
+//                mapEntityToDto(_baseRepository.save(mapUpdateDtoToEntity(updateDtoEntity)))
+//        );
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.easyhostel.backend.application.mapping.interfaces;
 
-import com.easyhostel.backend.application.dto.roomservice.RoomAmenityCreationDto;
-import com.easyhostel.backend.application.dto.roomservice.RoomAmenityDto;
-import com.easyhostel.backend.application.dto.roomservice.RoomAmenityUpdateDto;
+import com.easyhostel.backend.application.dto.roomamenity.RoomAmenityCreationDto;
+import com.easyhostel.backend.application.dto.roomamenity.RoomAmenityDto;
+import com.easyhostel.backend.application.dto.roomamenity.RoomAmenityUpdateDto;
 import com.easyhostel.backend.domain.entity.RoomAmenity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

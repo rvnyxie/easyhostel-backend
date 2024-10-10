@@ -32,14 +32,18 @@ public class ContractRoomAmenity extends BaseEntity {
 
     private float roomAmenityPrice;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "contract_id")
     @MapsId("contractId")
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private Contract contract;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "room_amenity_id")
     @MapsId("roomAmenityId")
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private RoomAmenity roomAmenity;
 
 }

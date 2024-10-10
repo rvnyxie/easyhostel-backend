@@ -1,4 +1,4 @@
-package com.easyhostel.backend.application.dto.roomservice;
+package com.easyhostel.backend.application.dto.roomamenity;
 
 import com.easyhostel.backend.application.dto.base.BaseDtoEntity;
 import jakarta.validation.constraints.NotBlank;

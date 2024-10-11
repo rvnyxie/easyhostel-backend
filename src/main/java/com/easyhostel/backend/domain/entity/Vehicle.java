@@ -37,7 +37,9 @@ public class Vehicle extends BaseEntity {
 
     private String vehicleLicensePlate;
 
-    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "vehicle", fetch = FetchType.EAGER)
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private Set<ContractVehicle> contractVehicles = new HashSet<>();
 
 }

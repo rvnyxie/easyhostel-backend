@@ -33,6 +33,6 @@ public interface IContractInteriorService extends IBaseService<ContractInteriorD
      * @return CompletableFuture Void object
      * @author Nyx
      */
-    CompletableFuture<Void> validateDeletionBusiness(String contractId, String interiorId);
+    CompletableFuture<Void> validateDeletionBusinessAsync(String contractId, String interiorId);
 
 }

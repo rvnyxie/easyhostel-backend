@@ -116,7 +116,7 @@ public class ContractInteriorService extends BaseService<ContractInterior, Contr
     @Override
     @Async
     public CompletableFuture<Void> deleteContractInteriorByIdsAsync(String contractId, String interiorId) {
-        return validateDeletionBusiness(contractId, interiorId)
+        return validateDeletionBusinessAsync(contractId, interiorId)
                 .thenComposeAsync(v -> CompletableFuture.runAsync(() -> {
                     var contractInteriorId = new ContractInteriorId();
                     contractInteriorId.setContractId(contractId);
@@ -166,7 +166,7 @@ public class ContractInteriorService extends BaseService<ContractInterior, Contr
 
     @Override
     @Async
-    public CompletableFuture<Void> validateDeletionBusiness(String contractId, String interiorId) {
+    public CompletableFuture<Void> validateDeletionBusinessAsync(String contractId, String interiorId) {
         return CompletableFuture
                 .runAsync(() -> _contractInteriorBusinessValidator.checkIfContractInteriorAlreadyExistedByIds(contractId, interiorId));
     }

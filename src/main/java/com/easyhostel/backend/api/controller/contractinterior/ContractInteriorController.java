@@ -46,7 +46,7 @@ public class ContractInteriorController extends BaseController<ContractInteriorD
     @DeleteMapping("/{contractId}/{interiorId}")
     public ResponseEntity<FormattedResponse<Void>> deleteContractInteriorByIdsAsync(@PathVariable @Valid String contractId,
                                                                                     @PathVariable @Valid String interiorId) {
-        _contractInteriorService.deleteContractInteriorByIdsAsync(contractId, interiorId);
+        _contractInteriorService.deleteContractInteriorByIdsAsync(contractId, interiorId).join();
 
         var response = new FormattedResponse<Void>(
                 true,

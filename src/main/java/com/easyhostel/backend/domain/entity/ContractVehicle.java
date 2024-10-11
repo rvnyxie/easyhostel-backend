@@ -30,14 +30,18 @@ public class ContractVehicle extends BaseEntity {
     @EmbeddedId
     private ContractVehicleId contractVehicleId = new ContractVehicleId();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "contract_id")
     @MapsId("contractId")
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private Contract contract;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "vehicle_id")
     @MapsId("vehicleId")
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private Vehicle vehicle;
 
 }

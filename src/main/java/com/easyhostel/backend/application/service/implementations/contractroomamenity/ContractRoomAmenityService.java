@@ -75,6 +75,7 @@ public class ContractRoomAmenityService
     }
 
     @Override
+    @Async
     public CompletableFuture<ContractRoomAmenityDto> updateAsync(ContractRoomAmenityUpdateDto contractRoomAmenityUpdateDto) {
         return validateUpdateBusiness(contractRoomAmenityUpdateDto)
                 .thenComposeAsync(v -> CompletableFuture.supplyAsync(() -> {
@@ -102,7 +103,7 @@ public class ContractRoomAmenityService
     @Override
     @Transactional
     public CompletableFuture<Void> deleteContractRoomAmenityByIdsAsync(String contractId, String roomAmenityId) {
-        return validateDeleteBusiness(contractId, roomAmenityId)
+        return validateDeletionBusiness(contractId, roomAmenityId)
                 .thenComposeAsync(v -> CompletableFuture.runAsync(() -> {
                     // Create ContractRoomAmenityId object to search
                     var contractRoomAmenityId = new ContractRoomAmenityId();
@@ -154,7 +155,7 @@ public class ContractRoomAmenityService
     }
 
     @Async
-    public CompletableFuture<Void> validateDeleteBusiness(String contractId, String roomAmenityId) {
+    public CompletableFuture<Void> validateDeletionBusiness(String contractId, String roomAmenityId) {
         return _contractRoomAmenityBusinessValidator.checkIfContractAndRoomAmenityExistedByIdsAsync(contractId, roomAmenityId);
     }
 

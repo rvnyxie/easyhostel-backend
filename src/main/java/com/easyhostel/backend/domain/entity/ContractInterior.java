@@ -30,14 +30,18 @@ public class ContractInterior extends BaseEntity {
     @EmbeddedId
     private ContractInteriorId contractInteriorId = new ContractInteriorId();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "contract_id")
     @MapsId("contractId")
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private Contract contract;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "interior_id")
     @MapsId("interiorId")
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private Interior interior;
 
 }

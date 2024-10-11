@@ -31,7 +31,9 @@ public class Interior extends BaseEntity {
 
     private String interiorName;
 
-    @OneToMany(mappedBy = "interior", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "interior", fetch = FetchType.EAGER)
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private Set<ContractInterior> contractInteriors = new HashSet<>();
 
 }

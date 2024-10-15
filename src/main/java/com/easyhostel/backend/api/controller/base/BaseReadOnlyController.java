@@ -60,7 +60,7 @@ public class BaseReadOnlyController<TDtoEntity, TId> {
      * @author Nyx
      */
     @GetMapping("/{id}")
-    public ResponseEntity<FormattedResponse<Optional<TDtoEntity>>> getByIdAsync(@PathVariable TId id) {
+    public ResponseEntity<FormattedResponse<TDtoEntity>> getByIdAsync(@PathVariable TId id) {
         var futureDtoEntity = baseReadOnlyService.getByIdAsync(id);
 
         var dtoEntity = futureDtoEntity.join();

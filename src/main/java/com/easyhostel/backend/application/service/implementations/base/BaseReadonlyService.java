@@ -39,9 +39,9 @@ public abstract class BaseReadonlyService<TEntity, TDtoEntity, TId> implements I
 
     @Override
     @Async
-    public CompletableFuture<Optional<TDtoEntity>> getByIdAsync(TId id) {
+    public CompletableFuture<TDtoEntity> getByIdAsync(TId id) {
         return CompletableFuture.supplyAsync(() ->
-            _baseReadonlyRepository.findById(id).map(this::mapEntityToDto)
+            _baseReadonlyRepository.findById(id).map(this::mapEntityToDto).orElseThrow()
         );
     }
 

@@ -30,7 +30,7 @@ public interface IBaseReadonlyService<TDtoEntity, TId> {
      * @return A CompletableFuture containing a DTO entity with specified ID
      * @author Nyx
      */
-    CompletableFuture<Optional<TDtoEntity>> getByIdAsync(TId id);
+    CompletableFuture<TDtoEntity> getByIdAsync(TId id);
 
     /**
      * Asynchronous method to retrieve records with pagination

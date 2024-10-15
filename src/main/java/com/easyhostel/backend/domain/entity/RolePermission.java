@@ -30,14 +30,18 @@ public class RolePermission extends BaseEntity {
     @EmbeddedId
     private RolePermissionId rolePermissionId = new RolePermissionId();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "role_id")
     @MapsId("roleId")
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private Role role;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "permission_id")
     @MapsId("permissionId")
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private Permission permission;
 
 }

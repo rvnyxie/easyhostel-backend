@@ -20,6 +20,6 @@ public class ManagerRoleId implements Serializable {
 
     private String managerId;
 
-    private String roleId;
+    private Integer roleId;
 
 }

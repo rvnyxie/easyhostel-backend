@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author Nyx
  */
 @Service
-public class RoleReadonlyService extends BaseReadonlyService<Role, RoleDto, String> implements IRoleReadonlyService {
+public class RoleReadonlyService extends BaseReadonlyService<Role, RoleDto, Integer> implements IRoleReadonlyService {
 
     private final IRoleMapper _roleMapper;
 

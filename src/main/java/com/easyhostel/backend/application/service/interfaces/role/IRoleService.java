@@ -10,5 +10,5 @@ import com.easyhostel.backend.application.service.interfaces.base.IBaseService;
  *
  * @author Nyx
  */
-public interface IRoleService extends IBaseService<RoleDto, RoleCreationDto, RoleUpdateDto, String> {
+public interface IRoleService extends IBaseService<RoleDto, RoleCreationDto, RoleUpdateDto, Integer> {
 }

@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
  * @author Nyx
  */
 @Service
-public class RoleService extends BaseService<Role, RoleDto, RoleCreationDto, RoleUpdateDto, String> implements IRoleService {
+public class RoleService extends BaseService<Role, RoleDto, RoleCreationDto, RoleUpdateDto, Integer> implements IRoleService {
 
     private final IRoleRepository _roleRepository;
     private final IRoleBusinessValidator _roleBusinessValidator;

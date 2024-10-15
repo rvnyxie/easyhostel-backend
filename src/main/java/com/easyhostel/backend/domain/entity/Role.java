@@ -26,8 +26,8 @@ import java.util.Set;
 public class Role extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String roleId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer roleId;
 
     private String roleName;
 

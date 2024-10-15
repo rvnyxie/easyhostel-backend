@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("${api.base-path}/roles")
 @Tag(name = "Role Controller")
-public class RoleController extends BaseController<RoleDto, RoleCreationDto, RoleUpdateDto, String> {
+public class RoleController extends BaseController<RoleDto, RoleCreationDto, RoleUpdateDto, Integer> {
 
     public RoleController(IRoleService roleService) {
         super(roleService);

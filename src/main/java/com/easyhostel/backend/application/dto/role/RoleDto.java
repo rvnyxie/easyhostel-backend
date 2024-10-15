@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class RoleDto extends BaseDtoEntity {
 
-    private String roleId;
+    private Integer roleId;
 
     private String roleName;
 

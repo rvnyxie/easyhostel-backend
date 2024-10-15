@@ -8,5 +8,5 @@ import com.easyhostel.backend.application.service.interfaces.base.IBaseReadonlyS
  *
  * @author Nyx
  */
-public interface IRoleReadonlyService extends IBaseReadonlyService<RoleDto, String> {
+public interface IRoleReadonlyService extends IBaseReadonlyService<RoleDto, Integer> {
 }

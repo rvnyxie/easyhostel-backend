@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 public class RoleUpdateDto extends BaseDtoEntity {
 
     @NotBlank(message = "{validation.roleId.notBlank}")
-    private String roleId;
+    private Integer roleId;
 
     @NotBlank(message = "{validation.roleName.notBlank}")
     private String roleName;

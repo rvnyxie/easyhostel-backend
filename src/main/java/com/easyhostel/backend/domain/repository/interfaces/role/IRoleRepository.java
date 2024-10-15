@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  * @author Nyx
  */
 @Repository
-public interface IRoleRepository extends IBaseRepository<Role, String> {
+public interface IRoleRepository extends IBaseRepository<Role, Integer> {
 }

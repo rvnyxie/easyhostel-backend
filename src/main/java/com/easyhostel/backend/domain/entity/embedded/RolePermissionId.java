@@ -20,6 +20,6 @@ public class RolePermissionId implements Serializable {
 
     private Integer roleId;
 
-    private String permissionId;
+    private Integer permissionId;
 
 }

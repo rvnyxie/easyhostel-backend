@@ -26,14 +26,14 @@ import java.util.Set;
 public class Permission extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String permissionId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer permissionId;
 
     private String permissionName;
 
     private String permissionDescription;
 
-    @OneToMany(mappedBy = "permission", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "permission", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<RolePermission> rolePermissions = new HashSet<>();
 
 }

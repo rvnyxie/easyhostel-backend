@@ -41,6 +41,9 @@ public class Manager extends BaseEntity {
 
     private String token;
 
+    @OneToMany(mappedBy = "manager", fetch = FetchType.EAGER)
+    private Set<ManagerHouse> managerHouses = new HashSet<>();
+
     @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ManagerRole> managerRoles = new HashSet<>();
 

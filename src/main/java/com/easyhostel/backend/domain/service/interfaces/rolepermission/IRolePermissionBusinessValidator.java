@@ -23,7 +23,7 @@ public interface IRolePermissionBusinessValidator {
      * Check if RolePermission existed by ID
      *
      * @param rolePermissionId RolePermissionId Object
-     * @exception com.easyhostel.backend.domain.exception.EntityNotFoundException If Role or Permission not found
+     * @exception com.easyhostel.backend.domain.exception.EntityNotFoundException If RolePermission not found
      * @author Nyx
      */
     void checkIfRolePermissionExistedById(RolePermissionId rolePermissionId);

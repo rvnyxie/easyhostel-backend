@@ -35,6 +35,9 @@ public class House extends BaseEntity {
 
     private float occupancy;
 
+    @OneToMany(mappedBy = "house", fetch = FetchType.EAGER)
+    private Set<ManagerHouse> managerHouses = new HashSet<>();
+
     @OneToMany(mappedBy = "house", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     // This one annotation to avoid circular dependency with toString() and hashcode()
     @EqualsAndHashCode.Exclude

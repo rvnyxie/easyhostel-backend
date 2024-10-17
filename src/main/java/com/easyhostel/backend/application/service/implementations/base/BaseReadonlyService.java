@@ -7,7 +7,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -29,20 +28,23 @@ public abstract class BaseReadonlyService<TEntity, TDtoEntity, TId> implements I
     @Override
     @Async
     public CompletableFuture<List<TDtoEntity>> getAllAsync() {
-        return CompletableFuture.supplyAsync(() ->
-                _baseReadonlyRepository.findAll() // Synchronously fetch data
-                        .stream()
-                        .map(this::mapEntityToDto)
-                        .toList()
-        );
+        return CompletableFuture.supplyAsync(() -> {
+            var entities = _baseReadonlyRepository.findAll();
+
+            return entities.stream()
+                    .map(this::mapEntityToDto)
+                    .toList();
+        });
     }
 
     @Override
     @Async
     public CompletableFuture<TDtoEntity> getByIdAsync(TId id) {
-        return CompletableFuture.supplyAsync(() ->
-            _baseReadonlyRepository.findById(id).map(this::mapEntityToDto).orElseThrow()
-        );
+        return CompletableFuture.supplyAsync(() -> {
+            var entity = _baseReadonlyRepository.findById(id);
+
+            return entity.map(this::mapEntityToDto).orElseThrow();
+        });
     }
 
     @Override

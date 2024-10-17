@@ -1,6 +1,7 @@
 package com.easyhostel.backend.application.dto.manager;
 
 import com.easyhostel.backend.application.dto.base.BaseDtoEntity;
+import com.easyhostel.backend.application.dto.role.RoleDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,6 @@ public class ManagerDto extends BaseDtoEntity {
 
     private String avatar;
 
-//    private Set<ManagerRole> managerRoles = new HashSet<>();
+    private RoleDto role;
 
 }

@@ -1,6 +1,7 @@
 package com.easyhostel.backend.application.dto.manager;
 
 import com.easyhostel.backend.application.dto.base.BaseDtoEntity;
+import com.easyhostel.backend.domain.entity.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -23,9 +24,6 @@ public class ManagerUpdateDto extends BaseDtoEntity {
     @NotBlank(message = "{validation.managerId.notBlank}")
     private String managerId;
 
-    @NotBlank(message = "{validation.username.notBlank}")
-    private String username;
-
     @NotBlank(message = "{validation.email.notBlank}")
     @Pattern(message = "{validation.email.invalidFormat}", regexp = "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
     private String email;
@@ -34,7 +32,5 @@ public class ManagerUpdateDto extends BaseDtoEntity {
     private String password;
 
     private String avatar;
-
-//    private Set<ManagerRole> managerRoles = new HashSet<>();
 
 }

@@ -33,7 +33,7 @@ public class Permission extends BaseEntity {
 
     private String permissionDescription;
 
-    @OneToMany(mappedBy = "permission", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "permission", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Set<RolePermission> rolePermissions = new HashSet<>();
 
 }

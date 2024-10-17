@@ -19,7 +19,9 @@ public enum ErrorCode {
 
     INTERNAL_SERVER_ERROR("INTERNAL_SERVER_ERROR", "An unexpected error occurred"),
 
-    BUSINESS_LOGIC_ERROR("BUSINESS_LOGIC_ERROR", "Business logic failure: {0}");
+    BUSINESS_LOGIC_ERROR("BUSINESS_LOGIC_ERROR", "Business logic failure: {0}"),
+
+    DUPLICATED_VALUE("DUPLICATED_VALUE", "Value need to be distinct but duplicated");
 
     private final String code;
 

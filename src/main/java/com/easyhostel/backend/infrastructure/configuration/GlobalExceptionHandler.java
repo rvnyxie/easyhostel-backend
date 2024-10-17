@@ -1,6 +1,7 @@
 package com.easyhostel.backend.infrastructure.configuration;
 
 import com.easyhostel.backend.domain.enums.ErrorCode;
+import com.easyhostel.backend.domain.exception.DuplicatedDistinctRequiredValueException;
 import com.easyhostel.backend.domain.exception.EntityNotFoundException;
 import com.easyhostel.backend.domain.exception.UnauthorizedAccessException;
 import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
@@ -238,6 +239,41 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Handle custom CompletionException
+     *
+     * @param ex CompletionException
+     * @return Formatted response entity
+     * @author Nyx
+     */
+    @ExceptionHandler(CompletionException.class)
+    public ResponseEntity<FormattedResponse<Object>> handleCompletionException(final CompletionException ex) {
+        log.error(ex.getMessage(), ex);
+        if (ex.getCause() instanceof EntityNotFoundException) {
+            var errorResponse = new FormattedResponse<>(
+                    false,
+                    HttpStatus.NOT_FOUND.value(),
+                    ErrorCode.ENTITY_NOT_FOUND.getCode(),
+                    !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.ENTITY_NOT_FOUND.getMessage(),
+                    null
+            );
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        } else if (ex.getCause() instanceof DuplicatedDistinctRequiredValueException) {
+            var errorResponse = new FormattedResponse<>(
+                    false,
+                    HttpStatus.BAD_REQUEST.value(),
+                    ErrorCode.DUPLICATED_VALUE.getCode(),
+                    !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.DUPLICATED_VALUE.getMessage(),
+                    null
+            );
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+
+        return null;
+    }
+
+    /**
      * Handle custom EntityNotFoundException (e.g.can not find entity with ID)
      *
      * @param ex EntityNotFoundException
@@ -258,22 +294,25 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(CompletionException.class)
-    public ResponseEntity<FormattedResponse<Object>> handleCompletionException(final CompletionException ex) {
+    /**
+     * Handle custom DuplicatedDistinctRequiredField (e.g.username or email already existed)
+     *
+     * @param ex DuplicatedDistinctRequiredField
+     * @return Formatted response entity
+     * @author Nyx
+     */
+    @ExceptionHandler(DuplicatedDistinctRequiredValueException.class)
+    public ResponseEntity<FormattedResponse<Object>> handleDuplicatedDistinctRequiredFieldException(final DuplicatedDistinctRequiredValueException ex) {
         log.error(ex.getMessage(), ex);
-        if (ex.getCause() instanceof EntityNotFoundException) {
-            var errorResponse = new FormattedResponse<>(
-                    false,
-                    HttpStatus.NOT_FOUND.value(),
-                    ErrorCode.ENTITY_NOT_FOUND.getCode(),
-                    !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.ENTITY_NOT_FOUND.getMessage(),
-                    null
-            );
+        var errorResponse = new FormattedResponse<>(
+                false,
+                HttpStatus.BAD_REQUEST.value(),
+                ErrorCode.DUPLICATED_VALUE.getCode(),
+                !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.DUPLICATED_VALUE.getMessage(),
+                null
+        );
 
-            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-        }
-
-        return null;
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
 }

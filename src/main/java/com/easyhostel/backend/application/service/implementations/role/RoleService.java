@@ -21,13 +21,11 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class RoleService extends BaseService<Role, RoleDto, RoleCreationDto, RoleUpdateDto, Integer> implements IRoleService {
 
-    private final IRoleRepository _roleRepository;
     private final IRoleBusinessValidator _roleBusinessValidator;
     private final IRoleMapper _roleMapper;
 
     public RoleService(IRoleRepository roleRepository, IRoleBusinessValidator roleBusinessValidator, IRoleMapper roleMapper) {
         super(roleRepository);
-        _roleRepository = roleRepository;
         _roleBusinessValidator = roleBusinessValidator;
         _roleMapper = roleMapper;
     }
@@ -49,11 +47,18 @@ public class RoleService extends BaseService<Role, RoleDto, RoleCreationDto, Rol
 
     @Override
     public CompletableFuture<Void> validateCreationBusiness(RoleCreationDto roleCreationDto) {
-        return super.validateCreationBusiness(roleCreationDto);
+        return CompletableFuture.runAsync(() -> {
+            _roleBusinessValidator.checkIfRoleNameExistedThenThrowException(roleCreationDto.getRoleName());
+        });
     }
 
     @Override
     public CompletableFuture<Void> validateUpdateBusiness(RoleUpdateDto roleUpdateDto) {
-        return super.validateUpdateBusiness(roleUpdateDto);
+        return CompletableFuture.runAsync(() -> {
+            _roleBusinessValidator.checkIfRoleExistedById(roleUpdateDto.getRoleId());
+            _roleBusinessValidator.checkIfRoleNameUnchangedOrChangedToNonExistedValue(
+                    roleUpdateDto.getRoleId(),
+                    roleUpdateDto.getRoleName());
+        });
     }
 }

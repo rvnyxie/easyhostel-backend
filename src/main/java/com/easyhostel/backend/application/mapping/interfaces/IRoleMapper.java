@@ -5,6 +5,7 @@ import com.easyhostel.backend.application.dto.role.RoleDto;
 import com.easyhostel.backend.application.dto.role.RoleUpdateDto;
 import com.easyhostel.backend.domain.entity.Role;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -12,7 +13,7 @@ import org.mapstruct.factory.Mappers;
  *
  * @author Nyx
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { IManagerMapper.class })
 public interface IRoleMapper {
 
     //region Instance
@@ -23,6 +24,7 @@ public interface IRoleMapper {
 
     //region General
 
+    @Mapping(target = "managers", qualifiedByName = "mapManagerToManagerDtoWithoutRole")
     RoleDto mapRoleToRoleDto(Role role);
 
     //endregion

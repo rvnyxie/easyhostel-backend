@@ -33,11 +33,15 @@ public class ManagerHouse extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "manager_id")
     @MapsId("managerId")
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private Manager manager;
 
     @ManyToOne
     @JoinColumn(name = "house_id")
     @MapsId("houseId")
+    // This one annotation to avoid circular dependency with toString() and hashcode()
+    @EqualsAndHashCode.Exclude
     private House house;
 
 }

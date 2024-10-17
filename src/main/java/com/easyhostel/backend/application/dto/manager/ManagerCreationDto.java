@@ -1,6 +1,7 @@
 package com.easyhostel.backend.application.dto.manager;
 
 import com.easyhostel.backend.application.dto.base.BaseDtoEntity;
+import com.easyhostel.backend.application.dto.role.RoleDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
@@ -29,6 +30,6 @@ public class ManagerCreationDto extends BaseDtoEntity {
     @NotBlank(message = "{validation.password.notBlank}")
     private String password;
 
-//    private Set<ManagerRole> managerRoles = new HashSet<>();
+    private RoleDto role;
 
 }

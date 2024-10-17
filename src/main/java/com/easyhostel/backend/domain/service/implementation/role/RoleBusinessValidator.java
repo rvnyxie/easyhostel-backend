@@ -2,6 +2,7 @@ package com.easyhostel.backend.domain.service.implementation.role;
 
 import com.easyhostel.backend.domain.entity.Role;
 import com.easyhostel.backend.domain.enums.ErrorCode;
+import com.easyhostel.backend.domain.exception.DuplicatedDistinctRequiredValueException;
 import com.easyhostel.backend.domain.exception.EntityNotFoundException;
 import com.easyhostel.backend.domain.repository.interfaces.role.IRoleRepository;
 import com.easyhostel.backend.domain.service.interfaces.role.IRoleBusinessValidator;
@@ -39,4 +40,25 @@ public class RoleBusinessValidator implements IRoleBusinessValidator {
         }
     }
 
+    @Override
+    public void checkIfRoleNameExistedThenThrowException(String roleName) {
+        var isRoleNameExisted = _roleRepository.existsByRoleName(roleName);
+
+        if (isRoleNameExisted) {
+            throw new DuplicatedDistinctRequiredValueException(
+                    Translator.toLocale("exception.roleName.duplicated"),
+                    ErrorCode.DUPLICATED_VALUE,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    @Override
+    public void checkIfRoleNameUnchangedOrChangedToNonExistedValue(Integer roleId, String roleName) {
+        var role = _roleRepository.findById(roleId).orElseThrow();
+
+        if (!role.getRoleName().equals(roleName)) {
+            checkIfRoleNameExistedThenThrowException(roleName);
+        }
+    }
 }

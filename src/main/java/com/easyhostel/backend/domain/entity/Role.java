@@ -33,10 +33,10 @@ public class Role extends BaseEntity {
 
     private String description;
 
-    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Set<RolePermission> rolePermissions = new HashSet<>();
 
-    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-    private Set<ManagerRole> managerRoles = new HashSet<>();
+    @OneToMany(mappedBy = "role", cascade = { CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    private Set<Manager> managers = new HashSet<>();
 
 }

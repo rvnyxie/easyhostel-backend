@@ -8,9 +8,16 @@ import com.easyhostel.backend.application.service.implementations.base.BaseServi
 import com.easyhostel.backend.application.service.interfaces.manager.IManagerService;
 import com.easyhostel.backend.domain.entity.Manager;
 import com.easyhostel.backend.domain.enums.RoleType;
+import com.easyhostel.backend.domain.exception.EntityNotFoundException;
 import com.easyhostel.backend.domain.repository.interfaces.manager.IManagerRepository;
 import com.easyhostel.backend.domain.repository.interfaces.role.IRoleReadonlyRepository;
 import com.easyhostel.backend.domain.service.interfaces.manager.IManagerBusinessValidator;
+import com.easyhostel.backend.infrastructure.service.implementation.PasswordService;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -30,15 +37,19 @@ public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCrea
 
     private final IRoleReadonlyRepository _roleReadonlyRepository;
 
+    private final PasswordService _passwordService;
+
     public ManagerService(IManagerRepository managerRepository,
                           IManagerBusinessValidator managerBusinessValidator,
                           IManagerMapper managerMapper,
-                          IRoleReadonlyRepository roleReadonlyRepository) {
+                          IRoleReadonlyRepository roleReadonlyRepository,
+                          @Lazy PasswordService passwordService) {
         super(managerRepository);
         _managerRepository = managerRepository;
         _managerBusinessValidator = managerBusinessValidator;
         _managerMapper = managerMapper;
         _roleReadonlyRepository = roleReadonlyRepository;
+        _passwordService = passwordService;
     }
 
     @Override
@@ -54,6 +65,9 @@ public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCrea
 
                     // Set reference to Role
                     manager.setRole(role);
+
+                    // Encode password
+                    manager.setPassword(_passwordService.encodePassword(manager.getPassword()));
 
                     // Insert
                     var savedManager = _managerRepository.save(manager);
@@ -102,4 +116,11 @@ public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCrea
         });
     }
 
+    @Override
+    public UserDetailsService userDetailsService() {
+        return username -> {
+            _managerBusinessValidator.checkIfManagerUsernameExisted(username);
+            return _managerRepository.findManagerByUsername(username).orElseThrow();
+        };
+    }
 }

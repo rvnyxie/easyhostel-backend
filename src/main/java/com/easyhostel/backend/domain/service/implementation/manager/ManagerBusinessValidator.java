@@ -39,6 +39,19 @@ public class ManagerBusinessValidator implements IManagerBusinessValidator {
     }
 
     @Override
+    public void checkIfManagerUsernameExisted(String username) {
+        var isManagerExisted = _managerRepository.existsByUsername(username);
+
+        if (!isManagerExisted) {
+            throw new EntityNotFoundException(
+                    Translator.toLocale("exception.managerUsername.notFound"),
+                    ErrorCode.ENTITY_NOT_FOUND,
+                    HttpStatus.NOT_FOUND
+            );
+        }
+    }
+
+    @Override
     public void checkIfUsernameExistedThenThrowException(String username) {
         var isUsernameExisted = _managerRepository.existsByUsername(username);
 

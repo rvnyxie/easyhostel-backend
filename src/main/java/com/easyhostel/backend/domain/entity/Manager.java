@@ -7,8 +7,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,14 +27,16 @@ import java.util.Set;
 @SuperBuilder
 @Entity
 @Table(name = "manager")
-public class Manager extends BaseEntity {
+public class Manager extends BaseEntity implements UserDetails {
+
+    //region Fields
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(updatable = false)
     private String managerId;
 
-//    @Column(updatable = false, unique = true)
+    @Column(updatable = false, unique = true)
     private String username;
 
     private String email;
@@ -48,4 +54,34 @@ public class Manager extends BaseEntity {
     @OneToMany(mappedBy = "manager", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Set<ManagerHouse> managerHouses = new HashSet<>();
 
+    //endregion
+
+    //region Override UserDetails
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
+    }
+
+    //endregion
 }

@@ -6,12 +6,18 @@ import com.easyhostel.backend.domain.exception.EntityNotFoundException;
 import com.easyhostel.backend.domain.exception.UnauthorizedAccessException;
 import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.AccountStatusException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -270,6 +276,67 @@ public class GlobalExceptionHandler {
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
 
+        //region Authentication exception
+
+        else if (ex.getCause() instanceof InternalAuthenticationServiceException) {
+            var errorResponse = new FormattedResponse<>(
+                    false,
+                    HttpStatus.BAD_REQUEST.value(),
+                    ErrorCode.ENTITY_NOT_FOUND.getCode(),
+                    !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.ENTITY_NOT_FOUND.getMessage(),
+                    null
+            );
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+
+        } else if (ex.getCause() instanceof BadCredentialsException) {
+            var errorResponse = new FormattedResponse<>(
+                    false,
+                    HttpStatus.UNAUTHORIZED.value(),
+                    ErrorCode.BAD_CREDENTIALS.getCode(),
+                    !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.BAD_CREDENTIALS.getMessage(),
+                    null
+            );
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+
+        } else if (ex.getCause() instanceof AccountStatusException) {
+            var errorResponse = new FormattedResponse<>(
+                    false,
+                    HttpStatus.FORBIDDEN.value(),
+                    ErrorCode.ACCOUNT_LOCKED.getCode(),
+                    !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.ACCOUNT_LOCKED.getMessage(),
+                    null
+            );
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+
+        } else if (ex.getCause() instanceof AccessDeniedException) {
+            var errorResponse = new FormattedResponse<>(
+                    false,
+                    HttpStatus.FORBIDDEN.value(),
+                    ErrorCode.UNAUTHORIZED_ACCESS.getCode(),
+                    !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.UNAUTHORIZED_ACCESS.getMessage(),
+                    null
+            );
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+
+        } else if (ex.getCause() instanceof ExpiredJwtException) {
+            var errorResponse = new FormattedResponse<>(
+                    false,
+                    HttpStatus.UNAUTHORIZED.value(),
+                    ErrorCode.EXPIRED_JWT.getCode(),
+                    !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.EXPIRED_JWT.getMessage(),
+                    null
+            );
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+
+        }
+
+        //endregion
+
         return null;
     }
 
@@ -309,6 +376,46 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST.value(),
                 ErrorCode.DUPLICATED_VALUE.getCode(),
                 !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.DUPLICATED_VALUE.getMessage(),
+                null
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle SignatureException (Correct format JWT but invalid...)
+     *
+     * @param ex SignatureException
+     * @return Formatted response entity
+     * @author Nyx
+     */
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity<FormattedResponse<Object>> handleSignatureException(final SignatureException ex) {
+        var errorResponse = new FormattedResponse<>(
+                false,
+                HttpStatus.UNAUTHORIZED.value(),
+                ErrorCode.SIGNATURE_INVALID.getCode(),
+                !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.SIGNATURE_INVALID.getMessage(),
+                null
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    /**
+     * Handle MalformedJwtException (Incorrect format JWT...)
+     *
+     * @param ex MalformedJwtException
+     * @return Formatted response entity
+     * @author Nyx
+     */
+    @ExceptionHandler(MalformedJwtException.class)
+    public ResponseEntity<FormattedResponse<Object>> handleMalformedJwtException(final MalformedJwtException ex) {
+        var errorResponse = new FormattedResponse<>(
+                false,
+                HttpStatus.BAD_REQUEST.value(),
+                ErrorCode.BAD_CREDENTIALS.getCode(),
+                !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.BAD_CREDENTIALS.getMessage(),
                 null
         );
 

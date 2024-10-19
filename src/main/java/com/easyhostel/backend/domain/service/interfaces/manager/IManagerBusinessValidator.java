@@ -1,6 +1,7 @@
 package com.easyhostel.backend.domain.service.interfaces.manager;
 
 import com.easyhostel.backend.domain.exception.DuplicatedDistinctRequiredValueException;
+import com.easyhostel.backend.domain.exception.EntityNotFoundException;
 
 /**
  * Interface for defining Manager's business validator
@@ -13,10 +14,19 @@ public interface IManagerBusinessValidator {
      * Check is Manager existed by ID
      *
      * @param managerId Manager's ID
-     * @exception com.easyhostel.backend.domain.exception.EntityNotFoundException If Role or Interior not found
+     * @exception EntityNotFoundException If Manager not found
      * @author Nyx
      */
     void checkIfManagerExistedById(String managerId);
+
+    /**
+     * Check is Manager existed by username
+     *
+     * @param username Manager's username
+     * @exception EntityNotFoundException If Manager not found
+     * @author Nyx
+     */
+    void checkIfManagerUsernameExisted(String username);
 
     /**
      * Check is Manager's username existed

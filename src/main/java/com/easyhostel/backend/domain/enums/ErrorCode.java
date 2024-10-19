@@ -21,7 +21,15 @@ public enum ErrorCode {
 
     BUSINESS_LOGIC_ERROR("BUSINESS_LOGIC_ERROR", "Business logic failure: {0}"),
 
-    DUPLICATED_VALUE("DUPLICATED_VALUE", "Value need to be distinct but duplicated");
+    DUPLICATED_VALUE("DUPLICATED_VALUE", "Value need to be distinct but duplicated"),
+
+    BAD_CREDENTIALS("BAD_CREDENTIALS", "Bad credentials provided"),
+
+    ACCOUNT_LOCKED("ACCOUNT_LOCKED", "Your account has been locked"),
+
+    SIGNATURE_INVALID("SIGNATURE_INVALID", "Invalid signature provided"),
+
+    EXPIRED_JWT("EXPIRED_JWT", "JWT has been expired");
 
     private final String code;
 

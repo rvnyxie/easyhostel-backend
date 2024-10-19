@@ -27,6 +27,8 @@ public interface IManagerMapper {
 
     ManagerDto mapManagerToManagerDto(Manager manager);
 
+    Manager mapManagerDtoToManager(ManagerDto managerDto);
+
     //endregion
 
     //region Map creation

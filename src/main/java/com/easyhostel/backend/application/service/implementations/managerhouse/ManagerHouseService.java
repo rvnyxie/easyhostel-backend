@@ -12,6 +12,7 @@ import com.easyhostel.backend.domain.repository.interfaces.house.IHouseReadonlyR
 import com.easyhostel.backend.domain.repository.interfaces.manager.IManagerReadonlyRepository;
 import com.easyhostel.backend.domain.repository.interfaces.managerhouse.IManagerHouseRepository;
 import com.easyhostel.backend.domain.service.interfaces.managerhouse.IManagerHouseBusinessValidator;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -31,18 +32,23 @@ public class ManagerHouseService extends BaseService<ManagerHouse, ManagerHouseD
     private final IManagerReadonlyRepository _managerReadonlyRepository;
     private final IHouseReadonlyRepository _houseReadonlyRepository;
 
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
+
     public ManagerHouseService(IManagerHouseRepository managerHouseRepository,
                                IManagerHouseBusinessValidator managerHouseBusinessValidator,
                                IManagerHouseMapper managerHouseMapper,
                                IManagerReadonlyRepository managerReadonlyRepository,
-                               IHouseReadonlyRepository houseReadonlyRepository) {
-        super(managerHouseRepository);
+                               IHouseReadonlyRepository houseReadonlyRepository,
+                               DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(managerHouseRepository, taskExecutor);
         _managerHouseRepository = managerHouseRepository;
         _managerHouseBusinessValidator = managerHouseBusinessValidator;
         _managerHouseMapper = managerHouseMapper;
 
         _managerReadonlyRepository = managerReadonlyRepository;
         _houseReadonlyRepository = houseReadonlyRepository;
+
+        _taskExecutor = taskExecutor;
     }
 
     @Override

@@ -13,7 +13,7 @@ public enum ErrorCode {
 
     VALIDATION_ERROR("VALIDATION_ERROR", "Validation failed for {0}"),
 
-    FORBIDDEN_ACCESS("FORBIDDEN_ACCESS", "You are not forbidden to access this resource"),
+    FORBIDDEN_ACCESS("FORBIDDEN_ACCESS", "You are forbidden to access this resource"),
 
     UNAUTHORIZED_ACCESS("UNAUTHORIZED_ACCESS", "Unauthorized access"),
 

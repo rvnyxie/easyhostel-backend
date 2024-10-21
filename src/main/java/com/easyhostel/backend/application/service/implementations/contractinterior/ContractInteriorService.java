@@ -13,6 +13,7 @@ import com.easyhostel.backend.domain.repository.interfaces.contractinterior.ICon
 import com.easyhostel.backend.domain.repository.interfaces.interior.IInteriorRepository;
 import com.easyhostel.backend.domain.service.interfaces.contractinterior.IContractInteriorBusinessValidator;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -32,17 +33,21 @@ public class ContractInteriorService extends BaseService<ContractInterior, Contr
     private final IContractRepository _contractRepository;
     private final IInteriorRepository _interiorRepository;
 
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
+
     public ContractInteriorService(IContractInteriorRepository contractInteriorRepository,
                                    IContractInteriorBusinessValidator contractInteriorBusinessValidator,
                                    IContractInteriorMapper contractInteriorMapper,
                                    IContractRepository contractRepository,
-                                   IInteriorRepository interiorRepository) {
-        super(contractInteriorRepository);
+                                   IInteriorRepository interiorRepository,
+                                   DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(contractInteriorRepository, taskExecutor);
         _contractInteriorRepository = contractInteriorRepository;
         _contractInteriorBusinessValidator = contractInteriorBusinessValidator;
         _contractInteriorMapper = contractInteriorMapper;
         _contractRepository = contractRepository;
         _interiorRepository = interiorRepository;
+        _taskExecutor = taskExecutor;
     }
 
     @Override

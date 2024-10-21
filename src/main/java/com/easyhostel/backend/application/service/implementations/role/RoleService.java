@@ -9,6 +9,7 @@ import com.easyhostel.backend.application.service.interfaces.role.IRoleService;
 import com.easyhostel.backend.domain.entity.Role;
 import com.easyhostel.backend.domain.repository.interfaces.role.IRoleRepository;
 import com.easyhostel.backend.domain.service.interfaces.role.IRoleBusinessValidator;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -24,10 +25,16 @@ public class RoleService extends BaseService<Role, RoleDto, RoleCreationDto, Rol
     private final IRoleBusinessValidator _roleBusinessValidator;
     private final IRoleMapper _roleMapper;
 
-    public RoleService(IRoleRepository roleRepository, IRoleBusinessValidator roleBusinessValidator, IRoleMapper roleMapper) {
-        super(roleRepository);
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
+
+    public RoleService(IRoleRepository roleRepository,
+                       IRoleBusinessValidator roleBusinessValidator,
+                       IRoleMapper roleMapper,
+                       DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(roleRepository, taskExecutor);
         _roleBusinessValidator = roleBusinessValidator;
         _roleMapper = roleMapper;
+        _taskExecutor = taskExecutor;
     }
 
     @Override

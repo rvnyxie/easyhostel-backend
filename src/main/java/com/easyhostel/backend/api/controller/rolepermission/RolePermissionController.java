@@ -7,14 +7,12 @@ import com.easyhostel.backend.application.dto.rolepermission.RolePermissionUpdat
 import com.easyhostel.backend.application.service.interfaces.rolepermission.IRolePermissionService;
 import com.easyhostel.backend.domain.entity.embedded.RolePermissionId;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
-import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
+import com.easyhostel.backend.infrastructure.util.custom.response.FormattedResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 /**
  * Controller for RolePermission

@@ -3,10 +3,7 @@ package com.easyhostel.backend.domain.entity;
 import com.easyhostel.backend.domain.entity.base.BaseEntity;
 import com.easyhostel.backend.domain.entity.embedded.RolePermissionId;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -35,6 +32,7 @@ public class RolePermission extends BaseEntity {
     @MapsId("roleId")
     // This one annotation to avoid circular dependency with toString() and hashcode()
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Role role;
 
     @ManyToOne
@@ -42,6 +40,7 @@ public class RolePermission extends BaseEntity {
     @MapsId("permissionId")
     // This one annotation to avoid circular dependency with toString() and hashcode()
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Permission permission;
 
 }

@@ -6,6 +6,7 @@ import com.easyhostel.backend.application.service.implementations.base.BaseReado
 import com.easyhostel.backend.application.service.interfaces.rentpayment.IRentPaymentReadonlyService;
 import com.easyhostel.backend.domain.entity.RentPayment;
 import com.easyhostel.backend.domain.repository.interfaces.rentpayment.IRentPaymentReadonlyRepository;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,8 +19,10 @@ public class RentPaymentReadonlyService extends BaseReadonlyService<RentPayment,
 
     private final IRentPaymentMapper _rentPaymentMapper;
 
-    public RentPaymentReadonlyService(IRentPaymentReadonlyRepository rentPaymentReadonlyRepository, IRentPaymentMapper rentPaymentMapper) {
-        super(rentPaymentReadonlyRepository);
+    public RentPaymentReadonlyService(IRentPaymentReadonlyRepository rentPaymentReadonlyRepository,
+                                      IRentPaymentMapper rentPaymentMapper,
+                                      DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(rentPaymentReadonlyRepository, taskExecutor);
         _rentPaymentMapper = rentPaymentMapper;
     }
 

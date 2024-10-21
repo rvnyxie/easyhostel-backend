@@ -8,16 +8,13 @@ import com.easyhostel.backend.application.service.implementations.base.BaseServi
 import com.easyhostel.backend.application.service.interfaces.manager.IManagerService;
 import com.easyhostel.backend.domain.entity.Manager;
 import com.easyhostel.backend.domain.enums.RoleType;
-import com.easyhostel.backend.domain.exception.EntityNotFoundException;
 import com.easyhostel.backend.domain.repository.interfaces.manager.IManagerRepository;
 import com.easyhostel.backend.domain.repository.interfaces.role.IRoleReadonlyRepository;
 import com.easyhostel.backend.domain.service.interfaces.manager.IManagerBusinessValidator;
 import com.easyhostel.backend.infrastructure.service.implementation.PasswordService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -39,17 +36,21 @@ public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCrea
 
     private final PasswordService _passwordService;
 
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
+
     public ManagerService(IManagerRepository managerRepository,
                           IManagerBusinessValidator managerBusinessValidator,
                           IManagerMapper managerMapper,
                           IRoleReadonlyRepository roleReadonlyRepository,
-                          @Lazy PasswordService passwordService) {
-        super(managerRepository);
+                          @Lazy PasswordService passwordService,
+                          DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(managerRepository, taskExecutor);
         _managerRepository = managerRepository;
         _managerBusinessValidator = managerBusinessValidator;
         _managerMapper = managerMapper;
         _roleReadonlyRepository = roleReadonlyRepository;
         _passwordService = passwordService;
+        _taskExecutor = taskExecutor;
     }
 
     @Override
@@ -59,9 +60,9 @@ public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCrea
                     var manager = mapCreationDtoToEntity(managerCreationDto);
 
                     // Need to check the Role when creating new Manager, because we can't update Role after creating
-                    var roleId = manager.getRole().getRoleId();
-                    var role = _roleReadonlyRepository.findById(
-                            Objects.requireNonNullElse(roleId, RoleType.USER.getRoleId())).orElseThrow();
+                    var roleName = manager.getRole().getRoleName();
+                    var role = _roleReadonlyRepository.findRoleByRoleName(
+                            Objects.requireNonNullElse(roleName, RoleType.USER.name())).orElseThrow();
 
                     // Set reference to Role
                     manager.setRole(role);

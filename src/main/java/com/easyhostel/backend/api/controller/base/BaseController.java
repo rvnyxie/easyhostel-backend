@@ -2,10 +2,11 @@ package com.easyhostel.backend.api.controller.base;
 
 import com.easyhostel.backend.application.service.interfaces.base.IBaseService;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
-import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
+import com.easyhostel.backend.infrastructure.util.custom.response.FormattedResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ import java.util.List;
  */
 @RestController
 @Validated
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("${api.base-path}/modification")
 public class BaseController<TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TId> extends BaseReadOnlyController<TDtoEntity, TId>{
 

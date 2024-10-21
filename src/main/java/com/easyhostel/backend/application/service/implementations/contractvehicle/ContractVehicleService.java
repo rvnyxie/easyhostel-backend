@@ -13,6 +13,7 @@ import com.easyhostel.backend.domain.repository.interfaces.contractvehicle.ICont
 import com.easyhostel.backend.domain.repository.interfaces.vehicle.IVehicleRepository;
 import com.easyhostel.backend.domain.service.interfaces.contractvehicle.IContractVehicleBusinessValidator;
 import jakarta.transaction.Transactional;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -32,17 +33,21 @@ public class ContractVehicleService extends BaseService<ContractVehicle, Contrac
     private final IContractRepository _contractRepository;
     private final IVehicleRepository _vehicleRepository;
 
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
+
     public ContractVehicleService(IContractVehicleRepository contractVehicleRepository,
                                   IContractVehicleBusinessValidator contractVehicleBusinessValidator,
                                   IContractVehicleMapper contractVehicleMapper,
                                   IContractRepository contractRepository,
-                                  IVehicleRepository vehicleRepository) {
-        super(contractVehicleRepository);
+                                  IVehicleRepository vehicleRepository,
+                                  DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(contractVehicleRepository, taskExecutor);
         _contractVehicleRepository = contractVehicleRepository;
         _contractVehicleBusinessValidator = contractVehicleBusinessValidator;
         _contractVehicleMapper = contractVehicleMapper;
         _contractRepository = contractRepository;
         _vehicleRepository = vehicleRepository;
+        _taskExecutor = taskExecutor;
     }
 
     @Override

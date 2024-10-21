@@ -15,6 +15,7 @@ import com.easyhostel.backend.domain.repository.interfaces.room.IRoomRepository;
 import com.easyhostel.backend.domain.service.interfaces.room.IRoomBusinessValidator;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,12 +34,19 @@ public class RoomService extends BaseService<Room, RoomDto, RoomCreationDto, Roo
     private final IRoomMapper _roomMapper;
     private final IContractRepository _contractRepository;
 
-    public RoomService(IRoomRepository roomRepository, IRoomBusinessValidator roomBusinessValidator, IRoomMapper roomMapper, IContractRepository contractRepository) {
-        super(roomRepository);
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
+
+    public RoomService(IRoomRepository roomRepository,
+                       IRoomBusinessValidator roomBusinessValidator,
+                       IRoomMapper roomMapper,
+                       IContractRepository contractRepository,
+                       DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(roomRepository, taskExecutor);
         _roomRepository = roomRepository;
         _roomBusinessValidator = roomBusinessValidator;
         _roomMapper = roomMapper;
         _contractRepository = contractRepository;
+        _taskExecutor = taskExecutor;
     }
 
     @Override

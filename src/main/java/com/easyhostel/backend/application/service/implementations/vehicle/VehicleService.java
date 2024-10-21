@@ -9,6 +9,7 @@ import com.easyhostel.backend.application.service.interfaces.vehicle.IVehicleSer
 import com.easyhostel.backend.domain.entity.Vehicle;
 import com.easyhostel.backend.domain.repository.interfaces.vehicle.IVehicleRepository;
 import com.easyhostel.backend.domain.service.interfaces.vehicle.IVehicleBusinessValidator;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,11 +26,17 @@ public class VehicleService extends BaseService<Vehicle, VehicleDto, VehicleCrea
     private final IVehicleBusinessValidator _vehicleBusinessValidator;
     private final IVehicleMapper _vehicleMapper;
 
-    public VehicleService(IVehicleRepository vehicleRepository, IVehicleBusinessValidator vehicleBusinessValidator, IVehicleMapper vehicleMapper) {
-        super(vehicleRepository);
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
+
+    public VehicleService(IVehicleRepository vehicleRepository,
+                          IVehicleBusinessValidator vehicleBusinessValidator,
+                          IVehicleMapper vehicleMapper,
+                          DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(vehicleRepository, taskExecutor);
         _vehicleRepository = vehicleRepository;
         _vehicleBusinessValidator = vehicleBusinessValidator;
         _vehicleMapper = vehicleMapper;
+        _taskExecutor = taskExecutor;
     }
 
     @Override

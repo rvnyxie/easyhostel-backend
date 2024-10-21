@@ -7,6 +7,7 @@ import com.easyhostel.backend.application.service.interfaces.contractvehicle.ICo
 import com.easyhostel.backend.domain.entity.ContractVehicle;
 import com.easyhostel.backend.domain.entity.embedded.ContractVehicleId;
 import com.easyhostel.backend.domain.repository.interfaces.contractvehicle.IContractVehicleReadonlyRepository;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,8 +21,9 @@ public class ContractVehicleReadonlyService extends BaseReadonlyService<Contract
     private final IContractVehicleMapper _contractVehicleMapper;
 
     public ContractVehicleReadonlyService(IContractVehicleReadonlyRepository contractVehicleReadonlyRepository,
-                                          IContractVehicleMapper contractVehicleMapper) {
-        super(contractVehicleReadonlyRepository);
+                                          IContractVehicleMapper contractVehicleMapper,
+                                          DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(contractVehicleReadonlyRepository, taskExecutor);
         _contractVehicleMapper = contractVehicleMapper;
     }
 

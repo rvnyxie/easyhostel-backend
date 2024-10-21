@@ -7,6 +7,7 @@ import com.easyhostel.backend.application.service.interfaces.contractinterior.IC
 import com.easyhostel.backend.domain.entity.ContractInterior;
 import com.easyhostel.backend.domain.entity.embedded.ContractInteriorId;
 import com.easyhostel.backend.domain.repository.interfaces.contractinterior.IContractInteriorReadonlyRepository;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,8 +21,9 @@ public class ContractInteriorReadonlyService extends BaseReadonlyService<Contrac
     private final IContractInteriorMapper _contractInteriorMapper;
 
     public ContractInteriorReadonlyService(IContractInteriorReadonlyRepository contractInteriorReadonlyRepository,
-                                           IContractInteriorMapper contractInteriorMapper) {
-        super(contractInteriorReadonlyRepository);
+                                           IContractInteriorMapper contractInteriorMapper,
+                                           DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(contractInteriorReadonlyRepository, taskExecutor);
         _contractInteriorMapper = contractInteriorMapper;
     }
 

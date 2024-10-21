@@ -7,6 +7,7 @@ import com.easyhostel.backend.application.service.interfaces.room.IRoomReadonlyS
 import com.easyhostel.backend.domain.entity.Room;
 import com.easyhostel.backend.domain.repository.interfaces.room.IRoomReadonlyRepository;
 import com.easyhostel.backend.domain.service.interfaces.room.IRoomBusinessValidator;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,8 +20,11 @@ public class RoomReadonlyService extends BaseReadonlyService<Room, RoomDto, Stri
 
     private final IRoomMapper _roomMapper;
 
-    public RoomReadonlyService(IRoomReadonlyRepository roomReadonlyRepository, IRoomBusinessValidator roomBusinessValidator, IRoomMapper roomMapper) {
-        super(roomReadonlyRepository);
+    public RoomReadonlyService(IRoomReadonlyRepository roomReadonlyRepository,
+                               IRoomBusinessValidator roomBusinessValidator,
+                               IRoomMapper roomMapper,
+                               DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(roomReadonlyRepository, taskExecutor);
         _roomMapper = roomMapper;
     }
 

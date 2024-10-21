@@ -9,6 +9,7 @@ import com.easyhostel.backend.application.service.interfaces.roomamenity.IRoomAm
 import com.easyhostel.backend.domain.entity.RoomAmenity;
 import com.easyhostel.backend.domain.repository.interfaces.roomamenity.IRoomAmenityRepository;
 import com.easyhostel.backend.domain.service.interfaces.roomamenity.IRoomAmenityBusinessValidator;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,11 +26,17 @@ public class RoomAmenityService extends BaseService<RoomAmenity, RoomAmenityDto,
     private final IRoomAmenityBusinessValidator _roomAmenityBusinessValidator;
     private final IRoomAmenityMapper _roomAmenityMapper;
 
-    public RoomAmenityService(IRoomAmenityRepository roomAmenityRepository, IRoomAmenityBusinessValidator roomAmenityBusinessValidator, IRoomAmenityMapper roomAmenityMapper) {
-        super(roomAmenityRepository);
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
+
+    public RoomAmenityService(IRoomAmenityRepository roomAmenityRepository,
+                              IRoomAmenityBusinessValidator roomAmenityBusinessValidator,
+                              IRoomAmenityMapper roomAmenityMapper,
+                              DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(roomAmenityRepository, taskExecutor);
         _roomAmenityRepository = roomAmenityRepository;
         _roomAmenityBusinessValidator = roomAmenityBusinessValidator;
         _roomAmenityMapper = roomAmenityMapper;
+        _taskExecutor = taskExecutor;
     }
 
     @Override

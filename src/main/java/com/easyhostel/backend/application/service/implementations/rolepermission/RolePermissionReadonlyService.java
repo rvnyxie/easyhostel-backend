@@ -7,6 +7,7 @@ import com.easyhostel.backend.application.service.interfaces.rolepermission.IRol
 import com.easyhostel.backend.domain.entity.RolePermission;
 import com.easyhostel.backend.domain.entity.embedded.RolePermissionId;
 import com.easyhostel.backend.domain.repository.interfaces.rolepermission.IRolePermissionReadonlyRepository;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,8 +21,9 @@ public class RolePermissionReadonlyService extends BaseReadonlyService<RolePermi
     private final IRolePermissionMapper _rolePermissionMapper;
 
     public RolePermissionReadonlyService(IRolePermissionReadonlyRepository rolePermissionReadonlyRepository,
-                                         IRolePermissionMapper rolePermissionMapper) {
-        super(rolePermissionReadonlyRepository);
+                                         IRolePermissionMapper rolePermissionMapper,
+                                         DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(rolePermissionReadonlyRepository, taskExecutor);
         _rolePermissionMapper = rolePermissionMapper;
     }
 

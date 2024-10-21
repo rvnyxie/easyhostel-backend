@@ -2,15 +2,16 @@ package com.easyhostel.backend.api.controller.base;
 
 import com.easyhostel.backend.application.service.interfaces.base.IBaseReadonlyService;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
-import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
+import com.easyhostel.backend.infrastructure.util.custom.response.FormattedResponse;
 import jakarta.validation.constraints.Min;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Base controller for readonly operations
@@ -21,6 +22,7 @@ import java.util.Optional;
  */
 @RestController
 @Validated
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("${api.base-path}/readonly")
 public class BaseReadOnlyController<TDtoEntity, TId> {
 
@@ -36,6 +38,7 @@ public class BaseReadOnlyController<TDtoEntity, TId> {
      * @return Full formatted response
      * @author Nyx
      */
+    @PostAuthorize("hasRole('SYSADMIN')")
     @GetMapping
     public ResponseEntity<FormattedResponse<List<TDtoEntity>>> getAllAsync() {
         var futureDtoEntity = baseReadOnlyService.getAllAsync();

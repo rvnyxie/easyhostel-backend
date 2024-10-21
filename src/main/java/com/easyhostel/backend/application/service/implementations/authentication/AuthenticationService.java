@@ -8,6 +8,8 @@ import com.easyhostel.backend.domain.repository.interfaces.manager.IManagerRepos
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -24,6 +26,11 @@ public class AuthenticationService implements IAuthenticationService {
     private final AuthenticationManager _authenticationManager;
     private final IManagerRepository _managerRepository;
     private final IManagerMapper _managerMapper;
+
+    @Override
+    public Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
 
     @Override
     public CompletableFuture<ManagerDto> authenticate(ManagerLogInDto managerLogInDto) {

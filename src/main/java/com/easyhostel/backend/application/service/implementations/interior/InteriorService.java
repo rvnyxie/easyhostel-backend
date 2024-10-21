@@ -9,6 +9,7 @@ import com.easyhostel.backend.application.service.interfaces.interior.IInteriorS
 import com.easyhostel.backend.domain.entity.Interior;
 import com.easyhostel.backend.domain.repository.interfaces.interior.IInteriorRepository;
 import com.easyhostel.backend.domain.service.interfaces.interior.IInteriorBusinessValidator;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,11 +26,17 @@ public class InteriorService extends BaseService<Interior, InteriorDto, Interior
     private final IInteriorBusinessValidator _interiorBusinessValidator;
     private final IInteriorMapper _interiorMapper;
 
-    public InteriorService(IInteriorRepository interiorRepository, IInteriorBusinessValidator interiorBusinessValidator, IInteriorMapper interiorMapper) {
-        super(interiorRepository);
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
+
+    public InteriorService(IInteriorRepository interiorRepository,
+                           IInteriorBusinessValidator interiorBusinessValidator,
+                           IInteriorMapper interiorMapper,
+                           DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(interiorRepository, taskExecutor);
         _interiorRepository = interiorRepository;
         _interiorBusinessValidator = interiorBusinessValidator;
         _interiorMapper = interiorMapper;
+        _taskExecutor = taskExecutor;
     }
 
     @Override

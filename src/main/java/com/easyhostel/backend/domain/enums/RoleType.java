@@ -12,9 +12,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum RoleType {
 
-    USER(1),
+    USER(3),
     ADMIN(2),
-    SYSADMIN(3);
+    SYSADMIN(1);
 
     private final int roleId;
 

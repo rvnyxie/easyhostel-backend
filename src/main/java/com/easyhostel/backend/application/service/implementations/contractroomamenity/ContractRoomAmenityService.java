@@ -14,6 +14,7 @@ import com.easyhostel.backend.domain.repository.interfaces.roomamenity.IRoomAmen
 import com.easyhostel.backend.domain.service.interfaces.contractroomamenity.IContractRoomAmenityBusinessValidator;
 import jakarta.transaction.Transactional;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -35,17 +36,21 @@ public class ContractRoomAmenityService
     private final IContractRepository _contractRepository;
     private final IRoomAmenityRepository _roomAmenityRepository;
 
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
+
     public ContractRoomAmenityService(IContractRoomAmenityRepository contractRoomAmenityRepository,
                                       IContractRoomAmenityBusinessValidator contractRoomAmenityBusinessValidator,
                                       IContractRoomAmenityMapper contractRoomAmenityMapper,
                                       IContractRepository contractRepository,
-                                      IRoomAmenityRepository roomAmenityRepository) {
-        super(contractRoomAmenityRepository);
+                                      IRoomAmenityRepository roomAmenityRepository,
+                                      DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(contractRoomAmenityRepository, taskExecutor);
         _contractRoomAmenityRepository = contractRoomAmenityRepository;
         _contractRoomAmenityBusinessValidator = contractRoomAmenityBusinessValidator;
         _contractRoomAmenityMapper = contractRoomAmenityMapper;
         _contractRepository = contractRepository;
         _roomAmenityRepository = roomAmenityRepository;
+        _taskExecutor = taskExecutor;
     }
 
     @Override

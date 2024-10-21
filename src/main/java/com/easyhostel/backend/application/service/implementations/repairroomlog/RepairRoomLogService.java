@@ -9,6 +9,7 @@ import com.easyhostel.backend.application.service.interfaces.repairroomlog.IRepa
 import com.easyhostel.backend.domain.entity.RepairRoomLog;
 import com.easyhostel.backend.domain.repository.interfaces.repairroomlog.IRepairRoomLogRepository;
 import com.easyhostel.backend.domain.service.interfaces.repairroomlog.IRepairRoomLogBusinessValidator;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,12 +26,17 @@ public class RepairRoomLogService extends BaseService<RepairRoomLog, RepairRoomL
     private final IRepairRoomLogBusinessValidator _repairRoomLogBusinessValidator;
     private final IRepairRoomLogMapper _repairRoomLogMapper;
 
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
 
-    public RepairRoomLogService(IRepairRoomLogRepository repairRoomLogRepository, IRepairRoomLogBusinessValidator repairRoomLogBusinessValidator, IRepairRoomLogMapper repairRoomLogMapper) {
-        super(repairRoomLogRepository);
+    public RepairRoomLogService(IRepairRoomLogRepository repairRoomLogRepository,
+                                IRepairRoomLogBusinessValidator repairRoomLogBusinessValidator,
+                                IRepairRoomLogMapper repairRoomLogMapper,
+                                DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(repairRoomLogRepository, taskExecutor);
         _repairRoomLogRepository = repairRoomLogRepository;
         _repairRoomLogBusinessValidator = repairRoomLogBusinessValidator;
         _repairRoomLogMapper = repairRoomLogMapper;
+        _taskExecutor = taskExecutor;
     }
 
     @Override

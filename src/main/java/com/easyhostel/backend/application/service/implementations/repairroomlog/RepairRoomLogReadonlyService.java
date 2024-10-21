@@ -6,6 +6,7 @@ import com.easyhostel.backend.application.service.implementations.base.BaseReado
 import com.easyhostel.backend.application.service.interfaces.repairroomlog.IRepairRoomLogReadonlyService;
 import com.easyhostel.backend.domain.entity.RepairRoomLog;
 import com.easyhostel.backend.domain.repository.interfaces.repairroomlog.IRepairRoomLogReadonlyRepository;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,8 +19,10 @@ public class RepairRoomLogReadonlyService extends BaseReadonlyService<RepairRoom
 
     private final IRepairRoomLogMapper _repairRoomLogMapper;
 
-    public RepairRoomLogReadonlyService(IRepairRoomLogReadonlyRepository repairRoomLogReadonlyRepository, IRepairRoomLogMapper repairRoomLogMapper) {
-        super(repairRoomLogReadonlyRepository);
+    public RepairRoomLogReadonlyService(IRepairRoomLogReadonlyRepository repairRoomLogReadonlyRepository,
+                                        IRepairRoomLogMapper repairRoomLogMapper,
+                                        DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(repairRoomLogReadonlyRepository, taskExecutor);
         _repairRoomLogMapper = repairRoomLogMapper;
     }
 

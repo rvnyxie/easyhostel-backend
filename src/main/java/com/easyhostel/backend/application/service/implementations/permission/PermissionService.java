@@ -9,6 +9,7 @@ import com.easyhostel.backend.application.service.interfaces.permission.IPermiss
 import com.easyhostel.backend.domain.entity.Permission;
 import com.easyhostel.backend.domain.repository.interfaces.permission.IPermissionRepository;
 import com.easyhostel.backend.domain.service.interfaces.permission.IPermissionBusinessValidator;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,14 +26,17 @@ public class PermissionService extends BaseService<Permission, PermissionDto, Pe
     private final IPermissionBusinessValidator _permissionBusinessValidator;
     private final IPermissionMapper _permissionMapper;
 
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
 
     public PermissionService(IPermissionRepository permissionRepository,
                              IPermissionBusinessValidator permissionBusinessValidator,
-                             IPermissionMapper permissionMapper) {
-        super(permissionRepository);
+                             IPermissionMapper permissionMapper,
+                             DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(permissionRepository, taskExecutor);
         _permissionRepository = permissionRepository;
         _permissionBusinessValidator = permissionBusinessValidator;
         _permissionMapper = permissionMapper;
+        _taskExecutor = taskExecutor;
     }
 
     @Override
@@ -50,6 +54,7 @@ public class PermissionService extends BaseService<Permission, PermissionDto, Pe
         return _permissionMapper.MAPPER.mapPermissionToPermissionDto(permission);
     }
 
+    // TODO: check duplicated permission name
     @Override
     public CompletableFuture<Void> validateCreationBusiness(PermissionCreationDto permissionCreationDto) {
         return super.validateCreationBusiness(permissionCreationDto);

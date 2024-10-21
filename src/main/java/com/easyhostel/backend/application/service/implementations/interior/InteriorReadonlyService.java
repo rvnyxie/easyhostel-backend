@@ -6,6 +6,7 @@ import com.easyhostel.backend.application.service.implementations.base.BaseReado
 import com.easyhostel.backend.application.service.interfaces.interior.IInteriorReadonlyService;
 import com.easyhostel.backend.domain.entity.Interior;
 import com.easyhostel.backend.domain.repository.interfaces.interior.IInteriorRepository;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,8 +19,10 @@ public class InteriorReadonlyService extends BaseReadonlyService<Interior, Inter
 
     private final IInteriorMapper _interiorMapper;
 
-    public InteriorReadonlyService(IInteriorRepository interiorRepository, IInteriorMapper interiorMapper) {
-        super(interiorRepository);
+    public InteriorReadonlyService(IInteriorRepository interiorRepository,
+                                   IInteriorMapper interiorMapper,
+                                   DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(interiorRepository, taskExecutor);
         _interiorMapper = interiorMapper;
     }
 

@@ -7,6 +7,7 @@ import com.easyhostel.backend.application.service.interfaces.contractroomamenity
 import com.easyhostel.backend.domain.entity.ContractRoomAmenity;
 import com.easyhostel.backend.domain.entity.embedded.ContractRoomAmenityId;
 import com.easyhostel.backend.domain.repository.interfaces.contractroomamenity.IContractRoomAmenityRepository;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,8 +20,10 @@ public class ContractRoomAmenityReadonlyService extends BaseReadonlyService<Cont
 
     private final IContractRoomAmenityMapper _contractRoomAmenityMapper;
 
-    public ContractRoomAmenityReadonlyService(IContractRoomAmenityRepository contractRoomAmenityRepository, IContractRoomAmenityMapper contractRoomAmenityMapper) {
-        super(contractRoomAmenityRepository);
+    public ContractRoomAmenityReadonlyService(IContractRoomAmenityRepository contractRoomAmenityRepository,
+                                              IContractRoomAmenityMapper contractRoomAmenityMapper,
+                                              DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(contractRoomAmenityRepository, taskExecutor);
         _contractRoomAmenityMapper = contractRoomAmenityMapper;
     }
 

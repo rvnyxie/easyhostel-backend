@@ -6,6 +6,7 @@ import com.easyhostel.backend.application.service.implementations.base.BaseReado
 import com.easyhostel.backend.application.service.interfaces.roomamenity.IRoomAmenityReadonlyService;
 import com.easyhostel.backend.domain.entity.RoomAmenity;
 import com.easyhostel.backend.domain.repository.interfaces.roomamenity.IRoomAmenityReadonlyRepository;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,8 +19,10 @@ public class RoomAmenityReadonlyService extends BaseReadonlyService<RoomAmenity,
 
     private final IRoomAmenityMapper _roomAmenityMapper;
 
-    public RoomAmenityReadonlyService(IRoomAmenityReadonlyRepository roomAmenityReadonlyRepository, IRoomAmenityMapper roomAmenityMapper) {
-        super(roomAmenityReadonlyRepository);
+    public RoomAmenityReadonlyService(IRoomAmenityReadonlyRepository roomAmenityReadonlyRepository,
+                                      IRoomAmenityMapper roomAmenityMapper,
+                                      DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(roomAmenityReadonlyRepository, taskExecutor);
         _roomAmenityMapper = roomAmenityMapper;
     }
 

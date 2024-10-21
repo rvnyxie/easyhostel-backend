@@ -6,7 +6,7 @@ import com.easyhostel.backend.application.dto.room.RoomDto;
 import com.easyhostel.backend.application.dto.room.RoomUpdateDto;
 import com.easyhostel.backend.application.service.interfaces.room.IRoomService;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
-import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
+import com.easyhostel.backend.infrastructure.util.custom.response.FormattedResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;

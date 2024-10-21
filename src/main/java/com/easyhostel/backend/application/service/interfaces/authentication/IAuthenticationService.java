@@ -2,6 +2,7 @@ package com.easyhostel.backend.application.service.interfaces.authentication;
 
 import com.easyhostel.backend.application.dto.manager.ManagerDto;
 import com.easyhostel.backend.application.dto.manager.ManagerLogInDto;
+import org.springframework.security.core.Authentication;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -11,6 +12,14 @@ import java.util.concurrent.CompletableFuture;
  * @author Nyx
  */
 public interface IAuthenticationService {
+
+    /**
+     * Get Authentication object
+     *
+     * @return Authentication object
+     * @author Nyx
+     */
+    Authentication getAuthentication();
 
     /**
      * Authenticate user with credentials provided

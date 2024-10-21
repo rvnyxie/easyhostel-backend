@@ -6,6 +6,7 @@ import com.easyhostel.backend.application.service.implementations.base.BaseReado
 import com.easyhostel.backend.application.service.interfaces.vehicle.IVehicleReadonlyService;
 import com.easyhostel.backend.domain.entity.Vehicle;
 import com.easyhostel.backend.domain.repository.interfaces.vehicle.IVehicleReadonlyRepository;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,8 +19,10 @@ public class VehicleReadonlyService extends BaseReadonlyService<Vehicle, Vehicle
 
     private final IVehicleMapper _vehicleMapper;
 
-    public VehicleReadonlyService(IVehicleReadonlyRepository vehicleReadonlyRepository, IVehicleMapper vehicleMapper) {
-        super(vehicleReadonlyRepository);
+    public VehicleReadonlyService(IVehicleReadonlyRepository vehicleReadonlyRepository,
+                                  IVehicleMapper vehicleMapper,
+                                  DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(vehicleReadonlyRepository, taskExecutor);
         _vehicleMapper = vehicleMapper;
     }
 

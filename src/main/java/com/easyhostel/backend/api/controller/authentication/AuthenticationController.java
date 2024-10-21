@@ -5,7 +5,7 @@ import com.easyhostel.backend.application.mapping.interfaces.IManagerMapper;
 import com.easyhostel.backend.application.service.interfaces.authentication.IAuthenticationService;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
 import com.easyhostel.backend.infrastructure.service.interfaces.IJwtService;
-import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
+import com.easyhostel.backend.infrastructure.util.custom.response.FormattedResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

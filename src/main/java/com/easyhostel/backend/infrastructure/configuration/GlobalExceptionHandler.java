@@ -4,7 +4,7 @@ import com.easyhostel.backend.domain.enums.ErrorCode;
 import com.easyhostel.backend.domain.exception.DuplicatedDistinctRequiredValueException;
 import com.easyhostel.backend.domain.exception.EntityNotFoundException;
 import com.easyhostel.backend.domain.exception.UnauthorizedAccessException;
-import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
+import com.easyhostel.backend.infrastructure.util.custom.response.FormattedResponse;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -15,9 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,7 +27,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import javax.naming.AuthenticationException;
-import java.nio.file.AccessDeniedException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletionException;
@@ -333,6 +334,16 @@ public class GlobalExceptionHandler {
 
             return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
 
+        } else if (ex.getCause() instanceof UnauthorizedAccessException) {
+            var errorResponse = new FormattedResponse<>(
+                    false,
+                    HttpStatus.FORBIDDEN.value(),
+                    ErrorCode.UNAUTHORIZED_ACCESS.getCode(),
+                    !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.UNAUTHORIZED_ACCESS.getMessage(),
+                    null
+            );
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
         }
 
         //endregion
@@ -420,6 +431,46 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle AuthorizationDeniedException (Unauthorized access to resource)
+     *
+     * @param ex AuthorizationDeniedException
+     * @return Formatted response entity
+     * @author Nyx
+     */
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<FormattedResponse<Object>> handleAuthorizationDeniedException(final AuthorizationDeniedException ex) {
+        var errorResponse = new FormattedResponse<>(
+                false,
+                HttpStatus.UNAUTHORIZED.value(),
+                ErrorCode.UNAUTHORIZED_ACCESS.getCode(),
+                !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.UNAUTHORIZED_ACCESS.getMessage(),
+                null
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    /**
+     * Handle ExpiredJwtException (JWT is expired)
+     *
+     * @param ex ExpiredJwtException
+     * @return Formatted response entity
+     * @author Nyx
+     */
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<FormattedResponse<Object>> handleExpiredJwtException(final ExpiredJwtException ex) {
+        var errorResponse = new FormattedResponse<>(
+                false,
+                HttpStatus.UNAUTHORIZED.value(),
+                ErrorCode.EXPIRED_JWT.getCode(),
+                !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.EXPIRED_JWT.getMessage(),
+                null
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
 }

@@ -9,6 +9,7 @@ import com.easyhostel.backend.application.service.interfaces.rentpayment.IRentPa
 import com.easyhostel.backend.domain.entity.RentPayment;
 import com.easyhostel.backend.domain.repository.interfaces.rentpayment.IRentPaymentRepository;
 import com.easyhostel.backend.domain.service.interfaces.rentpayment.IRentPaymentBusinessValidator;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,11 +26,17 @@ public class RentPaymentService extends BaseService<RentPayment, RentPaymentDto,
     private final IRentPaymentBusinessValidator _rentPaymentBusinessValidator;
     private final IRentPaymentMapper _rentPaymentMapper;
 
-    public RentPaymentService(IRentPaymentRepository rentPaymentRepository, IRentPaymentBusinessValidator rentPaymentBusinessValidator, IRentPaymentMapper rentPaymentMapper) {
-        super(rentPaymentRepository);
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
+
+    public RentPaymentService(IRentPaymentRepository rentPaymentRepository,
+                              IRentPaymentBusinessValidator rentPaymentBusinessValidator,
+                              IRentPaymentMapper rentPaymentMapper,
+                              DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(rentPaymentRepository, taskExecutor);
         _rentPaymentRepository = rentPaymentRepository;
         _rentPaymentBusinessValidator = rentPaymentBusinessValidator;
         _rentPaymentMapper = rentPaymentMapper;
+        _taskExecutor = taskExecutor;
     }
 
     @Override

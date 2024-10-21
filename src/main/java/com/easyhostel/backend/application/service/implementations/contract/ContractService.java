@@ -10,6 +10,7 @@ import com.easyhostel.backend.domain.entity.Contract;
 import com.easyhostel.backend.domain.repository.interfaces.base.IBaseRepository;
 import com.easyhostel.backend.domain.repository.interfaces.contract.IContractRepository;
 import com.easyhostel.backend.domain.service.interfaces.contract.IContractBusinessValidator;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,12 +26,18 @@ public class ContractService extends BaseService<Contract, ContractDto, Contract
     private final IContractRepository _contractRepository;
     private final IContractBusinessValidator _contractBusinessValidator;
     private final IContractMapper _contractMapper;
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
 
-    public ContractService(IBaseRepository<Contract, String> baseRepository, IContractRepository contractRepository, IContractBusinessValidator contractBusinessValidator, IContractMapper contractMapper) {
-        super(baseRepository);
+    public ContractService(IBaseRepository<Contract, String> baseRepository,
+                           IContractRepository contractRepository,
+                           IContractBusinessValidator contractBusinessValidator,
+                           IContractMapper contractMapper,
+                           DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(baseRepository, taskExecutor);
         _contractRepository = contractRepository;
         _contractBusinessValidator = contractBusinessValidator;
         _contractMapper = contractMapper;
+        _taskExecutor = taskExecutor;
     }
 
     @Override

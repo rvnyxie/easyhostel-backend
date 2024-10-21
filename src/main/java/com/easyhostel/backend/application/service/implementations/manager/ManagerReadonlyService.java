@@ -6,6 +6,7 @@ import com.easyhostel.backend.application.service.implementations.base.BaseReado
 import com.easyhostel.backend.application.service.interfaces.manager.IManagerReadonlyService;
 import com.easyhostel.backend.domain.entity.Manager;
 import com.easyhostel.backend.domain.repository.interfaces.manager.IManagerReadonlyRepository;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,8 +20,9 @@ public class ManagerReadonlyService extends BaseReadonlyService<Manager, Manager
     private final IManagerMapper _managerMapper;
 
     public ManagerReadonlyService(IManagerReadonlyRepository managerReadonlyRepository,
-                                  IManagerMapper managerMapper) {
-        super(managerReadonlyRepository);
+                                  IManagerMapper managerMapper,
+                                  DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(managerReadonlyRepository, taskExecutor);
         _managerMapper = managerMapper;
     }
 

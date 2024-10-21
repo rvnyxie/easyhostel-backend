@@ -7,7 +7,7 @@ import com.easyhostel.backend.application.dto.contractvehicle.ContractVehicleUpd
 import com.easyhostel.backend.application.service.interfaces.contractvehicle.IContractVehicleService;
 import com.easyhostel.backend.domain.entity.embedded.ContractVehicleId;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
-import com.easyhostel.backend.infrastructure.util.response.FormattedResponse;
+import com.easyhostel.backend.infrastructure.util.custom.response.FormattedResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;

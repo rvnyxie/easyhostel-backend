@@ -6,6 +6,7 @@ import com.easyhostel.backend.application.service.implementations.base.BaseReado
 import com.easyhostel.backend.application.service.interfaces.role.IRoleReadonlyService;
 import com.easyhostel.backend.domain.entity.Role;
 import com.easyhostel.backend.domain.repository.interfaces.role.IRoleReadonlyRepository;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,8 +19,10 @@ public class RoleReadonlyService extends BaseReadonlyService<Role, RoleDto, Inte
 
     private final IRoleMapper _roleMapper;
 
-    public RoleReadonlyService(IRoleReadonlyRepository roleReadonlyRepository, IRoleMapper roleMapper) {
-        super(roleReadonlyRepository);
+    public RoleReadonlyService(IRoleReadonlyRepository roleReadonlyRepository,
+                               IRoleMapper roleMapper,
+                               DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(roleReadonlyRepository, taskExecutor);
         _roleMapper = roleMapper;
     }
 

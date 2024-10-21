@@ -1,4 +1,4 @@
-package com.easyhostel.backend.infrastructure.util.response;
+package com.easyhostel.backend.infrastructure.util.custom.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

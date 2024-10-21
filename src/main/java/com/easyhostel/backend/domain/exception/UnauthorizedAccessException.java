@@ -5,10 +5,8 @@ import org.springframework.http.HttpStatus;
 
 public class UnauthorizedAccessException extends ApplicationException {
 
-    public UnauthorizedAccessException(String message) {
-        super(String.format(ErrorCode.FORBIDDEN_ACCESS.getMessage()),
-                ErrorCode.FORBIDDEN_ACCESS,
-                HttpStatus.FORBIDDEN);
+    public UnauthorizedAccessException(String message, ErrorCode errorCode, HttpStatus httpStatus) {
+        super(message, errorCode, httpStatus);
     }
 
 }

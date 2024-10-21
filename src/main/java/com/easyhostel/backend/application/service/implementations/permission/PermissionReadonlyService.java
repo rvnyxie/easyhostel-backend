@@ -6,6 +6,7 @@ import com.easyhostel.backend.application.service.implementations.base.BaseReado
 import com.easyhostel.backend.application.service.interfaces.permission.IPermissionReadonlyService;
 import com.easyhostel.backend.domain.entity.Permission;
 import com.easyhostel.backend.domain.repository.interfaces.permission.IPermissionReadonlyRepository;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,8 +19,10 @@ public class PermissionReadonlyService extends BaseReadonlyService<Permission, P
 
     private final IPermissionMapper _permissionMapper;
 
-    public PermissionReadonlyService(IPermissionReadonlyRepository permissionReadonlyRepository, IPermissionMapper permissionMapper) {
-        super(permissionReadonlyRepository);
+    public PermissionReadonlyService(IPermissionReadonlyRepository permissionReadonlyRepository,
+                                     IPermissionMapper permissionMapper,
+                                     DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(permissionReadonlyRepository, taskExecutor);
         _permissionMapper = permissionMapper;
     }
 

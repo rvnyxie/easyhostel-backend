@@ -2,6 +2,7 @@ package com.easyhostel.backend.application.service.implementations.base;
 
 import com.easyhostel.backend.application.service.interfaces.base.IBaseService;
 import com.easyhostel.backend.domain.repository.interfaces.base.IBaseRepository;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
@@ -20,10 +21,13 @@ import java.util.concurrent.CompletableFuture;
 public abstract class BaseService<TEntity, TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TId> extends BaseReadonlyService<TEntity, TDtoEntity, TId> implements IBaseService<TDtoEntity, TCreationDtoEntity, TUpdateDtoEntity, TId> {
 
     private final IBaseRepository<TEntity, TId> _baseRepository;
+    private final TaskExecutor _taskExecutor;
 
-    public BaseService(IBaseRepository<TEntity, TId> baseRepository) {
-        super(baseRepository);
+    public BaseService(IBaseRepository<TEntity, TId> baseRepository,
+                       TaskExecutor taskExecutor) {
+        super(baseRepository, taskExecutor);
         _baseRepository = baseRepository;
+        _taskExecutor = taskExecutor;
     }
 
     @Override
@@ -56,8 +60,10 @@ public abstract class BaseService<TEntity, TDtoEntity, TCreationDtoEntity, TUpda
     @Override
     @Async
     public CompletableFuture<Void> deleteManyByIdsAsync(List<TId> ids) {
-        return CompletableFuture.runAsync(() ->
-                _baseRepository.deleteAllById(ids));
+        return validateDeletionManyBusinessAsync(ids)
+                .thenCompose(v -> CompletableFuture.runAsync(() -> {
+                    _baseRepository.deleteAllById(ids);
+                }));
     }
 
     /**
@@ -79,17 +85,6 @@ public abstract class BaseService<TEntity, TDtoEntity, TCreationDtoEntity, TUpda
     public abstract TEntity mapUpdateDtoToEntity(TUpdateDtoEntity updateDtoEntity);
 
     /**
-     * Asynchronously validate deletion business on specified entity
-     *
-     * @param id Entity's ID
-     * @return A CompletableFuture with no data
-     * @author Nyx
-     */
-    public CompletableFuture<Void> validateGettingBusinessAsync(TId id) {
-        return CompletableFuture.runAsync(() -> { });
-    }
-
-    /**
      * Validate creation business on specified entity
      *
      * @param creationDtoEntity Creation DTO Entity
@@ -98,7 +93,7 @@ public abstract class BaseService<TEntity, TDtoEntity, TCreationDtoEntity, TUpda
      */
     @Async
     public CompletableFuture<Void> validateCreationBusiness(TCreationDtoEntity creationDtoEntity) {
-        return CompletableFuture.runAsync(() -> { });
+        return CompletableFuture.runAsync(() -> { }, _taskExecutor);
     }
 
     /**
@@ -110,7 +105,7 @@ public abstract class BaseService<TEntity, TDtoEntity, TCreationDtoEntity, TUpda
      */
     @Async
     public CompletableFuture<Void> validateUpdateBusiness(TUpdateDtoEntity updateDtoEntity) {
-        return CompletableFuture.runAsync(() -> { });
+        return CompletableFuture.runAsync(() -> { }, _taskExecutor);
     }
 
     /**
@@ -122,7 +117,19 @@ public abstract class BaseService<TEntity, TDtoEntity, TCreationDtoEntity, TUpda
      */
     @Async
     public CompletableFuture<Void> validateDeletionBusinessAsync(TId id) {
-        return CompletableFuture.runAsync(() -> { });
+        return CompletableFuture.runAsync(() -> { }, _taskExecutor);
+    }
+
+    /**
+     * Asynchronously validate deletion business on many entities
+     *
+     * @param ids Entity's IDs
+     * @return A CompletableFuture with no data
+     * @author Nyx
+     */
+    @Async
+    public CompletableFuture<Void> validateDeletionManyBusinessAsync(List<TId> ids) {
+        return CompletableFuture.runAsync(() -> { }, _taskExecutor);
     }
 
 }

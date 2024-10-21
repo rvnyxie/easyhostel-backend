@@ -2,8 +2,6 @@ package com.easyhostel.backend.domain.repository.interfaces.role;
 
 import com.easyhostel.backend.domain.entity.Role;
 import com.easyhostel.backend.domain.repository.interfaces.base.IBaseRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -15,6 +13,15 @@ import java.util.Optional;
  */
 @Repository
 public interface IRoleRepository extends IBaseRepository<Role, Integer> {
+
+    /**
+     * Find Role by Role's name
+     *
+     * @param roleName Role's name
+     * @return Optional Role object
+     * @author Nyx
+     */
+    Optional<Role> findRoleByRoleName(String roleName);
 
     /**
      * Check if Role's name already existed

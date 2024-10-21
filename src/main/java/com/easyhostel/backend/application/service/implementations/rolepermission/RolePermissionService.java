@@ -12,6 +12,7 @@ import com.easyhostel.backend.domain.repository.interfaces.permission.IPermissio
 import com.easyhostel.backend.domain.repository.interfaces.role.IRoleReadonlyRepository;
 import com.easyhostel.backend.domain.repository.interfaces.rolepermission.IRolePermissionRepository;
 import com.easyhostel.backend.domain.service.interfaces.rolepermission.IRolePermissionBusinessValidator;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -30,18 +31,23 @@ public class RolePermissionService extends BaseService<RolePermission, RolePermi
     private final IRoleReadonlyRepository _roleReadonlyRepository;
     private final IPermissionReadonlyRepository _permissionReadonlyRepository;
 
+    private final DelegatingSecurityContextAsyncTaskExecutor _taskExecutor;
+
     public RolePermissionService(IRolePermissionRepository rolePermissionRepository,
                                  IRolePermissionBusinessValidator rolePermissionBusinessValidator,
                                  IRolePermissionMapper rolePermissionMapper,
                                  IRoleReadonlyRepository roleReadonlyRepository,
-                                 IPermissionReadonlyRepository permissionReadonlyRepository) {
-        super(rolePermissionRepository);
+                                 IPermissionReadonlyRepository permissionReadonlyRepository,
+                                 DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
+        super(rolePermissionRepository, taskExecutor);
         _rolePermissionRepository = rolePermissionRepository;
         _rolePermissionBusinessValidator = rolePermissionBusinessValidator;
         _rolePermissionMapper = rolePermissionMapper;
 
         _roleReadonlyRepository = roleReadonlyRepository;
         _permissionReadonlyRepository = permissionReadonlyRepository;
+
+        _taskExecutor = taskExecutor;
     }
 
     @Override

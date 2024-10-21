@@ -80,17 +80,17 @@ public class HouseService extends BaseService<House, HouseDto, HouseCreationDto,
 
     @Override
     public House mapCreationDtoToEntity(HouseCreationDto houseCreationDto) {
-        return _houseMapper.MAPPER.mapHouseCreationDtoToHouse(houseCreationDto);
+        return _houseMapper.mapHouseCreationDtoToHouse(houseCreationDto);
     }
 
     @Override
     public House mapUpdateDtoToEntity(HouseUpdateDto houseUpdateDto) {
-        return _houseMapper.MAPPER.mapHouseUpdateDtoToHouse(houseUpdateDto);
+        return _houseMapper.mapHouseUpdateDtoToHouse(houseUpdateDto);
     }
 
     @Override
     public HouseDto mapEntityToDto(House house) {
-        return _houseMapper.MAPPER.mapHouseToHouseDto(house);
+        return _houseMapper.mapHouseToHouseDto(house);
     }
 
     @Override

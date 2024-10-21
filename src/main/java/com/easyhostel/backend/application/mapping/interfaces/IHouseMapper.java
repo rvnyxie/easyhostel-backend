@@ -19,60 +19,27 @@ import java.util.stream.Collectors;
  *
  * @author Nyx
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { IRoomMapper.class })
 public interface IHouseMapper {
-
-    //region Instance
-
-    IHouseMapper MAPPER = Mappers.getMapper(IHouseMapper.class);
-
-    //endregion
 
     //region General
 
-    // Room need to ignore house to avoid circular dependency
-    @Mapping(target = "rooms", qualifiedByName = "mapRoomsToRoomDtosWithoutHouse")
+    @Mapping(target = "rooms", qualifiedByName = "mapRoomToRoomDtoWithoutHouse")
     HouseDto mapHouseToHouseDto(House house);
 
     //endregion
 
-    //region Map Room to RoomDto without house to avoid circular dependency
-
-    @Named("mapRoomsToRoomDtosWithoutHouse")
-    @Mapping(target = "house", ignore = true)
-    default Set<RoomDto> mapRoomsToRoomDtosWithoutHouse(Set<Room> rooms) {
-        return rooms.stream().map(room -> {
-            RoomDto roomDto = IRoomMapper.MAPPER.mapRoomToRoomDtoWithoutHouse(room);
-            return roomDto;
-        }).collect(Collectors.toSet());
-    }
-
-    // endregion
-
     //region Map creation
 
-    @Mapping(target = "rooms", qualifiedByName = "mapRoomCreationDtosToRooms")
+    @Mapping(target = "rooms", qualifiedByName = "mapRoomCreationDtoToRoom")
     House mapHouseCreationDtoToHouse(HouseCreationDto houseCreationDto);
-
-    @Named("mapRoomCreationDtosToRooms")
-    Set<Room> mapRoomCreationDtosToRooms(Set<RoomCreationDto> roomCreationDto);
 
     //endregion
 
     //region Map update
 
-    @Mapping(target = "rooms", qualifiedByName = "mapRoomUpdateDtosToRooms")
+    @Mapping(target = "rooms", qualifiedByName = "mapRoomUpdateDtoToRoom")
     House mapHouseUpdateDtoToHouse(HouseUpdateDto houseUpdateDto);
-
-    @Named("mapRoomUpdateDtosToRooms")
-    Set<Room> mapRoomUpdateDtosToRooms(Set<RoomUpdateDto> roomUpdateDtos);
-
-    //endregion
-
-    //region Map House to HouseDto without Rooms to avoid circular dependency
-
-    @Mapping(target = "rooms", ignore = true)
-    HouseDto mapHouseToHouseDtoWithoutRooms(House house);
 
     //endregion
 

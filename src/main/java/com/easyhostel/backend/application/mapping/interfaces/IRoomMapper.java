@@ -21,64 +21,38 @@ import java.util.stream.Collectors;
  *
  * @author Nyx
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { IContractMapper.class })
 public interface IRoomMapper {
-
-    //region Instance
-
-    IRoomMapper MAPPER = Mappers.getMapper(IRoomMapper.class);
-
-    //endregion
 
     //region General
 
-    // House need to ignore rooms to avoid circular dependency
     @Mapping(target = "house", qualifiedByName = "mapHouseToHouseDtoWithoutRooms")
-    // Contracts need to ignore Room to avoid circular dependency
-    @Mapping(target = "contracts", qualifiedByName = "mapContractsToContractDtosWithoutRoom")
+    @Mapping(target = "contracts", qualifiedByName = "mapContractToContractDtoWithoutRoom")
     RoomDto mapRoomToRoomDTO(Room room);
 
-    //endregion
-
-    //region Map House to HouseDto without rooms to avoid circular dependency
+    //region Map House to HouseDto without Rooms to avoid circular dependency
 
     @Named("mapHouseToHouseDtoWithoutRooms")
-    default HouseDto mapHouseToHouseDtoWithoutRooms(House house) {
-        HouseDto houseDto = IHouseMapper.MAPPER.mapHouseToHouseDtoWithoutRooms(house);
-        return houseDto;
-    }
+    @Mapping(target = "rooms", ignore = true)
+    HouseDto mapHouseToHouseDtoWithoutRooms(House house);
 
     //endregion
-
-    //region Map Contract to ContractDto without Room to avoid circular dependency
-
-    @Named("mapContractsToContractDtosWithoutRoom")
-    default Set<ContractDto> mapContractsToContractDtosWithoutRoom(Set<Contract> contracts) {
-        return contracts.stream().map(contract -> {
-            ContractDto contractDto = IContractMapper.MAPPER.mapContractToContractDtoWithoutRoom(contract);
-            return contractDto;
-        }).collect(Collectors.toSet());
-    }
 
     //endregion
 
     //region Map creation
 
-    @Mapping(target = "contracts", qualifiedByName = "mapContractCreationDtosToContracts")
+    @Named("mapRoomCreationDtoToRoom")
+    @Mapping(target = "contracts", qualifiedByName = "mapContractCreationDtoToContract")
     Room mapRoomCreationDtoToRoom(RoomCreationDto roomCreationDto);
-
-    @Named("mapContractCreationDtosToContracts")
-    Set<Contract> mapContractCreationDtosToContracts(Set<ContractCreationDto> contractCreationDtos);
 
     //endregion
 
     //region Map update
 
-    @Mapping(target = "contracts", qualifiedByName = "mapContractUpdateDtosToContracts")
+    @Named("mapRoomUpdateDtoToRoom")
+    @Mapping(target = "contracts", qualifiedByName = "mapContractUpdateDtoToContract")
     Room mapRoomUpdateDtoToRoom(RoomUpdateDto roomUpdateDto);
-
-    @Named("mapContractUpdateDtosToContracts")
-    Set<Contract> mapContractUpdateDtosToContracts(Set<ContractUpdateDto> contractUpdateDtos);
 
     //endregion
 
@@ -87,14 +61,6 @@ public interface IRoomMapper {
     @Named("mapRoomToRoomDtoWithoutHouse")
     @Mapping(target = "house", ignore = true)
     RoomDto mapRoomToRoomDtoWithoutHouse(Room room);
-
-    //endregion
-
-    //region Map Room to RoomDto without Contracts to avoid circular dependency
-
-    @Named("mapRoomToRoomDtoWithoutContracts")
-    @Mapping(target = "contracts", ignore = true)
-    RoomDto mapRoomToRoomDtoWithoutContracts(Room room);
 
     //endregion
 

@@ -12,10 +12,7 @@ import com.easyhostel.backend.domain.service.interfaces.house.IHouseBusinessVali
 import com.easyhostel.backend.domain.service.interfaces.room.IRoomBusinessValidator;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Implementation for House's business validator
@@ -51,7 +48,7 @@ public class HouseBusinessValidator extends BaseBusinessValidator implements IHo
     @Override
     public void checkIsRoomBelongedToHouse(String houseId, String roomId) {
         var house = checkIfHouseExistedFromId(houseId);
-        _roomBusinessValidator.checkIfRoomExistedFromId(roomId);
+        _roomBusinessValidator.checkIfRoomExistedById(roomId);
 
         var isRoomBelongedToHouse = house.getRooms().stream()
                 .anyMatch(room -> room.getRoomId().equals(roomId));

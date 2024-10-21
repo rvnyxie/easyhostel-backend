@@ -30,9 +30,7 @@ public class RoomReadonlyService extends BaseReadonlyService<Room, RoomDto, Stri
 
     @Override
     public RoomDto mapEntityToDto(Room room) {
-        var roomDto = _roomMapper.mapRoomToRoomDTO(room);
-
-        return roomDto;
+        return _roomMapper.mapRoomToRoomDTO(room);
     }
 
 }

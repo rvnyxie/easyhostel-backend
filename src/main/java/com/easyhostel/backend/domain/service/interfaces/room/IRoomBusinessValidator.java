@@ -1,33 +1,42 @@
 package com.easyhostel.backend.domain.service.interfaces.room;
 
-import com.easyhostel.backend.domain.entity.Room;
-
-import java.util.concurrent.CompletableFuture;
+import com.easyhostel.backend.domain.exception.EntityNotFoundException;
+import com.easyhostel.backend.domain.exception.UnauthorizedAccessException;
+import com.easyhostel.backend.domain.service.interfaces.base.IBaseBusinessValidator;
 
 /**
  * Interface for defining Room's business validator
  *
  * @author Nyx
  */
-public interface IRoomBusinessValidator {
+public interface IRoomBusinessValidator extends IBaseBusinessValidator {
 
     /**
-     * Asynchronously check if Room existed by ID
+     * Check if Room existed by ID
      *
      * @param roomId Room's ID
-     * @return CompletableFuture Room object
+     * @exception EntityNotFoundException Room not found
      * @author Nyx
      */
-    CompletableFuture<Room> checkIfRoomExistedFromId(String roomId);
+    void checkIfRoomExistedById(String roomId);
 
     /**
-     * Asynchronously check if Contract belonged to Room by ID
+     * Check if Contract belonged to Room by IDs
      *
      * @param roomId Room's ID
      * @param contractId Contract's ID
-     * @return CompletableFuture Void object
+     * @exception EntityNotFoundException Contract from Room not found
      * @author Nyx
      */
-    CompletableFuture<Void> checkIsContractBelongedToRoom(String roomId, String contractId);
+    void checkIfContractBelongedToRoom(String roomId, String contractId);
+
+    /**
+     * Check if Room not belonged to House which is supervised by authenticated user
+     *
+     * @param roomId Room's ID
+     * @exception UnauthorizedAccessException If Room not supervised by authenticated user
+     * @author Nyx
+     */
+    void checkIfRoomSupervisedByAuthUser(String roomId);
 
 }

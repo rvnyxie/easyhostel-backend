@@ -45,11 +45,11 @@ public class Room extends BaseEntity {
     @EqualsAndHashCode.Exclude
     private House house;
 
-    @OneToMany(mappedBy = "room", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "room", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude
     private Set<Contract> contracts = new HashSet<>();
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "room", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
     private Set<RepairRoomLog> repairRoomLogs = new HashSet<>();
 
 }

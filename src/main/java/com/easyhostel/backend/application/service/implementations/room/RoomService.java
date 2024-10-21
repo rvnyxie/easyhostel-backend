@@ -7,14 +7,9 @@ import com.easyhostel.backend.application.mapping.interfaces.IRoomMapper;
 import com.easyhostel.backend.application.service.implementations.base.BaseService;
 import com.easyhostel.backend.application.service.interfaces.room.IRoomService;
 import com.easyhostel.backend.domain.entity.Room;
-import com.easyhostel.backend.domain.enums.ErrorCode;
-import com.easyhostel.backend.domain.exception.EntityNotFoundException;
 import com.easyhostel.backend.domain.repository.interfaces.contract.IContractRepository;
-import com.easyhostel.backend.domain.repository.interfaces.house.IHouseRepository;
 import com.easyhostel.backend.domain.repository.interfaces.room.IRoomRepository;
 import com.easyhostel.backend.domain.service.interfaces.room.IRoomBusinessValidator;
-import com.easyhostel.backend.infrastructure.configuration.Translator;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
@@ -50,15 +45,24 @@ public class RoomService extends BaseService<Room, RoomDto, RoomCreationDto, Roo
     }
 
     @Override
-    public CompletableFuture<Void> deleteContractFromRoomByIdAsync(String roomId, String contractId) {
-        return CompletableFuture.runAsync(() -> {
-           _roomBusinessValidator.checkIsContractBelongedToRoom(roomId, contractId);
+    public CompletableFuture<Void> deleteByIdAsync(String roomId) {
+        return validateDeletionBusinessAsync(roomId)
+                .thenCompose(v -> CompletableFuture.runAsync(() -> {
+                    var room = _roomRepository.findById(roomId).orElseThrow();
 
-           var contract = _contractRepository.findById(contractId).orElseThrow(() -> new EntityNotFoundException(
-                   Translator.toLocale("exception.contractFromRoom.notFound"),
-                   ErrorCode.RESOURCE_NOT_FOUND,
-                   HttpStatus.NOT_FOUND
-           ));
+                    room.setHouse(null);
+                    _roomRepository.save(room);
+                    _roomRepository.deleteById(roomId);
+                }));
+    }
+
+    @Override
+    public CompletableFuture<Void> deleteContractFromRoomByIdAsync(String roomId, String contractId) {
+        _roomBusinessValidator.checkIfContractBelongedToRoom(roomId, contractId);
+        _roomBusinessValidator.checkIfRoomSupervisedByAuthUser(roomId);
+
+        return CompletableFuture.runAsync(() -> {
+           var contract = _contractRepository.findById(contractId).orElseThrow();
 
            // Delete contract
            contract.setRoom(null);
@@ -68,36 +72,56 @@ public class RoomService extends BaseService<Room, RoomDto, RoomCreationDto, Roo
     }
 
     @Override
-    public Room mapCreationDtoToEntity(RoomCreationDto roomCreationDto) {
-        var room = _roomMapper.mapRoomCreationDtoToRoom(roomCreationDto);
+    public CompletableFuture<Void> validateGettingBusinessAsync(String roomId) {
+        return CompletableFuture.runAsync(() -> {
+            if (!_roomBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _roomBusinessValidator.checkIfRoomSupervisedByAuthUser(roomId);
+            }
+        }, _taskExecutor);
+    }
 
-        return room;
+    @Override
+    public CompletableFuture<Void> validateCreationBusiness(RoomCreationDto roomCreationDto) {
+        return CompletableFuture.runAsync(_roomBusinessValidator::checkIfAuthenticatedUserNotSysadminThrowException, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateUpdateBusiness(RoomUpdateDto roomUpdateDto) {
+        return CompletableFuture.runAsync(() -> {
+            _roomBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            _roomBusinessValidator.checkIfRoomExistedById(roomUpdateDto.getRoomId());
+        }, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionBusinessAsync(String roomId) {
+        return CompletableFuture.runAsync(() -> {
+            _roomBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            _roomBusinessValidator.checkIfRoomExistedById(roomId);
+        }, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionManyBusinessAsync(List<String> roomIds) {
+        return CompletableFuture.runAsync(() -> {
+            _roomBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            roomIds.forEach(_roomBusinessValidator::checkIfRoomExistedById);
+        }, _taskExecutor);
+    }
+
+    @Override
+    public Room mapCreationDtoToEntity(RoomCreationDto roomCreationDto) {
+        return _roomMapper.mapRoomCreationDtoToRoom(roomCreationDto);
     }
 
     @Override
     public Room mapUpdateDtoToEntity(RoomUpdateDto roomUpdateDto) {
-        var room = _roomMapper.mapRoomUpdateDtoToRoom(roomUpdateDto);
-
-        return room;
+        return _roomMapper.mapRoomUpdateDtoToRoom(roomUpdateDto);
     }
 
     @Override
     public RoomDto mapEntityToDto(Room room) {
-        var roomDto = _roomMapper.mapRoomToRoomDTO(room);
-
-        return roomDto;
-    }
-
-    // TODO: Add business creation validation for Room
-    @Override
-    public CompletableFuture<Void> validateCreationBusiness(RoomCreationDto roomCreationDto) {
-        return super.validateCreationBusiness(roomCreationDto);
-    }
-
-    // TODO: Add business update validation for Room
-    @Override
-    public CompletableFuture<Void> validateUpdateBusiness(RoomUpdateDto roomUpdateDto) {
-        return super.validateUpdateBusiness(roomUpdateDto);
+        return _roomMapper.mapRoomToRoomDTO(room);
     }
 
 }

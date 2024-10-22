@@ -12,6 +12,7 @@ import com.easyhostel.backend.domain.service.interfaces.roomamenity.IRoomAmenity
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -22,7 +23,6 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class RoomAmenityService extends BaseService<RoomAmenity, RoomAmenityDto, RoomAmenityCreationDto, RoomAmenityUpdateDto, String> implements IRoomAmenityService {
 
-    private final IRoomAmenityRepository _roomAmenityRepository;
     private final IRoomAmenityBusinessValidator _roomAmenityBusinessValidator;
     private final IRoomAmenityMapper _roomAmenityMapper;
 
@@ -33,42 +33,60 @@ public class RoomAmenityService extends BaseService<RoomAmenity, RoomAmenityDto,
                               IRoomAmenityMapper roomAmenityMapper,
                               DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
         super(roomAmenityRepository, taskExecutor);
-        _roomAmenityRepository = roomAmenityRepository;
         _roomAmenityBusinessValidator = roomAmenityBusinessValidator;
         _roomAmenityMapper = roomAmenityMapper;
         _taskExecutor = taskExecutor;
     }
 
+
+    @Override
+    public CompletableFuture<Void> validateCreationBusiness(RoomAmenityCreationDto roomAmenityCreationDto) {
+        return CompletableFuture.runAsync(() -> {
+            _roomAmenityBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            _roomAmenityBusinessValidator.checkIfNewRoomAmenityHasDuplicatedName(roomAmenityCreationDto.getRoomAmenityName());
+        }, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateUpdateBusiness(RoomAmenityUpdateDto roomAmenityUpdateDto) {
+        return CompletableFuture.runAsync(() -> {
+            _roomAmenityBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            _roomAmenityBusinessValidator.checkIfRoomAmenityExistedById(roomAmenityUpdateDto.getRoomAmenityId());
+            _roomAmenityBusinessValidator.checkIfUpdateRoomAmenityHasDuplicatedName(
+                    roomAmenityUpdateDto.getRoomAmenityId(),
+                    roomAmenityUpdateDto.getRoomAmenityName());
+        }, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionBusinessAsync(String roomAmenityId) {
+        return CompletableFuture.runAsync(() -> {
+            _roomAmenityBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            _roomAmenityBusinessValidator.checkIfRoomAmenityExistedById(roomAmenityId);
+        }, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionManyBusinessAsync(List<String> roomAmenityIds) {
+        return CompletableFuture.runAsync(() -> {
+            _roomAmenityBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            roomAmenityIds.forEach(_roomAmenityBusinessValidator::checkIfRoomAmenityExistedById);
+        }, _taskExecutor);
+    }
+
     @Override
     public RoomAmenity mapCreationDtoToEntity(RoomAmenityCreationDto roomAmenityCreationDto) {
-        var roomAmenity = _roomAmenityMapper.MAPPER.mapRoomAmenityCreationDtoToRoomAmenity(roomAmenityCreationDto);
-
-        return roomAmenity;
+        return _roomAmenityMapper.mapRoomAmenityCreationDtoToRoomAmenity(roomAmenityCreationDto);
     }
 
     @Override
     public RoomAmenity mapUpdateDtoToEntity(RoomAmenityUpdateDto roomAmenityUpdateDto) {
-        var roomAmenity = _roomAmenityMapper.MAPPER.mapRoomAmenityUpdateDtoToRoomAmenity(roomAmenityUpdateDto);
-
-        return roomAmenity;
+        return _roomAmenityMapper.mapRoomAmenityUpdateDtoToRoomAmenity(roomAmenityUpdateDto);
     }
 
     @Override
     public RoomAmenityDto mapEntityToDto(RoomAmenity roomAmenity) {
-        var roomAmenityDto = _roomAmenityMapper.MAPPER.mapRoomAmenityToRoomAmenityDto(roomAmenity);
-
-        return roomAmenityDto;
+        return _roomAmenityMapper.mapRoomAmenityToRoomAmenityDto(roomAmenity);
     }
 
-    // TODO: Add business creation validation for RoomAmenity
-    @Override
-    public CompletableFuture<Void> validateCreationBusiness(RoomAmenityCreationDto roomAmenityCreationDto) {
-        return super.validateCreationBusiness(roomAmenityCreationDto);
-    }
-
-    // TODO: Add business update validation for RoomAmenity
-    @Override
-    public CompletableFuture<Void> validateUpdateBusiness(RoomAmenityUpdateDto roomAmenityUpdateDto) {
-        return super.validateUpdateBusiness(roomAmenityUpdateDto);
-    }
 }

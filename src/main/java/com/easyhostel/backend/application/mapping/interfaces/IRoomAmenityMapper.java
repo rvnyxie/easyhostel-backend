@@ -5,7 +5,6 @@ import com.easyhostel.backend.application.dto.roomamenity.RoomAmenityDto;
 import com.easyhostel.backend.application.dto.roomamenity.RoomAmenityUpdateDto;
 import com.easyhostel.backend.domain.entity.RoomAmenity;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 /**
  * Mapper for RoomAmenity entity
@@ -15,12 +14,22 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface IRoomAmenityMapper {
 
-    IRoomAmenityMapper MAPPER = Mappers.getMapper(IRoomAmenityMapper.class);
+    //region General
 
     RoomAmenityDto mapRoomAmenityToRoomAmenityDto(RoomAmenity roomAmenity);
 
+    //endregion
+
+    //region Map creation
+
     RoomAmenity mapRoomAmenityCreationDtoToRoomAmenity(RoomAmenityCreationDto roomAmenityCreationDto);
 
+    //endregion
+
+    //region Map update
+
     RoomAmenity mapRoomAmenityUpdateDtoToRoomAmenity(RoomAmenityUpdateDto roomAmenityUpdateDto);
+
+    //endregion
 
 }

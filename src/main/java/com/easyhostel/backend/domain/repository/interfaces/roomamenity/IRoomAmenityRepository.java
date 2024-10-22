@@ -11,4 +11,14 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IRoomAmenityRepository extends IBaseRepository<RoomAmenity, String> {
+
+    /**
+     * Check if RoomAmenity's name existed
+     *
+     * @param roomAmenityName RoomAmenity's name
+     * @return true if existed, false if not
+     * @author Nyx
+     */
+    boolean existsByRoomAmenityName(String roomAmenityName);
+
 }

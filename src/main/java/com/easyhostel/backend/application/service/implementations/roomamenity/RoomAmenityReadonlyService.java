@@ -28,8 +28,6 @@ public class RoomAmenityReadonlyService extends BaseReadonlyService<RoomAmenity,
 
     @Override
     public RoomAmenityDto mapEntityToDto(RoomAmenity roomAmenity) {
-        var roomAmenityDto = _roomAmenityMapper.MAPPER.mapRoomAmenityToRoomAmenityDto(roomAmenity);
-
-        return roomAmenityDto;
+        return _roomAmenityMapper.mapRoomAmenityToRoomAmenityDto(roomAmenity);
     }
 }

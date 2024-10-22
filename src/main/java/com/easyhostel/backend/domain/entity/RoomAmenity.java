@@ -31,6 +31,7 @@ public class RoomAmenity extends BaseEntity {
 
     private String roomAmenityType;
 
+    @Column(unique = true)
     private String roomAmenityName;
 
     @OneToMany(mappedBy = "roomAmenity", fetch = FetchType.EAGER)

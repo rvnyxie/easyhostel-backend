@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -87,9 +88,11 @@ public class ContractInteriorService extends BaseService<ContractInterior, Contr
                     // In our case, it means we save new ContractInterior and delete the old one
 
                     // Delete old ContractInterior
-                    deleteContractInteriorByIdsAsync(
-                            contractInteriorUpdateDto.getOldContractId(),
-                            contractInteriorUpdateDto.getOldInteriorId());
+                    var oldContractInteriorIdToDelete = ContractInteriorId.builder()
+                            .contractId(contractInteriorUpdateDto.getOldContractId())
+                            .interiorId(contractInteriorUpdateDto.getOldInteriorId())
+                            .build();
+                    deleteContractInteriorByIdsAsync(oldContractInteriorIdToDelete);
 
                     // Create new ContractInterior
                     var newContractInterior = mapUpdateDtoToEntity(contractInteriorUpdateDto);
@@ -120,30 +123,22 @@ public class ContractInteriorService extends BaseService<ContractInterior, Contr
 
     @Override
     @Async
-    public CompletableFuture<Void> deleteContractInteriorByIdsAsync(String contractId, String interiorId) {
-        return validateDeletionBusinessAsync(contractId, interiorId)
+    public CompletableFuture<Void> deleteContractInteriorByIdsAsync(ContractInteriorId contractInteriorId) {
+        return validateDeletionBusinessAsync(contractInteriorId)
                 .thenComposeAsync(v -> CompletableFuture.runAsync(() -> {
-                    var contractInteriorId = new ContractInteriorId();
-                    contractInteriorId.setContractId(contractId);
-                    contractInteriorId.setInteriorId(interiorId);
-
                     _contractInteriorRepository.deleteById(contractInteriorId);
                 }));
     }
 
     @Override
-    public ContractInterior mapCreationDtoToEntity(ContractInteriorCreationDto contractInteriorCreationDto) {
-        return _contractInteriorMapper.MAPPER.mapContractInteriorCreationDtoToContractInterior(contractInteriorCreationDto);
-    }
+    public CompletableFuture<Void> validateGettingBusinessAsync(ContractInteriorId contractInteriorId) {
+        return CompletableFuture.runAsync(() -> {
+            _contractInteriorBusinessValidator.checkIfContractInteriorExistedByIds(contractInteriorId);
 
-    @Override
-    public ContractInterior mapUpdateDtoToEntity(ContractInteriorUpdateDto contractInteriorUpdateDto) {
-        return _contractInteriorMapper.MAPPER.mapContractInteriorUpdateDtoToContractInterior(contractInteriorUpdateDto);
-    }
-
-    @Override
-    public ContractInteriorDto mapEntityToDto(ContractInterior contractInterior) {
-        return _contractInteriorMapper.MAPPER.mapContractInteriorToContractInteriorDto(contractInterior);
+            if (!_contractInteriorBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _contractInteriorBusinessValidator.checkIfContractInteriorAccessibleByAuthUser(contractInteriorId);
+            }
+        }, _taskExecutor);
     }
 
     @Override
@@ -152,28 +147,76 @@ public class ContractInteriorService extends BaseService<ContractInterior, Contr
         var contractId = contractInteriorCreationDto.getContractId();
         var interiorId = contractInteriorCreationDto.getInteriorId();
 
-        return CompletableFuture
-                .runAsync(() -> _contractInteriorBusinessValidator.checkIfContractAndInteriorExistedByIds(contractId, interiorId));
+        var contractInteriorId = ContractInteriorId.builder().contractId(contractId).interiorId(interiorId).build();
+
+        return CompletableFuture.runAsync(() -> {
+            _contractInteriorBusinessValidator.checkIfContractAndInteriorExistedByIds(contractId, interiorId);
+            _contractInteriorBusinessValidator.checkIfContractInteriorExistedThrowException(contractInteriorId);
+
+            if (!_contractInteriorBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _contractInteriorBusinessValidator.checkIfContractInteriorAccessibleByAuthUser(contractInteriorId);
+            }
+        }, _taskExecutor);
     }
 
     @Override
     @Async
     public CompletableFuture<Void> validateUpdateBusiness(ContractInteriorUpdateDto contractInteriorUpdateDto) {
-        var oldContractId = contractInteriorUpdateDto.getOldContractId();
-        var oldInteriorId = contractInteriorUpdateDto.getOldInteriorId();
-        var contractId = contractInteriorUpdateDto.getContractId();
-        var interiorId = contractInteriorUpdateDto.getInteriorId();
+        var oldContractInteriorId = ContractInteriorId.builder()
+                .contractId(contractInteriorUpdateDto.getOldContractId())
+                .interiorId(contractInteriorUpdateDto.getOldInteriorId())
+                .build();
 
-        return CompletableFuture
-                .runAsync(() -> _contractInteriorBusinessValidator.checkIfContractAndInteriorExistedByIds(contractId, interiorId))
-                .thenRunAsync(() -> _contractInteriorBusinessValidator.checkIfContractInteriorAlreadyExistedByIds(oldContractId, oldInteriorId));
+        var newContractId = contractInteriorUpdateDto.getContractId();
+        var newInteriorId = contractInteriorUpdateDto.getInteriorId();
+
+        return CompletableFuture.runAsync(() -> {
+            _contractInteriorBusinessValidator.checkIfContractInteriorExistedByIds(oldContractInteriorId);
+            _contractInteriorBusinessValidator.checkIfContractAndInteriorExistedByIds(newContractId, newInteriorId);
+
+            if (!_contractInteriorBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _contractInteriorBusinessValidator.checkIfContractInteriorAccessibleByAuthUser(oldContractInteriorId);
+                _contractInteriorBusinessValidator.checkIfContractAndInteriorAccessibleByAuthUser(newContractId, newInteriorId);
+            }
+        }, _taskExecutor);
     }
 
     @Override
     @Async
-    public CompletableFuture<Void> validateDeletionBusinessAsync(String contractId, String interiorId) {
-        return CompletableFuture
-                .runAsync(() -> _contractInteriorBusinessValidator.checkIfContractInteriorAlreadyExistedByIds(contractId, interiorId));
+    public CompletableFuture<Void> validateDeletionBusinessAsync(ContractInteriorId contractInteriorId) {
+        return CompletableFuture.runAsync(() -> {
+            if (!_contractInteriorBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _contractInteriorBusinessValidator.checkIfContractInteriorAccessibleByAuthUser(contractInteriorId);
+            }
+
+            _contractInteriorBusinessValidator.checkIfContractInteriorExistedByIds(contractInteriorId);
+        }, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionManyBusinessAsync(List<ContractInteriorId> contractInteriorIds) {
+        return CompletableFuture.runAsync(() -> {
+            contractInteriorIds.forEach(_contractInteriorBusinessValidator::checkIfContractInteriorExistedByIds);
+
+            if (!_contractInteriorBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                contractInteriorIds.forEach(_contractInteriorBusinessValidator::checkIfContractInteriorAccessibleByAuthUser);
+            }
+        }, _taskExecutor);
+    }
+
+    @Override
+    public ContractInterior mapCreationDtoToEntity(ContractInteriorCreationDto contractInteriorCreationDto) {
+        return _contractInteriorMapper.mapContractInteriorCreationDtoToContractInterior(contractInteriorCreationDto);
+    }
+
+    @Override
+    public ContractInterior mapUpdateDtoToEntity(ContractInteriorUpdateDto contractInteriorUpdateDto) {
+        return _contractInteriorMapper.mapContractInteriorUpdateDtoToContractInterior(contractInteriorUpdateDto);
+    }
+
+    @Override
+    public ContractInteriorDto mapEntityToDto(ContractInterior contractInterior) {
+        return _contractInteriorMapper.mapContractInteriorToContractInteriorDto(contractInterior);
     }
 
 }

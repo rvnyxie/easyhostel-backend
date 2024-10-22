@@ -1,9 +1,7 @@
 package com.easyhostel.backend.domain.entity.embedded;
 
 import jakarta.persistence.Embeddable;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -15,6 +13,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Embeddable
 public class ContractInteriorId implements Serializable {
 

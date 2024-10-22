@@ -18,21 +18,10 @@ public interface IContractInteriorService extends IBaseService<ContractInteriorD
     /**
      * Asynchronously delete ContractInterior by IDs
      *
-     * @param contractId Contract's ID
-     * @param interiorId Interior's ID
+     * @param contractInteriorId ContractInterior's ID
      * @return CompletableFuture Void object
      * @author Nyx
      */
-    CompletableFuture<Void> deleteContractInteriorByIdsAsync(String contractId, String interiorId);
-
-    /**
-     * Asynchronously validate ContractInterior for deletion by IDs
-     *
-     * @param contractId Contract's ID
-     * @param interiorId Interior's ID
-     * @return CompletableFuture Void object
-     * @author Nyx
-     */
-    CompletableFuture<Void> validateDeletionBusinessAsync(String contractId, String interiorId);
+    CompletableFuture<Void> deleteContractInteriorByIdsAsync(ContractInteriorId contractInteriorId);
 
 }

@@ -16,12 +16,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface IContractInteriorMapper {
 
-    //region Instance
-
-    IContractInteriorMapper MAPPER = Mappers.getMapper(IContractInteriorMapper.class);
-
-    //endregion
-
     //region General
 
     @Mapping(source = "contractInterior.contractInteriorId.contractId", target = "contractId")

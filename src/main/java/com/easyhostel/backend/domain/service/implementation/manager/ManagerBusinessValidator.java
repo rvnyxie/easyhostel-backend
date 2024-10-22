@@ -1,9 +1,13 @@
 package com.easyhostel.backend.domain.service.implementation.manager;
 
+import com.easyhostel.backend.application.service.interfaces.authentication.IAuthenticationService;
+import com.easyhostel.backend.domain.entity.Manager;
 import com.easyhostel.backend.domain.enums.ErrorCode;
 import com.easyhostel.backend.domain.exception.DuplicatedDistinctRequiredValueException;
 import com.easyhostel.backend.domain.exception.EntityNotFoundException;
+import com.easyhostel.backend.domain.exception.UnauthorizedAccessException;
 import com.easyhostel.backend.domain.repository.interfaces.manager.IManagerRepository;
+import com.easyhostel.backend.domain.service.implementation.base.BaseBusinessValidator;
 import com.easyhostel.backend.domain.service.interfaces.manager.IManagerBusinessValidator;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
 import org.springframework.http.HttpStatus;
@@ -17,11 +21,15 @@ import java.util.Optional;
  * @author Nyx
  */
 @Service
-public class ManagerBusinessValidator implements IManagerBusinessValidator {
+public class ManagerBusinessValidator extends BaseBusinessValidator implements IManagerBusinessValidator {
 
+    private final IAuthenticationService _authenticationService;
     private final IManagerRepository _managerRepository;
 
-    public ManagerBusinessValidator(IManagerRepository managerRepository) {
+    public ManagerBusinessValidator(IAuthenticationService authenticationService,
+                                    IManagerRepository managerRepository) {
+        super(authenticationService);
+        _authenticationService = authenticationService;
         _managerRepository = managerRepository;
     }
 
@@ -85,4 +93,22 @@ public class ManagerBusinessValidator implements IManagerBusinessValidator {
             checkIfEmailExistedThenThrowException(email);
         }
     }
+
+    @Override
+    public void checkIfManagerManagedByAuthUser(String managerId) {
+        var currentAuthUser = (Manager) _authenticationService.getAuthentication().getPrincipal();
+
+        // TODO: add USER managed by ADMIN relationship
+
+        var isManagerManagedByAuthUser = currentAuthUser.getManagerId().equals(managerId);
+
+        if (!isManagerManagedByAuthUser) {
+            throw new UnauthorizedAccessException(
+                    Translator.toLocale("exception.managerNotManagedByAuthUser"),
+                    ErrorCode.FORBIDDEN_ACCESS,
+                    HttpStatus.FORBIDDEN
+            );
+        }
+    }
+
 }

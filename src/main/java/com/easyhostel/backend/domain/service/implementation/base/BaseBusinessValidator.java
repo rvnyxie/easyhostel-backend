@@ -42,4 +42,24 @@ public abstract class BaseBusinessValidator implements IBaseBusinessValidator {
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_" + RoleType.SYSADMIN.name()));
     }
 
+    @Override
+    public void checkIfAuthenticatedUserNotAdminThrowException() {
+        var isAuthenticatedUserAdmin = checkIsAuthenticatedUserAdmin();
+
+        if (!isAuthenticatedUserAdmin) {
+            throw new UnauthorizedAccessException(
+                    Translator.toLocale("exception.notEnoughPrivilege"),
+                    ErrorCode.FORBIDDEN_ACCESS,
+                    HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @Override
+    public boolean checkIsAuthenticatedUserAdmin() {
+        var userDetail = (Manager) _authenticationService.getAuthentication().getPrincipal();
+
+        return userDetail.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_" + RoleType.ADMIN.name()));
+    }
+
 }

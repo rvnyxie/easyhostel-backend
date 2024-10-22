@@ -28,4 +28,20 @@ public interface IBaseBusinessValidator {
      */
     boolean checkIsAuthenticatedUserSysadmin();
 
+    /**
+     * Check if authenticated user is ADMIN
+     *
+     * @exception UnauthorizedAccessException Not ADMIN
+     * @author Nyx
+     */
+    void checkIfAuthenticatedUserNotAdminThrowException();
+
+    /**
+     * Check is authenticated user ADMIN
+     *
+     * @return true if ADMIN, false if not
+     * @author Nyx
+     */
+    boolean checkIsAuthenticatedUserAdmin();
+
 }

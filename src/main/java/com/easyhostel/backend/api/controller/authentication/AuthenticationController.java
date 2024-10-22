@@ -43,7 +43,7 @@ public class AuthenticationController {
         var authenticatedManagerDto = _authenticationService.authenticate(managerLogInDto).join();
 
         String jwtToken = _jwtService.generateToken(
-                _managerMapper.MAPPER.mapManagerDtoToManager(authenticatedManagerDto)
+                _managerMapper.mapManagerDtoToManager(authenticatedManagerDto)
         );
 
         Object loginData = new Object() {

@@ -2,13 +2,15 @@ package com.easyhostel.backend.domain.service.interfaces.manager;
 
 import com.easyhostel.backend.domain.exception.DuplicatedDistinctRequiredValueException;
 import com.easyhostel.backend.domain.exception.EntityNotFoundException;
+import com.easyhostel.backend.domain.exception.UnauthorizedAccessException;
+import com.easyhostel.backend.domain.service.interfaces.base.IBaseBusinessValidator;
 
 /**
  * Interface for defining Manager's business validator
  *
  * @author Nyx
  */
-public interface IManagerBusinessValidator {
+public interface IManagerBusinessValidator extends IBaseBusinessValidator {
 
     /**
      * Check is Manager existed by ID
@@ -55,5 +57,14 @@ public interface IManagerBusinessValidator {
      * @author Nyx
      */
     void checkIfEmailNotTakenByManagerThenThrowException(String managerId, String email);
+
+    /**
+     * Check if Manager being managed by authenticated user
+     *
+     * @param managerId Manager's ID
+     * @exception UnauthorizedAccessException If Manager not manageable by authenticated user
+     * @author Nyx
+     */
+    void checkIfManagerManagedByAuthUser(String managerId);
 
 }

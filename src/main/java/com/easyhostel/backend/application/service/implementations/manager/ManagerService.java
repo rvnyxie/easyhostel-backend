@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
@@ -78,43 +79,74 @@ public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCrea
     }
 
     @Override
-    public Manager mapCreationDtoToEntity(ManagerCreationDto creationDtoEntity) {
-        return _managerMapper.MAPPER.mapManagerCreationDtoToManager(creationDtoEntity);
+    public CompletableFuture<Void> validateGettingBusinessAsync(String managerId) {
+        return CompletableFuture.runAsync(() -> {
+            if (!_managerBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _managerBusinessValidator.checkIfManagerManagedByAuthUser(managerId);
+            }
+        }, _taskExecutor);
     }
 
     @Override
-    public Manager mapUpdateDtoToEntity(ManagerUpdateDto updateDtoEntity) {
-        return _managerMapper.MAPPER.mapManagerUpdateDtoToManager(updateDtoEntity);
-    }
-
-    @Override
-    public ManagerDto mapEntityToDto(Manager manager) {
-        return _managerMapper.MAPPER.mapManagerToManagerDto(manager);
+    public CompletableFuture<Void> validateGettingManyBusinessAsync() {
+        return CompletableFuture.runAsync(() -> {
+            if (!_managerBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _managerBusinessValidator.checkIfAuthenticatedUserNotAdminThrowException();
+            }
+        }, _taskExecutor);
     }
 
     @Override
     public CompletableFuture<Void> validateCreationBusiness(ManagerCreationDto managerCreationDto) {
         return CompletableFuture.runAsync(() -> {
+            _managerBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
             _managerBusinessValidator.checkIfUsernameExistedThenThrowException(managerCreationDto.getUsername());
             _managerBusinessValidator.checkIfEmailExistedThenThrowException(managerCreationDto.getEmail());
-        });
+        }, _taskExecutor);
     }
 
     @Override
     public CompletableFuture<Void> validateUpdateBusiness(ManagerUpdateDto managerUpdateDto) {
         return CompletableFuture.runAsync(() -> {
-            _managerBusinessValidator.checkIfManagerExistedById(managerUpdateDto.getManagerId());
-            _managerBusinessValidator.checkIfEmailNotTakenByManagerThenThrowException(
-                    managerUpdateDto.getManagerId(),
-                    managerUpdateDto.getEmail());
-        });
+            if (!_managerBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _managerBusinessValidator.checkIfManagerExistedById(managerUpdateDto.getManagerId());
+                _managerBusinessValidator.checkIfManagerManagedByAuthUser(managerUpdateDto.getManagerId());
+                _managerBusinessValidator.checkIfEmailNotTakenByManagerThenThrowException(
+                        managerUpdateDto.getManagerId(),
+                        managerUpdateDto.getEmail());
+            }
+        }, _taskExecutor);
     }
 
     @Override
     public CompletableFuture<Void> validateDeletionBusinessAsync(String managerId) {
         return CompletableFuture.runAsync(() -> {
+            _managerBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
             _managerBusinessValidator.checkIfManagerExistedById(managerId);
-        });
+        }, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionManyBusinessAsync(List<String> managerIds) {
+        return CompletableFuture.runAsync(() -> {
+            _managerBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            managerIds.forEach(_managerBusinessValidator::checkIfManagerExistedById);
+        }, _taskExecutor);
+    }
+
+    @Override
+    public Manager mapCreationDtoToEntity(ManagerCreationDto creationDtoEntity) {
+        return _managerMapper.mapManagerCreationDtoToManager(creationDtoEntity);
+    }
+
+    @Override
+    public Manager mapUpdateDtoToEntity(ManagerUpdateDto updateDtoEntity) {
+        return _managerMapper.mapManagerUpdateDtoToManager(updateDtoEntity);
+    }
+
+    @Override
+    public ManagerDto mapEntityToDto(Manager manager) {
+        return _managerMapper.mapManagerToManagerDto(manager);
     }
 
     @Override
@@ -124,4 +156,5 @@ public class ManagerService extends BaseService<Manager, ManagerDto, ManagerCrea
             return _managerRepository.findManagerByUsername(username).orElseThrow();
         };
     }
+
 }

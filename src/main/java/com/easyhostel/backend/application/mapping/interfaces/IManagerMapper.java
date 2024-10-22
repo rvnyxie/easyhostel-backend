@@ -7,7 +7,6 @@ import com.easyhostel.backend.domain.entity.Manager;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
 
 /**
  * Mapper for Manager entity
@@ -16,12 +15,6 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring")
 public interface IManagerMapper {
-
-    //region Instance
-
-    IManagerMapper MAPPER = Mappers.getMapper(IManagerMapper.class);
-
-    //endregion
 
     //region General
 

@@ -52,7 +52,7 @@ public class AccountSeeder implements ApplicationListener<ContextRefreshedEvent>
                 .role(_roleMapper.MAPPER.mapRoleToRoleDto(optionalRole.get()))
                 .build();
 
-        _managerRepository.save(_managerMapper.MAPPER.mapManagerCreationDtoToManager(sysadminCreationDto));
+        _managerRepository.save(_managerMapper.mapManagerCreationDtoToManager(sysadminCreationDto));
     }
 
     private void createAdministrator() {
@@ -70,7 +70,7 @@ public class AccountSeeder implements ApplicationListener<ContextRefreshedEvent>
                 .role(_roleMapper.MAPPER.mapRoleToRoleDto(optionalRole.get()))
                 .build();
 
-        _managerRepository.save(_managerMapper.MAPPER.mapManagerCreationDtoToManager(adminCreationDto));
+        _managerRepository.save(_managerMapper.mapManagerCreationDtoToManager(adminCreationDto));
     }
 
     private void createDefaultUser() {
@@ -88,7 +88,7 @@ public class AccountSeeder implements ApplicationListener<ContextRefreshedEvent>
                 .role(_roleMapper.MAPPER.mapRoleToRoleDto(optionalRole.get()))
                 .build();
 
-        _managerRepository.save(_managerMapper.MAPPER.mapManagerCreationDtoToManager(defaultUserCreationDto));
+        _managerRepository.save(_managerMapper.mapManagerCreationDtoToManager(defaultUserCreationDto));
     }
 
 }

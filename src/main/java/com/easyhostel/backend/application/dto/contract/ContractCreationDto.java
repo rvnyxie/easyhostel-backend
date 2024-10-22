@@ -1,6 +1,7 @@
 package com.easyhostel.backend.application.dto.contract;
 
 import com.easyhostel.backend.application.dto.base.BaseDtoEntity;
+import com.easyhostel.backend.application.dto.room.RoomDto;
 import com.easyhostel.backend.domain.entity.ContractRoomAmenity;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Min;
@@ -38,6 +39,8 @@ public class ContractCreationDto extends BaseDtoEntity {
 
     @FutureOrPresent(message = "{validation.expirationDate.notInPast}")
     private LocalDate expirationDate;
+
+    private RoomDto room;
 
 //    private Set<ContractRoomAmenity> contractRoomAmenities = new HashSet<>();
 

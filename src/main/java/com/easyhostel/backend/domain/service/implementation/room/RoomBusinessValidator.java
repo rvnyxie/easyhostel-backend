@@ -50,7 +50,7 @@ public class RoomBusinessValidator extends BaseBusinessValidator implements IRoo
     @Override
     public void checkIfContractBelongedToRoom(String roomId, String contractId) {
         checkIfRoomExistedById(roomId);
-        _contractBusinessValidator.checkIfContractExistedByIdAsync(contractId).join();
+        _contractBusinessValidator.checkIfContractExistedById(contractId);
 
         var room = _roomRepository.findById(roomId).orElseThrow();
 

@@ -27,8 +27,8 @@ public class ContractRoomAmenityBusinessValidator implements IContractRoomAmenit
     @Override
     @Async
     public CompletableFuture<Void> checkIfContractAndRoomAmenityExistedByIdsAsync(String contractId, String roomAmenityId) {
+        _contractBusinessValidator.checkIfContractExistedById(contractId);
         return CompletableFuture.allOf(
-            _contractBusinessValidator.checkIfContractExistedByIdAsync(contractId),
             _roomAmenityBusinessValidator.checkIfRoomAmenityExistedByIdAsync(roomAmenityId)
         );
     }

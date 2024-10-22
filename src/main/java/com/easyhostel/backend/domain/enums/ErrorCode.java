@@ -29,7 +29,9 @@ public enum ErrorCode {
 
     SIGNATURE_INVALID("SIGNATURE_INVALID", "Invalid signature provided"),
 
-    EXPIRED_JWT("EXPIRED_JWT", "JWT has been expired");
+    EXPIRED_JWT("EXPIRED_JWT", "JWT has been expired"),
+
+    MISSING_FIELDS("MISSING_FIELDS", "Required fields are not present");
 
     private final String code;
 

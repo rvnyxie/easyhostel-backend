@@ -20,11 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Contract Controller")
 public class ContractController extends BaseController<ContractDto, ContractCreationDto, ContractUpdateDto, String> {
 
-    private final IContractService _contractService;
-
     public ContractController(@Qualifier("contractService") IContractService contractService) {
         super(contractService);
-        _contractService = contractService;
     }
 
 }

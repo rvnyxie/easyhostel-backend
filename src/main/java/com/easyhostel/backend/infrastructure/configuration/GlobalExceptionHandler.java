@@ -3,6 +3,7 @@ package com.easyhostel.backend.infrastructure.configuration;
 import com.easyhostel.backend.domain.enums.ErrorCode;
 import com.easyhostel.backend.domain.exception.DuplicatedDistinctRequiredValueException;
 import com.easyhostel.backend.domain.exception.EntityNotFoundException;
+import com.easyhostel.backend.domain.exception.MissingRequiredFieldsException;
 import com.easyhostel.backend.domain.exception.UnauthorizedAccessException;
 import com.easyhostel.backend.infrastructure.util.custom.response.FormattedResponse;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -344,6 +345,16 @@ public class GlobalExceptionHandler {
             );
 
             return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+        } else if (ex.getCause() instanceof MissingRequiredFieldsException) {
+            var errorResponse = new FormattedResponse<>(
+                    false,
+                    HttpStatus.BAD_REQUEST.value(),
+                    ErrorCode.MISSING_FIELDS.getCode(),
+                    !ex.getMessage().isEmpty() ? ex.getMessage() : ErrorCode.MISSING_FIELDS.getMessage(),
+                    null
+            );
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
 
         //endregion

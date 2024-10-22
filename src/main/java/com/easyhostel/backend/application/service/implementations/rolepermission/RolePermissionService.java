@@ -15,6 +15,7 @@ import com.easyhostel.backend.domain.service.interfaces.rolepermission.IRolePerm
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -60,6 +61,8 @@ public class RolePermissionService extends BaseService<RolePermission, RolePermi
                 }));
     }
 
+    // TODO: override get many method
+
     @Override
     public CompletableFuture<RolePermissionDto> insertAsync(RolePermissionCreationDto rolePermissionCreationDto) {
         return validateCreationBusiness(rolePermissionCreationDto)
@@ -84,7 +87,7 @@ public class RolePermissionService extends BaseService<RolePermission, RolePermi
                     // Insert
                     var savedRolePermission = _rolePermissionRepository.save(rolePermission);
 
-                    return _rolePermissionMapper.MAPPER.mapRolePermissionToRolePermissionDto(savedRolePermission);
+                    return mapEntityToDto(savedRolePermission);
                 }));
     }
 
@@ -136,27 +139,17 @@ public class RolePermissionService extends BaseService<RolePermission, RolePermi
     }
 
     @Override
-    public RolePermission mapCreationDtoToEntity(RolePermissionCreationDto rolePermissionCreationDto) {
-        return _rolePermissionMapper.MAPPER.mapRolePermissionCreationDtoToRolePermission(rolePermissionCreationDto);
-    }
-
-    @Override
-    public RolePermission mapUpdateDtoToEntity(RolePermissionUpdateDto rolePermissionUpdateDto) {
-        return _rolePermissionMapper.MAPPER.mapRolePermissionUpdateDtoToRolePermission(rolePermissionUpdateDto);
-    }
-
-    @Override
-    public RolePermissionDto mapEntityToDto(RolePermission rolePermission) {
-        return _rolePermissionMapper.MAPPER.mapRolePermissionToRolePermissionDto(rolePermission);
-    }
-
-    @Override
     public CompletableFuture<Void> validateGettingBusinessAsync(RolePermissionId rolePermissionId) {
         return CompletableFuture.runAsync(() -> {
             _rolePermissionBusinessValidator.checkIfRoleAndPermissionExistedByIds(
                     rolePermissionId.getRoleId(),
                     rolePermissionId.getPermissionId());
-        });
+            _rolePermissionBusinessValidator.checkIfRolePermissionExistedById(rolePermissionId);
+
+            if (!_rolePermissionBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _rolePermissionBusinessValidator.checkIfRolePermissionAccessibleByAuthUser(rolePermissionId);
+            }
+        }, _taskExecutor);
     }
 
     @Override
@@ -165,7 +158,15 @@ public class RolePermissionService extends BaseService<RolePermission, RolePermi
             _rolePermissionBusinessValidator.checkIfRoleAndPermissionExistedByIds(
                     rolePermissionCreationDto.getRoleId(),
                     rolePermissionCreationDto.getPermissionId());
-        });
+
+            var rolePermissionCreationId = RolePermissionId.builder()
+                    .roleId(rolePermissionCreationDto.getRoleId())
+                    .permissionId(rolePermissionCreationDto.getPermissionId())
+                    .build();
+            _rolePermissionBusinessValidator.checkIfRolePermissionExistedThrowException(rolePermissionCreationId);
+
+            _rolePermissionBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+        }, _taskExecutor);
     }
 
     @Override
@@ -182,16 +183,47 @@ public class RolePermissionService extends BaseService<RolePermission, RolePermi
             // Check if new Role and Permission existed (the one which will be referenced to)
             var newRoleId = rolePermissionUpdateDto.getRoleId();
             var newPermissionId = rolePermissionUpdateDto.getPermissionId();
+            var newRolePermissionId = RolePermissionId.builder()
+                    .roleId(newRoleId)
+                    .permissionId(newPermissionId)
+                    .build();
 
             _rolePermissionBusinessValidator.checkIfRoleAndPermissionExistedByIds(newRoleId, newPermissionId);
-        });
+            _rolePermissionBusinessValidator.checkIfRolePermissionExistedThrowException(newRolePermissionId);
+
+            _rolePermissionBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+        }, _taskExecutor);
     }
 
     @Override
     public CompletableFuture<Void> validateDeletionBusinessAsync(RolePermissionId rolePermissionId) {
         return CompletableFuture.runAsync(() -> {
+            _rolePermissionBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
             _rolePermissionBusinessValidator.checkIfRolePermissionExistedById(rolePermissionId);
-        });
+        }, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionManyBusinessAsync(List<RolePermissionId> rolePermissionIds) {
+        return CompletableFuture.runAsync(() -> {
+            _rolePermissionBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            rolePermissionIds.forEach(_rolePermissionBusinessValidator::checkIfRolePermissionExistedById);
+        }, _taskExecutor);
+    }
+
+    @Override
+    public RolePermission mapCreationDtoToEntity(RolePermissionCreationDto rolePermissionCreationDto) {
+        return _rolePermissionMapper.mapRolePermissionCreationDtoToRolePermission(rolePermissionCreationDto);
+    }
+
+    @Override
+    public RolePermission mapUpdateDtoToEntity(RolePermissionUpdateDto rolePermissionUpdateDto) {
+        return _rolePermissionMapper.mapRolePermissionUpdateDtoToRolePermission(rolePermissionUpdateDto);
+    }
+
+    @Override
+    public RolePermissionDto mapEntityToDto(RolePermission rolePermission) {
+        return _rolePermissionMapper.mapRolePermissionToRolePermissionDto(rolePermission);
     }
 
 }

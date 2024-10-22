@@ -118,7 +118,7 @@ public class RolePermissionSeeder implements ApplicationListener<ContextRefreshe
                             .permissionId(permission.getPermissionId())
                             .build();
 
-                    var rolePermission = _rolePermissionMapper.MAPPER.mapRolePermissionCreationDtoToRolePermission(rolePermissionCreationDto);
+                    var rolePermission = _rolePermissionMapper.mapRolePermissionCreationDtoToRolePermission(rolePermissionCreationDto);
 
                     // Set ID and references for RolePermission
                     rolePermission.setRolePermissionId(rolePermissionId);

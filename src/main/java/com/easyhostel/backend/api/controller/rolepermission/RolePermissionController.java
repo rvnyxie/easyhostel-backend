@@ -69,7 +69,7 @@ public class RolePermissionController extends BaseController<RolePermissionDto, 
                                                                                   @PathVariable @Valid Integer permissionId) {
         var rolePermissionId = RolePermissionId.builder().roleId(roleId).permissionId(permissionId).build();
 
-        _rolePermissionService.deleteByIdAsync(rolePermissionId);
+        _rolePermissionService.deleteByIdAsync(rolePermissionId).join();
 
         var response = new FormattedResponse<Void>(
                 true,

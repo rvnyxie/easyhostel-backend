@@ -16,12 +16,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface IRolePermissionMapper {
 
-    //region Instance
-
-    IRolePermissionMapper MAPPER = Mappers.getMapper(IRolePermissionMapper.class);
-
-    //endregion
-
     //region General
 
     @Mapping(source = "rolePermission.rolePermissionId.roleId", target = "roleId")

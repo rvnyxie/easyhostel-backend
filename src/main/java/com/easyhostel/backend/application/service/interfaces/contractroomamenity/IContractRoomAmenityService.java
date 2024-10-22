@@ -18,11 +18,10 @@ public interface IContractRoomAmenityService extends IBaseService<ContractRoomAm
     /**
      * Asynchronously delete ContractRoomAmenity by IDs
      *
-     * @param contractId Contract's ID
-     * @param roomAmenityId RoomAmenity's ID
+     * @param contractRoomAmenityId ContractRoomAmenity's ID
      * @return CompletableFuture Void object
      * @author Nyx
      */
-    CompletableFuture<Void> deleteContractRoomAmenityByIdsAsync(String contractId, String roomAmenityId);
+    CompletableFuture<Void> deleteContractRoomAmenityByIdsAsync(ContractRoomAmenityId contractRoomAmenityId);
 
 }

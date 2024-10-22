@@ -17,6 +17,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -57,7 +58,7 @@ public class ContractRoomAmenityService
     @Async
     public CompletableFuture<ContractRoomAmenityDto> insertAsync(ContractRoomAmenityCreationDto contractRoomAmenityCreationDto) {
         return validateCreationBusiness(contractRoomAmenityCreationDto)
-                .thenComposeAsync(v -> CompletableFuture.supplyAsync(() -> {
+                .thenCompose(v -> CompletableFuture.supplyAsync(() -> {
                     var contractRoomAmenity = mapCreationDtoToEntity(contractRoomAmenityCreationDto);
 
                     var contract = _contractRepository.findById(contractRoomAmenityCreationDto.getContractId())
@@ -83,7 +84,7 @@ public class ContractRoomAmenityService
     @Async
     public CompletableFuture<ContractRoomAmenityDto> updateAsync(ContractRoomAmenityUpdateDto contractRoomAmenityUpdateDto) {
         return validateUpdateBusiness(contractRoomAmenityUpdateDto)
-                .thenComposeAsync(v -> CompletableFuture.supplyAsync(() -> {
+                .thenCompose(v -> CompletableFuture.supplyAsync(() -> {
                     var contractRoomAmenity = mapUpdateDtoToEntity(contractRoomAmenityUpdateDto);
 
                     var contract = _contractRepository.findById(contractRoomAmenityUpdateDto.getContractId())
@@ -107,38 +108,22 @@ public class ContractRoomAmenityService
 
     @Override
     @Transactional
-    public CompletableFuture<Void> deleteContractRoomAmenityByIdsAsync(String contractId, String roomAmenityId) {
-        return validateDeletionBusiness(contractId, roomAmenityId)
-                .thenComposeAsync(v -> CompletableFuture.runAsync(() -> {
-                    // Create ContractRoomAmenityId object to search
-                    var contractRoomAmenityId = new ContractRoomAmenityId();
-                    contractRoomAmenityId.setContractId(contractId);
-                    contractRoomAmenityId.setRoomAmenityId(roomAmenityId);
-
-                    // Search
-                    var contractRoomAmenity = _contractRoomAmenityRepository.findById(contractRoomAmenityId).orElseThrow();
-
-                    // Saved changes
-                    var savedContractRoomAmenity = _contractRoomAmenityRepository.save(contractRoomAmenity);
-
-                    // Delete ContractRoomAmenity
-                    _contractRoomAmenityRepository.delete(savedContractRoomAmenity);
+    public CompletableFuture<Void> deleteContractRoomAmenityByIdsAsync(ContractRoomAmenityId contractRoomAmenityIdToDelete) {
+        return validateDeletionBusinessAsync(contractRoomAmenityIdToDelete)
+                .thenCompose(v -> CompletableFuture.runAsync(() -> {
+                    _contractRoomAmenityRepository.deleteById(contractRoomAmenityIdToDelete);
                 }));
     }
 
     @Override
-    public ContractRoomAmenity mapCreationDtoToEntity(ContractRoomAmenityCreationDto contractRoomAmenityCreationDto) {
-        return _contractRoomAmenityMapper.MAPPER.mapContractRoomAmenityCreationDtoToContractRoomAmenity(contractRoomAmenityCreationDto);
-    }
+    public CompletableFuture<Void> validateGettingBusinessAsync(ContractRoomAmenityId contractRoomAmenityId) {
+        return CompletableFuture.runAsync(() -> {
+            _contractRoomAmenityBusinessValidator.checkIfContractRoomAmenityExistedById(contractRoomAmenityId);
 
-    @Override
-    public ContractRoomAmenity mapUpdateDtoToEntity(ContractRoomAmenityUpdateDto contractRoomAmenityUpdateDto) {
-        return _contractRoomAmenityMapper.MAPPER.mapContractRoomAmenityUpdateDtoToContractRoomAmenity(contractRoomAmenityUpdateDto);
-    }
-
-    @Override
-    public ContractRoomAmenityDto mapEntityToDto(ContractRoomAmenity contractRoomAmenity) {
-        return _contractRoomAmenityMapper.MAPPER.mapContractRoomAmenityToContractRoomAmenityDto(contractRoomAmenity);
+            if (!_contractRoomAmenityBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _contractRoomAmenityBusinessValidator.checkIfContractRoomAmenityAccessibleByAuthUser(contractRoomAmenityId);
+            }
+        }, _taskExecutor);
     }
 
     @Override
@@ -147,7 +132,19 @@ public class ContractRoomAmenityService
             var contractId = contractRoomAmenityCreationDto.getContractId();
             var roomAmenityId = contractRoomAmenityCreationDto.getRoomAmenityId();
 
-            return _contractRoomAmenityBusinessValidator.checkIfContractAndRoomAmenityExistedByIdsAsync(contractId, roomAmenityId);
+            var contractRoomAmenityToCreate = ContractRoomAmenityId.builder()
+                    .contractId(contractId)
+                    .roomAmenityId(roomAmenityId)
+                    .build();
+
+            return CompletableFuture.runAsync(() -> {
+                _contractRoomAmenityBusinessValidator.checkIfContractAndRoomAmenityExistedByIds(contractId, roomAmenityId);
+                _contractRoomAmenityBusinessValidator.checkIfContractRoomAmenityExistedThrowException(contractRoomAmenityToCreate);
+
+                if (!_contractRoomAmenityBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                    _contractRoomAmenityBusinessValidator.checkIfContractAndRoomAmenityAccessibleByAuthUser(contractId, roomAmenityId);
+                }
+            }, _taskExecutor);
     }
 
     @Override
@@ -156,12 +153,55 @@ public class ContractRoomAmenityService
             var contractId = contractRoomAmenityUpdateDto.getContractId();
             var roomAmenityId = contractRoomAmenityUpdateDto.getRoomAmenityId();
 
-            return _contractRoomAmenityBusinessValidator.checkIfContractAndRoomAmenityExistedByIdsAsync(contractId, roomAmenityId);
+            var contractRoomAmenityIdToUpdate = ContractRoomAmenityId.builder()
+                    .contractId(contractId)
+                    .roomAmenityId(roomAmenityId)
+                    .build();
+
+            return CompletableFuture.runAsync(() -> {
+                _contractRoomAmenityBusinessValidator.checkIfContractRoomAmenityExistedById(contractRoomAmenityIdToUpdate);
+
+                if (!_contractRoomAmenityBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                    _contractRoomAmenityBusinessValidator.checkIfContractRoomAmenityAccessibleByAuthUser(contractRoomAmenityIdToUpdate);
+                }
+            }, _taskExecutor);
     }
 
-    @Async
-    public CompletableFuture<Void> validateDeletionBusiness(String contractId, String roomAmenityId) {
-        return _contractRoomAmenityBusinessValidator.checkIfContractAndRoomAmenityExistedByIdsAsync(contractId, roomAmenityId);
+    @Override
+    public CompletableFuture<Void> validateDeletionBusinessAsync(ContractRoomAmenityId contractRoomAmenityId) {
+        return CompletableFuture.runAsync(() -> {
+            _contractRoomAmenityBusinessValidator.checkIfContractRoomAmenityExistedById(contractRoomAmenityId);
+
+            if (!_contractRoomAmenityBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _contractRoomAmenityBusinessValidator.checkIfContractRoomAmenityAccessibleByAuthUser(contractRoomAmenityId);
+            }
+        }, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionManyBusinessAsync(List<ContractRoomAmenityId> contractRoomAmenityIds) {
+        return CompletableFuture.runAsync(() -> {
+            contractRoomAmenityIds.forEach(_contractRoomAmenityBusinessValidator::checkIfContractRoomAmenityExistedById);
+
+            if (!_contractRoomAmenityBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                contractRoomAmenityIds.forEach(_contractRoomAmenityBusinessValidator::checkIfContractRoomAmenityAccessibleByAuthUser);
+            }
+        }, _taskExecutor);
+    }
+
+    @Override
+    public ContractRoomAmenity mapCreationDtoToEntity(ContractRoomAmenityCreationDto contractRoomAmenityCreationDto) {
+        return _contractRoomAmenityMapper.mapContractRoomAmenityCreationDtoToContractRoomAmenity(contractRoomAmenityCreationDto);
+    }
+
+    @Override
+    public ContractRoomAmenity mapUpdateDtoToEntity(ContractRoomAmenityUpdateDto contractRoomAmenityUpdateDto) {
+        return _contractRoomAmenityMapper.mapContractRoomAmenityUpdateDtoToContractRoomAmenity(contractRoomAmenityUpdateDto);
+    }
+
+    @Override
+    public ContractRoomAmenityDto mapEntityToDto(ContractRoomAmenity contractRoomAmenity) {
+        return _contractRoomAmenityMapper.mapContractRoomAmenityToContractRoomAmenityDto(contractRoomAmenity);
     }
 
 }

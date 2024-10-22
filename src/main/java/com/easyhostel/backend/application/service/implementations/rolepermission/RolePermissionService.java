@@ -54,7 +54,7 @@ public class RolePermissionService extends BaseService<RolePermission, RolePermi
     @Override
     public CompletableFuture<RolePermissionDto> getByIdAsync(RolePermissionId rolePermissionId) {
         return validateGettingBusinessAsync(rolePermissionId)
-                .thenComposeAsync(v -> CompletableFuture.supplyAsync(() -> {
+                .thenCompose(v -> CompletableFuture.supplyAsync(() -> {
                     var rolePermission = _rolePermissionRepository.findById(rolePermissionId).orElseThrow();
 
                     return mapEntityToDto(rolePermission);

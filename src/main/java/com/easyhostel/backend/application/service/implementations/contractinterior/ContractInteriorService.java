@@ -55,7 +55,7 @@ public class ContractInteriorService extends BaseService<ContractInterior, Contr
     @Async
     public CompletableFuture<ContractInteriorDto> insertAsync(ContractInteriorCreationDto contractInteriorCreationDto) {
         return validateCreationBusiness(contractInteriorCreationDto)
-                .thenComposeAsync(v -> CompletableFuture.supplyAsync(() -> {
+                .thenCompose(v -> CompletableFuture.supplyAsync(() -> {
                     var contractInterior = mapCreationDtoToEntity(contractInteriorCreationDto);
 
                     // Get Contract and Interior
@@ -83,7 +83,7 @@ public class ContractInteriorService extends BaseService<ContractInterior, Contr
     @Async
     public CompletableFuture<ContractInteriorDto> updateAsync(ContractInteriorUpdateDto contractInteriorUpdateDto) {
         return validateUpdateBusiness(contractInteriorUpdateDto)
-                .thenComposeAsync(v -> CompletableFuture.supplyAsync(() -> {
+                .thenCompose(v -> CompletableFuture.supplyAsync(() -> {
                     // When updating ContractInterior, it means we change either ContractId or InteriorId
                     // In our case, it means we save new ContractInterior and delete the old one
 
@@ -125,7 +125,7 @@ public class ContractInteriorService extends BaseService<ContractInterior, Contr
     @Async
     public CompletableFuture<Void> deleteContractInteriorByIdsAsync(ContractInteriorId contractInteriorId) {
         return validateDeletionBusinessAsync(contractInteriorId)
-                .thenComposeAsync(v -> CompletableFuture.runAsync(() -> {
+                .thenCompose(v -> CompletableFuture.runAsync(() -> {
                     _contractInteriorRepository.deleteById(contractInteriorId);
                 }));
     }

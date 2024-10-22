@@ -4,10 +4,8 @@ import com.easyhostel.backend.api.controller.base.BaseController;
 import com.easyhostel.backend.application.dto.contractinterior.ContractInteriorCreationDto;
 import com.easyhostel.backend.application.dto.contractinterior.ContractInteriorDto;
 import com.easyhostel.backend.application.dto.contractinterior.ContractInteriorUpdateDto;
-import com.easyhostel.backend.application.dto.rolepermission.RolePermissionDto;
 import com.easyhostel.backend.application.service.interfaces.contractinterior.IContractInteriorService;
 import com.easyhostel.backend.domain.entity.embedded.ContractInteriorId;
-import com.easyhostel.backend.domain.entity.embedded.RolePermissionId;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
 import com.easyhostel.backend.infrastructure.util.custom.response.FormattedResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,8 +41,8 @@ public class ContractInteriorController extends BaseController<ContractInteriorD
      * @author Nyx
      */
     @GetMapping("/{contractId}/{interiorId}")
-    public ResponseEntity<FormattedResponse<ContractInteriorDto>> getRolePermissionByIdsAsync(@PathVariable @Valid String contractId,
-                                                                                            @PathVariable @Valid String interiorId) {
+    public ResponseEntity<FormattedResponse<ContractInteriorDto>> getContractInteriorByIdsAsync(@PathVariable @Valid String contractId,
+                                                                                                @PathVariable @Valid String interiorId) {
         var contractInteriorId = ContractInteriorId.builder().contractId(contractId).interiorId(interiorId).build();
 
         var dtoEntity = _contractInteriorService.getByIdAsync(contractInteriorId).join();

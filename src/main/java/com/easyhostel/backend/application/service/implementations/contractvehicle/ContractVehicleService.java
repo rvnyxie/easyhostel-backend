@@ -53,7 +53,7 @@ public class ContractVehicleService extends BaseService<ContractVehicle, Contrac
     @Override
     public CompletableFuture<ContractVehicleDto> insertAsync(ContractVehicleCreationDto contractVehicleCreationDto) {
         return validateCreationBusiness(contractVehicleCreationDto)
-                .thenComposeAsync(v -> CompletableFuture.supplyAsync(() -> {
+                .thenCompose(v -> CompletableFuture.supplyAsync(() -> {
                     // Get ContractId and VehicleId
                     var contractId = contractVehicleCreationDto.getContractId();
                     var vehicleId = contractVehicleCreationDto.getVehicleId();
@@ -85,7 +85,7 @@ public class ContractVehicleService extends BaseService<ContractVehicle, Contrac
     @Transactional
     public CompletableFuture<ContractVehicleDto> updateAsync(ContractVehicleUpdateDto contractVehicleUpdateDto) {
         return validateUpdateBusiness(contractVehicleUpdateDto)
-                .thenComposeAsync(v -> CompletableFuture.supplyAsync(() -> {
+                .thenCompose(v -> CompletableFuture.supplyAsync(() -> {
                     // Delete old ContractVehicle
                     deleteContractVehicleByIdsAsync(contractVehicleUpdateDto.getContractId(), contractVehicleUpdateDto.getOldVehicleId());
 
@@ -120,7 +120,7 @@ public class ContractVehicleService extends BaseService<ContractVehicle, Contrac
     @Transactional
     public CompletableFuture<Void> deleteContractVehicleByIdsAsync(String contractId, String vehicleId) {
         return validateDeletionBusinessAsync(contractId, vehicleId)
-                .thenComposeAsync(v -> CompletableFuture.runAsync(() -> {
+                .thenCompose(v -> CompletableFuture.runAsync(() -> {
                     var contractVehicleId = new ContractVehicleId();
                     contractVehicleId.setContractId(contractId);
                     contractVehicleId.setVehicleId(vehicleId);

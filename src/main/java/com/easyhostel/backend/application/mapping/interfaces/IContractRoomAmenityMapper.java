@@ -16,12 +16,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface IContractRoomAmenityMapper {
 
-    //region Instance
-
-    IContractRoomAmenityMapper MAPPER = Mappers.getMapper(IContractRoomAmenityMapper.class);
-
-    //endregion
-
     //region General
 
     // Mapstruct does not automatically map embedded IDs, so we map them manually

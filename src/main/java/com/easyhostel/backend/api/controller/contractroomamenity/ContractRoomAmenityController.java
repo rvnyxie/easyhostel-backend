@@ -9,13 +9,11 @@ import com.easyhostel.backend.domain.entity.embedded.ContractRoomAmenityId;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
 import com.easyhostel.backend.infrastructure.util.custom.response.FormattedResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller for ContractRoomAmenity
@@ -35,6 +33,31 @@ public class ContractRoomAmenityController extends BaseController<ContractRoomAm
     }
 
     /**
+     * Asynchronously get ContractRoomAmenity by IDs
+     *
+     * @param contractId Contract's ID
+     * @param roomAmenityId RoomAmenity's ID
+     * @return Full formatted response
+     * @author Nyx
+     */
+    @GetMapping("/{contractId}/{roomAmenityId}")
+    public ResponseEntity<FormattedResponse<ContractRoomAmenityDto>> getContractRoomAmenityByIdsAsync(@PathVariable @Valid String contractId,
+                                                                                                      @PathVariable @Valid String roomAmenityId) {
+        var contractRoomAmenityId = ContractRoomAmenityId.builder().contractId(contractId).roomAmenityId(roomAmenityId).build();
+
+        var dtoEntity = _contractRoomAmenityService.getByIdAsync(contractRoomAmenityId).join();
+
+        var response = new FormattedResponse<>(
+                true,
+                HttpStatus.OK.value(),
+                null,
+                Translator.toLocale("get.contractRoomAmenity.success"),
+                dtoEntity
+        );
+        return ResponseEntity.ok(response);
+    }
+
+    /**
      * Asynchronously delete a ContractRoomAmenity by IDs
      *
      * @param contractId Contract's ID
@@ -47,13 +70,18 @@ public class ContractRoomAmenityController extends BaseController<ContractRoomAm
             @PathVariable String contractId,
             @PathVariable String roomAmenityId
     ) {
-        _contractRoomAmenityService.deleteContractRoomAmenityByIdsAsync(contractId, roomAmenityId).join();
+        var contractRoomAmenityId = ContractRoomAmenityId.builder()
+                .contractId(contractId)
+                .roomAmenityId(roomAmenityId)
+                .build();
+
+        _contractRoomAmenityService.deleteContractRoomAmenityByIdsAsync(contractRoomAmenityId).join();
 
         var response = new FormattedResponse<Void>(
                 true,
                 HttpStatus.OK.value(),
                 null,
-                Translator.toLocale(""),
+                Translator.toLocale("delete.contractRoomAmenity.success"),
                 null
         );
         return ResponseEntity.ok(response);

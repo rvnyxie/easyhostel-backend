@@ -12,4 +12,14 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IInteriorRepository extends IBaseRepository<Interior, String> {
+
+    /**
+     * Check if Interior's name existed
+     *
+     * @param interiorName Interior's name
+     * @return true if existed, false if not
+     * @author Nyx
+     */
+    boolean existsByInteriorName(String interiorName);
+
 }

@@ -12,6 +12,7 @@ import com.easyhostel.backend.domain.service.interfaces.interior.IInteriorBusine
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -40,35 +41,53 @@ public class InteriorService extends BaseService<Interior, InteriorDto, Interior
     }
 
     @Override
-    public Interior mapCreationDtoToEntity(InteriorCreationDto interiorCreationDto) {
-        var interior = _interiorMapper.MAPPER.mapInteriorCreationDtoToInterior(interiorCreationDto);
+    public CompletableFuture<Void> validateCreationBusiness(InteriorCreationDto interiorCreationDto) {
+        return CompletableFuture.runAsync(() -> {
+            _interiorBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            _interiorBusinessValidator.checkIfNewInteriorHasDuplicatedName(interiorCreationDto.getInteriorName());
+        }, _taskExecutor);
+    }
 
-        return interior;
+    @Override
+    public CompletableFuture<Void> validateUpdateBusiness(InteriorUpdateDto interiorUpdateDto) {
+        return CompletableFuture.runAsync(() -> {
+            _interiorBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            _interiorBusinessValidator.checkIfInteriorExistedById(interiorUpdateDto.getInteriorId());
+            _interiorBusinessValidator.checkIfUpdateInteriorHasDuplicatedName(
+                    interiorUpdateDto.getInteriorId(),
+                    interiorUpdateDto.getInteriorName());
+        }, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionBusinessAsync(String interiorId) {
+        return CompletableFuture.runAsync(() -> {
+            _interiorBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            _interiorBusinessValidator.checkIfInteriorExistedById(interiorId);
+        }, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionManyBusinessAsync(List<String> interiorIds) {
+        return CompletableFuture.runAsync(() -> {
+            _interiorBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            interiorIds.forEach(_interiorBusinessValidator::checkIfInteriorExistedById);
+        }, _taskExecutor);
+    }
+
+    @Override
+    public Interior mapCreationDtoToEntity(InteriorCreationDto interiorCreationDto) {
+        return _interiorMapper.mapInteriorCreationDtoToInterior(interiorCreationDto);
     }
 
     @Override
     public Interior mapUpdateDtoToEntity(InteriorUpdateDto interiorUpdateDto) {
-        var interior = _interiorMapper.mapInteriorUpdateDtoToInterior(interiorUpdateDto);
-
-        return interior;
+        return _interiorMapper.mapInteriorUpdateDtoToInterior(interiorUpdateDto);
     }
 
     @Override
     public InteriorDto mapEntityToDto(Interior interior) {
-        var interiorDto = _interiorMapper.mapInteriorToInteriorDto(interior);
-
-        return interiorDto;
+        return _interiorMapper.mapInteriorToInteriorDto(interior);
     }
 
-    // TODO: Add business creation validation for Interior
-    @Override
-    public CompletableFuture<Void> validateCreationBusiness(InteriorCreationDto interiorCreationDto) {
-        return super.validateCreationBusiness(interiorCreationDto);
-    }
-
-    // TODO: Add business update validation for Interior
-    @Override
-    public CompletableFuture<Void> validateUpdateBusiness(InteriorUpdateDto interiorUpdateDto) {
-        return super.validateUpdateBusiness(interiorUpdateDto);
-    }
 }

@@ -15,12 +15,22 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface IInteriorMapper {
 
-    IInteriorMapper MAPPER = Mappers.getMapper(IInteriorMapper.class);
+    //region General
 
     InteriorDto mapInteriorToInteriorDto(Interior interior);
 
+    //endregion
+
+    //region Map creation
+
     Interior mapInteriorCreationDtoToInterior(InteriorCreationDto interiorCreationDto);
 
+    //endregion
+
+    //region Map update
+
     Interior mapInteriorUpdateDtoToInterior(InteriorUpdateDto interiorUpdateDto);
+
+    //endregion
 
 }

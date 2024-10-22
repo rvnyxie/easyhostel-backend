@@ -28,8 +28,6 @@ public class InteriorReadonlyService extends BaseReadonlyService<Interior, Inter
 
     @Override
     public InteriorDto mapEntityToDto(Interior interior) {
-        var interiorDto = _interiorMapper.MAPPER.mapInteriorToInteriorDto(interior);
-
-        return interiorDto;
+        return _interiorMapper.mapInteriorToInteriorDto(interior);
     }
 }

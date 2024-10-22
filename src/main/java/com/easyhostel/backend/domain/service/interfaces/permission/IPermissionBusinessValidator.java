@@ -16,7 +16,7 @@ public interface IPermissionBusinessValidator extends IBaseBusinessValidator {
      * Check is Permission existed by ID
      *
      * @param permissionId Permission's ID
-     * @exception EntityNotFoundException If Permission or Interior not found
+     * @exception EntityNotFoundException If Permission not found
      * @author Nyx
      */
     void checkIfPermissionExistedById(Integer permissionId);

@@ -49,7 +49,7 @@ public class AccountSeeder implements ApplicationListener<ContextRefreshedEvent>
                 .username("sysadmin")
                 .email("sysadmin@easyhostel.com")
                 .password(_passwordService.encodePassword("sysadmin"))
-                .role(_roleMapper.MAPPER.mapRoleToRoleDto(optionalRole.get()))
+                .role(_roleMapper.mapRoleToRoleDto(optionalRole.get()))
                 .build();
 
         _managerRepository.save(_managerMapper.mapManagerCreationDtoToManager(sysadminCreationDto));
@@ -67,7 +67,7 @@ public class AccountSeeder implements ApplicationListener<ContextRefreshedEvent>
                 .username("admin")
                 .email("admin@easyhostel.com")
                 .password(_passwordService.encodePassword("admin"))
-                .role(_roleMapper.MAPPER.mapRoleToRoleDto(optionalRole.get()))
+                .role(_roleMapper.mapRoleToRoleDto(optionalRole.get()))
                 .build();
 
         _managerRepository.save(_managerMapper.mapManagerCreationDtoToManager(adminCreationDto));
@@ -85,7 +85,7 @@ public class AccountSeeder implements ApplicationListener<ContextRefreshedEvent>
                 .username("user")
                 .email("user@easyhostel.com")
                 .password(_passwordService.encodePassword("user"))
-                .role(_roleMapper.MAPPER.mapRoleToRoleDto(optionalRole.get()))
+                .role(_roleMapper.mapRoleToRoleDto(optionalRole.get()))
                 .build();
 
         _managerRepository.save(_managerMapper.mapManagerCreationDtoToManager(defaultUserCreationDto));

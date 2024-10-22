@@ -26,7 +26,8 @@ import java.util.Set;
 public class Role extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
+    @SequenceGenerator(name = "role_seq", sequenceName = "role_seq", allocationSize = 1)
     private Integer roleId;
 
     private String roleName;

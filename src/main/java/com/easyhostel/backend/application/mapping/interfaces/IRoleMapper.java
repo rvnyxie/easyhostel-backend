@@ -6,7 +6,6 @@ import com.easyhostel.backend.application.dto.role.RoleUpdateDto;
 import com.easyhostel.backend.domain.entity.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 /**
  * Mapper for Role entity
@@ -15,12 +14,6 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring", uses = { IManagerMapper.class })
 public interface IRoleMapper {
-
-    //region Instance
-
-    IRoleMapper MAPPER = Mappers.getMapper(IRoleMapper.class);
-
-    //endregion
 
     //region General
 

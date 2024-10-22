@@ -1,10 +1,14 @@
 package com.easyhostel.backend.domain.service.implementation.role;
 
+import com.easyhostel.backend.application.service.interfaces.authentication.IAuthenticationService;
+import com.easyhostel.backend.domain.entity.Manager;
 import com.easyhostel.backend.domain.entity.Role;
 import com.easyhostel.backend.domain.enums.ErrorCode;
 import com.easyhostel.backend.domain.exception.DuplicatedDistinctRequiredValueException;
 import com.easyhostel.backend.domain.exception.EntityNotFoundException;
+import com.easyhostel.backend.domain.exception.UnauthorizedAccessException;
 import com.easyhostel.backend.domain.repository.interfaces.role.IRoleRepository;
+import com.easyhostel.backend.domain.service.implementation.base.BaseBusinessValidator;
 import com.easyhostel.backend.domain.service.interfaces.role.IRoleBusinessValidator;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
 import org.springframework.http.HttpStatus;
@@ -18,11 +22,15 @@ import java.util.concurrent.CompletableFuture;
  * @author Nyx
  */
 @Service
-public class RoleBusinessValidator implements IRoleBusinessValidator {
+public class RoleBusinessValidator extends BaseBusinessValidator implements IRoleBusinessValidator {
 
+    private final IAuthenticationService _authenticationService;
     private final IRoleRepository _roleRepository;
 
-    public RoleBusinessValidator(IRoleRepository roleRepository) {
+    public RoleBusinessValidator(IAuthenticationService authenticationService,
+                                 IRoleRepository roleRepository) {
+        super(authenticationService);
+        _authenticationService = authenticationService;
         _roleRepository = roleRepository;
     }
 
@@ -59,6 +67,21 @@ public class RoleBusinessValidator implements IRoleBusinessValidator {
 
         if (!role.getRoleName().equals(roleName)) {
             checkIfRoleNameExistedThenThrowException(roleName);
+        }
+    }
+
+    @Override
+    public void checkIfRoleAccessibleByAuthUser(Integer roleId) {
+        var currentAuthUser = (Manager) _authenticationService.getAuthentication().getPrincipal();
+
+        var isRoleAccessibleByAuthUser = currentAuthUser.getRole().getRoleId().equals(roleId);
+
+        if (!isRoleAccessibleByAuthUser) {
+            throw new UnauthorizedAccessException(
+                    Translator.toLocale("exception.roleNotAccessibleByManager"),
+                    ErrorCode.FORBIDDEN_ACCESS,
+                    HttpStatus.FORBIDDEN
+            );
         }
     }
 }

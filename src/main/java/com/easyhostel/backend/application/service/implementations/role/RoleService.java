@@ -12,6 +12,7 @@ import com.easyhostel.backend.domain.service.interfaces.role.IRoleBusinessValida
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -38,34 +39,64 @@ public class RoleService extends BaseService<Role, RoleDto, RoleCreationDto, Rol
     }
 
     @Override
-    public Role mapCreationDtoToEntity(RoleCreationDto roleCreationDto) {
-        return _roleMapper.MAPPER.mapRoleCreationDtoToRole(roleCreationDto);
+    public CompletableFuture<Void> validateGettingBusinessAsync(Integer roleId) {
+        return CompletableFuture.runAsync(() -> {
+            if (!_roleBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _roleBusinessValidator.checkIfRoleAccessibleByAuthUser(roleId);
+            }
+        }, _taskExecutor);
     }
 
     @Override
-    public Role mapUpdateDtoToEntity(RoleUpdateDto roleUpdateDto) {
-        return _roleMapper.MAPPER.mapRoleUpdateDtoToRole(roleUpdateDto);
-    }
-
-    @Override
-    public RoleDto mapEntityToDto(Role role) {
-        return _roleMapper.MAPPER.mapRoleToRoleDto(role);
+    public CompletableFuture<Void> validateGettingManyBusinessAsync() {
+        return CompletableFuture.runAsync(_roleBusinessValidator::checkIfAuthenticatedUserNotSysadminThrowException, _taskExecutor);
     }
 
     @Override
     public CompletableFuture<Void> validateCreationBusiness(RoleCreationDto roleCreationDto) {
         return CompletableFuture.runAsync(() -> {
+            _roleBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
             _roleBusinessValidator.checkIfRoleNameExistedThenThrowException(roleCreationDto.getRoleName());
-        });
+        }, _taskExecutor);
     }
 
     @Override
     public CompletableFuture<Void> validateUpdateBusiness(RoleUpdateDto roleUpdateDto) {
         return CompletableFuture.runAsync(() -> {
+            _roleBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
             _roleBusinessValidator.checkIfRoleExistedById(roleUpdateDto.getRoleId());
             _roleBusinessValidator.checkIfRoleNameUnchangedOrChangedToNonExistedValue(
                     roleUpdateDto.getRoleId(),
                     roleUpdateDto.getRoleName());
-        });
+        }, _taskExecutor);
     }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionBusinessAsync(Integer integer) {
+        return CompletableFuture.runAsync(_roleBusinessValidator::checkIfAuthenticatedUserNotSysadminThrowException, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionManyBusinessAsync(List<Integer> roleIds) {
+        return CompletableFuture.runAsync(() -> {
+            _roleBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            roleIds.forEach(_roleBusinessValidator::checkIfRoleExistedById);
+        }, _taskExecutor);
+    }
+
+    @Override
+    public Role mapCreationDtoToEntity(RoleCreationDto roleCreationDto) {
+        return _roleMapper.mapRoleCreationDtoToRole(roleCreationDto);
+    }
+
+    @Override
+    public Role mapUpdateDtoToEntity(RoleUpdateDto roleUpdateDto) {
+        return _roleMapper.mapRoleUpdateDtoToRole(roleUpdateDto);
+    }
+
+    @Override
+    public RoleDto mapEntityToDto(Role role) {
+        return _roleMapper.mapRoleToRoleDto(role);
+    }
+
 }

@@ -2,13 +2,15 @@ package com.easyhostel.backend.domain.service.interfaces.role;
 
 import com.easyhostel.backend.domain.exception.DuplicatedDistinctRequiredValueException;
 import com.easyhostel.backend.domain.exception.EntityNotFoundException;
+import com.easyhostel.backend.domain.exception.UnauthorizedAccessException;
+import com.easyhostel.backend.domain.service.interfaces.base.IBaseBusinessValidator;
 
 /**
  * Interface for defining Role's business validator
  *
  * @author Nyx
  */
-public interface IRoleBusinessValidator {
+public interface IRoleBusinessValidator extends IBaseBusinessValidator {
 
     /**
      * Check is Role existed by ID
@@ -36,5 +38,14 @@ public interface IRoleBusinessValidator {
      * @author Nyx
      */
     void checkIfRoleNameUnchangedOrChangedToNonExistedValue(Integer roleId, String roleName);
+
+    /**
+     * Check if authenticated user can access Role
+     *
+     * @param roleId Role's ID
+     * @exception UnauthorizedAccessException Not accessible by authenticated user
+     * @author Nyx
+     */
+    void checkIfRoleAccessibleByAuthUser(Integer roleId);
 
 }

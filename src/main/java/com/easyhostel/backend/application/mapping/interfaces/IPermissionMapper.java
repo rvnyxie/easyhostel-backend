@@ -19,12 +19,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface IPermissionMapper {
 
-    //region Instance
-
-    IPermissionMapper MAPPER = Mappers.getMapper(IPermissionMapper.class);
-
-    //endregion
-
     //region General
 
     PermissionDto mapPermissionToPermissionDto(Permission permission);

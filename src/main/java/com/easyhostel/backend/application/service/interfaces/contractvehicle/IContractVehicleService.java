@@ -18,21 +18,10 @@ public interface IContractVehicleService extends IBaseService<ContractVehicleDto
     /**
      * Asynchronously delete ContractVehicle by IDs
      *
-     * @param contractId Contract's ID
-     * @param vehicleId Vehicle's ID
+     * @param contractVehicleId ContractVehicle's ID
      * @return CompletableFuture Void object
      * @author Nyx
      */
-    CompletableFuture<Void> deleteContractVehicleByIdsAsync(String contractId, String vehicleId);
-
-    /**
-     * Asynchronously validate ContractVehicle for deletion by IDs
-     *
-     * @param contractId Contract's ID
-     * @param vehicleId Vehicle's ID
-     * @return CompletableFuture Void object
-     * @author Nyx
-     */
-    CompletableFuture<Void> validateDeletionBusinessAsync(String contractId, String vehicleId);
+    CompletableFuture<Void> deleteContractVehicleByIdsAsync(ContractVehicleId contractVehicleId);
 
 }

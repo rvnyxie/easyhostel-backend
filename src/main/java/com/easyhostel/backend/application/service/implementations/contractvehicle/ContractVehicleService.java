@@ -16,6 +16,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -87,7 +88,11 @@ public class ContractVehicleService extends BaseService<ContractVehicle, Contrac
         return validateUpdateBusiness(contractVehicleUpdateDto)
                 .thenCompose(v -> CompletableFuture.supplyAsync(() -> {
                     // Delete old ContractVehicle
-                    deleteContractVehicleByIdsAsync(contractVehicleUpdateDto.getContractId(), contractVehicleUpdateDto.getOldVehicleId());
+                    var contractVehicleIdToDelete = ContractVehicleId.builder()
+                            .contractId(contractVehicleUpdateDto.getOldContractId())
+                            .vehicleId(contractVehicleUpdateDto.getOldVehicleId())
+                            .build();
+                    deleteContractVehicleByIdsAsync(contractVehicleIdToDelete);
 
                     // Insert new ContractVehicle
                     // Get new ContractId and VehicleId
@@ -118,58 +123,99 @@ public class ContractVehicleService extends BaseService<ContractVehicle, Contrac
 
     @Override
     @Transactional
-    public CompletableFuture<Void> deleteContractVehicleByIdsAsync(String contractId, String vehicleId) {
-        return validateDeletionBusinessAsync(contractId, vehicleId)
+    public CompletableFuture<Void> deleteContractVehicleByIdsAsync(ContractVehicleId contractVehicleId) {
+        return validateDeletionBusinessAsync(contractVehicleId)
                 .thenCompose(v -> CompletableFuture.runAsync(() -> {
-                    var contractVehicleId = new ContractVehicleId();
-                    contractVehicleId.setContractId(contractId);
-                    contractVehicleId.setVehicleId(vehicleId);
-
                     _contractVehicleRepository.deleteById(contractVehicleId);
                 }));
     }
 
     @Override
-    public ContractVehicle mapCreationDtoToEntity(ContractVehicleCreationDto contractVehicleCreationDto) {
-        return _contractVehicleMapper.MAPPER.mapContractVehicleCreationDtoToContractVehicle(contractVehicleCreationDto);
-    }
+    public CompletableFuture<Void> validateGettingBusinessAsync(ContractVehicleId contractVehicleId) {
+        return CompletableFuture.runAsync(() -> {
+            _contractVehicleBusinessValidator.checkIfContractVehicleExisted(contractVehicleId);
 
-    @Override
-    public ContractVehicle mapUpdateDtoToEntity(ContractVehicleUpdateDto contractVehicleUpdateDto) {
-        return _contractVehicleMapper.MAPPER.mapContractVehicleUpdateDtoToContractVehicle(contractVehicleUpdateDto);
-    }
-
-    @Override
-    public ContractVehicleDto mapEntityToDto(ContractVehicle contractVehicle) {
-        return _contractVehicleMapper.MAPPER.mapContractVehicleToContractVehicleDto(contractVehicle);
+            if (!_contractVehicleBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _contractVehicleBusinessValidator.checkIfContractVehicleAccessibleByAuthUser(contractVehicleId);
+            }
+        }, _taskExecutor);
     }
 
     @Override
     public CompletableFuture<Void> validateCreationBusiness(ContractVehicleCreationDto contractVehicleCreationDto) {
         var contractId = contractVehicleCreationDto.getContractId();
         var vehicleId = contractVehicleCreationDto.getVehicleId();
+        var contractVehicleId = ContractVehicleId.builder()
+                .contractId(contractId)
+                .vehicleId(vehicleId)
+                .build();
 
-        return CompletableFuture
-                .runAsync(() -> _contractVehicleBusinessValidator.checkIfContractAndVehicleExisted(contractId, vehicleId));
+        return CompletableFuture.runAsync(() -> {
+            _contractVehicleBusinessValidator.checkIfContractAndVehicleExisted(contractId, vehicleId);
+            _contractVehicleBusinessValidator.checkIfContractVehicleExistedThrowException(contractVehicleId);
+
+            if (!_contractVehicleBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _contractVehicleBusinessValidator.checkIfContractAndVehicleAccessibleByAuthUser(contractId, vehicleId);
+            }
+        }, _taskExecutor);
     }
 
     @Override
     public CompletableFuture<Void> validateUpdateBusiness(ContractVehicleUpdateDto contractVehicleUpdateDto) {
-        var oldContractId = contractVehicleUpdateDto.getOldContractId();
-        var oldVehicleId = contractVehicleUpdateDto.getOldVehicleId();
+        var oldContractVehicleId = ContractVehicleId.builder()
+                .contractId(contractVehicleUpdateDto.getOldContractId())
+                .vehicleId(contractVehicleUpdateDto.getOldVehicleId())
+                .build();
 
-        var contractId = contractVehicleUpdateDto.getContractId();
-        var vehicleId = contractVehicleUpdateDto.getVehicleId();
+        var newContractId = contractVehicleUpdateDto.getContractId();
+        var newVehicleId = contractVehicleUpdateDto.getVehicleId();
 
-        return CompletableFuture
-                .runAsync(() -> _contractVehicleBusinessValidator.checkIfContractVehicleExisted(oldContractId, oldVehicleId))
-                .thenRunAsync(() -> _contractVehicleBusinessValidator.checkIfContractAndVehicleExisted(contractId, vehicleId));
+        return CompletableFuture.runAsync(() -> {
+            _contractVehicleBusinessValidator.checkIfContractVehicleExisted(oldContractVehicleId);
+            _contractVehicleBusinessValidator.checkIfContractAndVehicleExisted(newContractId, newVehicleId);
+
+            if (!_contractVehicleBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _contractVehicleBusinessValidator.checkIfContractVehicleAccessibleByAuthUser(oldContractVehicleId);
+                _contractVehicleBusinessValidator.checkIfContractAndVehicleAccessibleByAuthUser(newContractId, newVehicleId);
+            }
+        }, _taskExecutor);
     }
 
     @Override
-    public CompletableFuture<Void> validateDeletionBusinessAsync(String contractId, String vehicleId) {
-        return CompletableFuture
-                .runAsync(() -> _contractVehicleBusinessValidator.checkIfContractVehicleExisted(contractId, vehicleId));
+    public CompletableFuture<Void> validateDeletionBusinessAsync(ContractVehicleId contractVehicleId) {
+        return CompletableFuture.runAsync(() -> {
+            _contractVehicleBusinessValidator.checkIfContractVehicleExisted(contractVehicleId);
+
+            if (_contractVehicleBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                _contractVehicleBusinessValidator.checkIfContractVehicleAccessibleByAuthUser(contractVehicleId);
+            }
+        }, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionManyBusinessAsync(List<ContractVehicleId> contractVehicleIds) {
+        return CompletableFuture.runAsync(() -> {
+            contractVehicleIds.forEach(_contractVehicleBusinessValidator::checkIfContractVehicleExisted);
+
+            if (_contractVehicleBusinessValidator.checkIsAuthenticatedUserSysadmin()) {
+                contractVehicleIds.forEach(_contractVehicleBusinessValidator::checkIfContractVehicleAccessibleByAuthUser);
+            }
+        }, _taskExecutor);
+    }
+
+    @Override
+    public ContractVehicle mapCreationDtoToEntity(ContractVehicleCreationDto contractVehicleCreationDto) {
+        return _contractVehicleMapper.mapContractVehicleCreationDtoToContractVehicle(contractVehicleCreationDto);
+    }
+
+    @Override
+    public ContractVehicle mapUpdateDtoToEntity(ContractVehicleUpdateDto contractVehicleUpdateDto) {
+        return _contractVehicleMapper.mapContractVehicleUpdateDtoToContractVehicle(contractVehicleUpdateDto);
+    }
+
+    @Override
+    public ContractVehicleDto mapEntityToDto(ContractVehicle contractVehicle) {
+        return _contractVehicleMapper.mapContractVehicleToContractVehicleDto(contractVehicle);
     }
 
 }

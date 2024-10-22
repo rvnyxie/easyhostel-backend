@@ -6,16 +6,9 @@ import com.easyhostel.backend.application.dto.contractvehicle.ContractVehicleUpd
 import com.easyhostel.backend.domain.entity.ContractVehicle;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface IContractVehicleMapper {
-
-    //region Instance
-
-    IContractVehicleMapper MAPPER = Mappers.getMapper(IContractVehicleMapper.class);
-
-    //endregion
 
     //region General
 

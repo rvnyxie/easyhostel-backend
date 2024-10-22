@@ -12,6 +12,7 @@ import com.easyhostel.backend.domain.service.interfaces.vehicle.IVehicleBusiness
 import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -22,7 +23,6 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class VehicleService extends BaseService<Vehicle, VehicleDto, VehicleCreationDto, VehicleUpdateDto, String> implements IVehicleService {
 
-    private final IVehicleRepository _vehicleRepository;
     private final IVehicleBusinessValidator _vehicleBusinessValidator;
     private final IVehicleMapper _vehicleMapper;
 
@@ -33,42 +33,50 @@ public class VehicleService extends BaseService<Vehicle, VehicleDto, VehicleCrea
                           IVehicleMapper vehicleMapper,
                           DelegatingSecurityContextAsyncTaskExecutor taskExecutor) {
         super(vehicleRepository, taskExecutor);
-        _vehicleRepository = vehicleRepository;
         _vehicleBusinessValidator = vehicleBusinessValidator;
         _vehicleMapper = vehicleMapper;
         _taskExecutor = taskExecutor;
     }
 
     @Override
-    public Vehicle mapCreationDtoToEntity(VehicleCreationDto vehicleCreationDto) {
-        var vehicle = _vehicleMapper.MAPPER.mapVehicleCreationDtoToVehicle(vehicleCreationDto);
+    public CompletableFuture<Void> validateCreationBusiness(VehicleCreationDto vehicleCreationDto) {
+        return CompletableFuture.runAsync(_vehicleBusinessValidator::checkIfAuthenticatedUserNotSysadminThrowException, _taskExecutor);
+    }
 
-        return vehicle;
+    @Override
+    public CompletableFuture<Void> validateUpdateBusiness(VehicleUpdateDto vehicleUpdateDto) {
+        return CompletableFuture.runAsync(_vehicleBusinessValidator::checkIfAuthenticatedUserNotSysadminThrowException, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionBusinessAsync(String vehicleId) {
+        return CompletableFuture.runAsync(() -> {
+            _vehicleBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            _vehicleBusinessValidator.checkIfVehicleExistedById(vehicleId);
+        }, _taskExecutor);
+    }
+
+    @Override
+    public CompletableFuture<Void> validateDeletionManyBusinessAsync(List<String> vehicleIds) {
+        return CompletableFuture.runAsync(() -> {
+            _vehicleBusinessValidator.checkIfAuthenticatedUserNotSysadminThrowException();
+            vehicleIds.forEach(_vehicleBusinessValidator::checkIfVehicleExistedById);
+        }, _taskExecutor);
+    }
+
+    @Override
+    public Vehicle mapCreationDtoToEntity(VehicleCreationDto vehicleCreationDto) {
+        return _vehicleMapper.mapVehicleCreationDtoToVehicle(vehicleCreationDto);
     }
 
     @Override
     public Vehicle mapUpdateDtoToEntity(VehicleUpdateDto vehicleUpdateDto) {
-        var vehicle = _vehicleMapper.MAPPER.mapVehicleUpdateDtoToVehicle(vehicleUpdateDto);
-
-        return vehicle;
+        return _vehicleMapper.mapVehicleUpdateDtoToVehicle(vehicleUpdateDto);
     }
 
     @Override
     public VehicleDto mapEntityToDto(Vehicle vehicle) {
-        var vehicleDto = _vehicleMapper.MAPPER.mapVehicleToVehicleDto(vehicle);
-
-        return vehicleDto;
+        return _vehicleMapper.mapVehicleToVehicleDto(vehicle);
     }
 
-    // TODO: Add business creation validation for Vehicle
-    @Override
-    public CompletableFuture<Void> validateCreationBusiness(VehicleCreationDto vehicleCreationDto) {
-        return super.validateCreationBusiness(vehicleCreationDto);
-    }
-
-    // TODO: Add business creation validation for Vehicle
-    @Override
-    public CompletableFuture<Void> validateUpdateBusiness(VehicleUpdateDto vehicleUpdateDto) {
-        return super.validateUpdateBusiness(vehicleUpdateDto);
-    }
 }

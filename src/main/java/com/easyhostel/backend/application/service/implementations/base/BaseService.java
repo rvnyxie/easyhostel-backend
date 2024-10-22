@@ -67,24 +67,6 @@ public abstract class BaseService<TEntity, TDtoEntity, TCreationDtoEntity, TUpda
     }
 
     /**
-     * Convert from creation DTO entity to entity
-     *
-     * @param creationDtoEntity Creation DTO entity
-     * @return An entity
-     * @author Nyx
-     */
-    public abstract TEntity mapCreationDtoToEntity(TCreationDtoEntity creationDtoEntity);
-
-    /**
-     * Convert from update DTO entity to entity
-     *
-     * @param updateDtoEntity Update DTO entity
-     * @return An entity
-     * @author Nyx
-     */
-    public abstract TEntity mapUpdateDtoToEntity(TUpdateDtoEntity updateDtoEntity);
-
-    /**
      * Validate creation business on specified entity
      *
      * @param creationDtoEntity Creation DTO Entity
@@ -131,5 +113,23 @@ public abstract class BaseService<TEntity, TDtoEntity, TCreationDtoEntity, TUpda
     public CompletableFuture<Void> validateDeletionManyBusinessAsync(List<TId> ids) {
         return CompletableFuture.runAsync(() -> { }, _taskExecutor);
     }
+
+    /**
+     * Convert from creation DTO entity to entity
+     *
+     * @param creationDtoEntity Creation DTO entity
+     * @return An entity
+     * @author Nyx
+     */
+    public abstract TEntity mapCreationDtoToEntity(TCreationDtoEntity creationDtoEntity);
+
+    /**
+     * Convert from update DTO entity to entity
+     *
+     * @param updateDtoEntity Update DTO entity
+     * @return An entity
+     * @author Nyx
+     */
+    public abstract TEntity mapUpdateDtoToEntity(TUpdateDtoEntity updateDtoEntity);
 
 }

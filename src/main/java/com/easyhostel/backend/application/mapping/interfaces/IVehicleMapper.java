@@ -5,7 +5,6 @@ import com.easyhostel.backend.application.dto.vehicle.VehicleDto;
 import com.easyhostel.backend.application.dto.vehicle.VehicleUpdateDto;
 import com.easyhostel.backend.domain.entity.Vehicle;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 /**
  * Mapper for Vehicle entity
@@ -15,12 +14,22 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface IVehicleMapper {
 
-    IVehicleMapper MAPPER = Mappers.getMapper(IVehicleMapper.class);
+    //region General
 
     VehicleDto mapVehicleToVehicleDto(Vehicle vehicle);
 
+    //endregion
+
+    //region Map creation
+
     Vehicle mapVehicleCreationDtoToVehicle(VehicleCreationDto vehicleCreationDto);
 
+    //endregion
+
+    //region Map update
+
     Vehicle mapVehicleUpdateDtoToVehicle(VehicleUpdateDto vehicleUpdateDto);
+
+    //endregion
 
 }

@@ -28,8 +28,6 @@ public class VehicleReadonlyService extends BaseReadonlyService<Vehicle, Vehicle
 
     @Override
     public VehicleDto mapEntityToDto(Vehicle vehicle) {
-        var vehicleDto = _vehicleMapper.MAPPER.mapVehicleToVehicleDto(vehicle);
-
-        return vehicleDto;
+        return _vehicleMapper.mapVehicleToVehicleDto(vehicle);
     }
 }

@@ -1,3 +1,8 @@
 spring:
   application:
     name: easyhostel-backend
+  profiles:
+    active: '@spring.profiles.active@'
+api:
+  version: v1.0
+  base-path: /api/${api.version}

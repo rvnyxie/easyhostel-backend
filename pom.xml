@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.easyhostel</groupId>
 	<artifactId>easyhostel-backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>api</name>
 	<description>EasyHostel API</description>
 	<url/>
@@ -32,6 +32,28 @@
 		<org.projectlombok.version>1.18.34</org.projectlombok.version>
 		<io.jsonwebtoken.version>0.11.5</io.jsonwebtoken.version>
 	</properties>
+
+	<!-- Profiles -->
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<spring.profiles.active>test</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<spring.profiles.active>prod</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
 
 	<dependencies>
 		<!-- Core Spring Boot Dependencies -->
@@ -138,6 +160,24 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.yml</include>
+					<include>**/*.txt</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+			<!-- This section ensures that properties files are copied without filtering -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include> <!-- Include all properties files -->
+				</includes>
+				<filtering>false</filtering> <!-- Do not filter properties files -->
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -165,6 +205,15 @@
 							<version>0.2.0</version>
 						</path>
 					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<!-- Add entry class -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.easyhostel.backend.EasyHostelApplication</mainClass>
+					<layout>JAR</layout>
 				</configuration>
 			</plugin>
 		</plugins>

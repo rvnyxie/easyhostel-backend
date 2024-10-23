@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: test
   datasource:
     url: jdbc:postgresql://localhost:5432/easyhostel
     username: nyx
@@ -13,14 +13,14 @@ spring:
     database: postgresql
     show-sql: false
 server:
-  port: 8080
+  port: 8081
 open:
   api:
     title: EasyHostel API
     version: ${api.version}
     description: API Documentation for EasyHostel Application
     serverUrl: http://localhost:${server.port}
-    serverName: Dev Server
+    serverName: Test Server
 logging:
   level:
     org:

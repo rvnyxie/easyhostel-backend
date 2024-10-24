@@ -8,6 +8,7 @@ import com.easyhostel.backend.application.service.interfaces.rolepermission.IRol
 import com.easyhostel.backend.domain.entity.embedded.RolePermissionId;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
 import com.easyhostel.backend.infrastructure.util.custom.response.FormattedResponse;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -80,6 +81,18 @@ public class RolePermissionController extends BaseController<RolePermissionDto, 
         );
 
         return ResponseEntity.ok(response);
+    }
+
+    @Override
+    @Hidden
+    public ResponseEntity<FormattedResponse<RolePermissionDto>> getByIdAsync(RolePermissionId rolePermissionId) {
+        return super.getByIdAsync(rolePermissionId);
+    }
+
+    @Override
+    @Hidden
+    public ResponseEntity<FormattedResponse<Void>> deleteByIdAsync(RolePermissionId rolePermissionId) {
+        return super.deleteByIdAsync(rolePermissionId);
     }
 
 }

@@ -8,6 +8,7 @@ import com.easyhostel.backend.application.service.interfaces.contractroomamenity
 import com.easyhostel.backend.domain.entity.embedded.ContractRoomAmenityId;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
 import com.easyhostel.backend.infrastructure.util.custom.response.FormattedResponse;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -86,4 +87,17 @@ public class ContractRoomAmenityController extends BaseController<ContractRoomAm
         );
         return ResponseEntity.ok(response);
     }
+
+    @Override
+    @Hidden
+    public ResponseEntity<FormattedResponse<ContractRoomAmenityDto>> getByIdAsync(ContractRoomAmenityId contractRoomAmenityId) {
+        return super.getByIdAsync(contractRoomAmenityId);
+    }
+
+    @Override
+    @Hidden
+    public ResponseEntity<FormattedResponse<Void>> deleteByIdAsync(ContractRoomAmenityId contractRoomAmenityId) {
+        return super.deleteByIdAsync(contractRoomAmenityId);
+    }
+
 }

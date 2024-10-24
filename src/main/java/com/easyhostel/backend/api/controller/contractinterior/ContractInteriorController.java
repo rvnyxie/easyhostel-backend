@@ -8,6 +8,7 @@ import com.easyhostel.backend.application.service.interfaces.contractinterior.IC
 import com.easyhostel.backend.domain.entity.embedded.ContractInteriorId;
 import com.easyhostel.backend.infrastructure.configuration.Translator;
 import com.easyhostel.backend.infrastructure.util.custom.response.FormattedResponse;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -83,6 +84,18 @@ public class ContractInteriorController extends BaseController<ContractInteriorD
         );
 
         return ResponseEntity.ok(response);
+    }
+
+    @Override
+    @Hidden
+    public ResponseEntity<FormattedResponse<ContractInteriorDto>> getByIdAsync(ContractInteriorId contractInteriorId) {
+        return super.getByIdAsync(contractInteriorId);
+    }
+
+    @Override
+    @Hidden
+    public ResponseEntity<FormattedResponse<Void>> deleteByIdAsync(ContractInteriorId contractInteriorId) {
+        return super.deleteByIdAsync(contractInteriorId);
     }
 
 }

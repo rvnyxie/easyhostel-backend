@@ -6,3 +6,9 @@ spring:
 api:
   version: v1.0
   base-path: /api/${api.version}
+#security:
+#  jwt:
+#    # Need to define (if not yet) secret key (HS256) and expiration time for JWT
+#    secret-key: 9e97b972f14e8fd416b37facf7f500a3da23557cb8080a48e6ef089c90eedb43
+#    # 24 hour in millisecond
+#    expiration-time: 86400000

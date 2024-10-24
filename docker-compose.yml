@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16.4-alpine
+    container_name: easyhostel-postgres
+    environment:
+      POSTGRES_USER: nyx
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: easyhostel
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - easyhostel-network
+
+  backend:
+    image: rvnyxie/easyhostel-backend:latest
+    container_name: easyhostel-backend
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/easyhostel
+      SPRING_DATASOURCE_USERNAME: nyx
+      SPRING_DATASOURCE_PASSWORD: 123
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - easyhostel-network
+
+volumes:
+  postgres-data:
+
+networks:
+  easyhostel-network:

@@ -25,8 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final String[] WHITE_LIST = { "/api/v0.1/auth", "/api/v0.1/auth/**",
-            "/api/v0.1/roles", "/api/v0.1/roles/**" };
+    private final String[] WHITE_LIST = { "/api/v1.0/auth", "/api/v1.0/auth/**" };
 
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;

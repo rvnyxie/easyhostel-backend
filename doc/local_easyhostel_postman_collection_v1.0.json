@@ -1,0 +1,6268 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "EasyHostel API",
+    "description": "API Documentation for EasyHostel Application",
+    "version": "v1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Development Server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/api/v1.0/vehicles": {
+      "get": {
+        "tags": [
+          "Vehicle Controller"
+        ],
+        "operationId": "getAllAsync",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListVehicleDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Vehicle Controller"
+        ],
+        "operationId": "updateAsync",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVehicleDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Vehicle Controller"
+        ],
+        "operationId": "insertAsync",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VehicleCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVehicleDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Vehicle Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/rooms": {
+      "get": {
+        "tags": [
+          "Room Controller"
+        ],
+        "operationId": "getAllAsync_1",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListRoomDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Room Controller"
+        ],
+        "operationId": "updateAsync_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoomUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRoomDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Room Controller"
+        ],
+        "operationId": "insertAsync_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoomCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRoomDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Room Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/room-amenities": {
+      "get": {
+        "tags": [
+          "RoomAmenity Controller"
+        ],
+        "operationId": "getAllAsync_2",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListRoomAmenityDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RoomAmenity Controller"
+        ],
+        "operationId": "updateAsync_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoomAmenityUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRoomAmenityDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "RoomAmenity Controller"
+        ],
+        "operationId": "insertAsync_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoomAmenityCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRoomAmenityDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RoomAmenity Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/roles": {
+      "get": {
+        "tags": [
+          "Role Controller"
+        ],
+        "operationId": "getAllAsync_3",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListRoleDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Role Controller"
+        ],
+        "operationId": "updateAsync_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRoleDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Role Controller"
+        ],
+        "operationId": "insertAsync_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRoleDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Role Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/roles-permissions": {
+      "get": {
+        "tags": [
+          "RolePermission Controller"
+        ],
+        "operationId": "getAllAsync_4",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListRolePermissionDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RolePermission Controller"
+        ],
+        "operationId": "updateAsync_4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RolePermissionUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRolePermissionDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "RolePermission Controller"
+        ],
+        "operationId": "insertAsync_4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RolePermissionCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRolePermissionDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RolePermission Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RolePermissionId"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/repair-room-logs": {
+      "get": {
+        "tags": [
+          "RepairRoomLog Controller"
+        ],
+        "operationId": "getAllAsync_5",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListRepairRoomLogDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RepairRoomLog Controller"
+        ],
+        "operationId": "updateAsync_5",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepairRoomLogUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRepairRoomLogDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "RepairRoomLog Controller"
+        ],
+        "operationId": "insertAsync_5",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepairRoomLogCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRepairRoomLogDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RepairRoomLog Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_5",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/rent-payments": {
+      "get": {
+        "tags": [
+          "RentPayment Controller"
+        ],
+        "operationId": "getAllAsync_6",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListRentPaymentDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "RentPayment Controller"
+        ],
+        "operationId": "updateAsync_6",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentPaymentUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRentPaymentDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "RentPayment Controller"
+        ],
+        "operationId": "insertAsync_6",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RentPaymentCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRentPaymentDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RentPayment Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_6",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/permissions": {
+      "get": {
+        "tags": [
+          "Permission Controller"
+        ],
+        "operationId": "getAllAsync_7",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListPermissionDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Permission Controller"
+        ],
+        "operationId": "updateAsync_7",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PermissionUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponsePermissionDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Permission Controller"
+        ],
+        "operationId": "insertAsync_7",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PermissionCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponsePermissionDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Permission Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_7",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/managers": {
+      "get": {
+        "tags": [
+          "Manager Controller"
+        ],
+        "operationId": "getAllAsync_8",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListManagerDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Manager Controller"
+        ],
+        "operationId": "updateAsync_8",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManagerUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseManagerDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Manager Controller"
+        ],
+        "operationId": "insertAsync_8",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManagerCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseManagerDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Manager Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_8",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/managers-houses": {
+      "get": {
+        "tags": [
+          "ManagerHouse Controller"
+        ],
+        "operationId": "getAllAsync_9",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListManagerHouseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ManagerHouse Controller"
+        ],
+        "operationId": "updateAsync_9",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManagerHouseUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseManagerHouseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ManagerHouse Controller"
+        ],
+        "operationId": "insertAsync_9",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManagerHouseCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseManagerHouseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ManagerHouse Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_9",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ManagerHouseId"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/interiors": {
+      "get": {
+        "tags": [
+          "Interior Controller"
+        ],
+        "operationId": "getAllAsync_10",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListInteriorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Interior Controller"
+        ],
+        "operationId": "updateAsync_10",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InteriorUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseInteriorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Interior Controller"
+        ],
+        "operationId": "insertAsync_10",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InteriorCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseInteriorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Interior Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_10",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/houses": {
+      "get": {
+        "tags": [
+          "House Controller"
+        ],
+        "operationId": "getAllAsync_11",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListHouseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "House Controller"
+        ],
+        "operationId": "updateAsync_11",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HouseUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseHouseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "House Controller"
+        ],
+        "operationId": "insertAsync_11",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HouseCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseHouseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "House Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_11",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/contracts": {
+      "get": {
+        "tags": [
+          "Contract Controller"
+        ],
+        "operationId": "getAllAsync_12",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListContractDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Contract Controller"
+        ],
+        "operationId": "updateAsync_12",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseContractDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Contract Controller"
+        ],
+        "operationId": "insertAsync_12",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseContractDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Contract Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_12",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/contracts-vehicles": {
+      "get": {
+        "tags": [
+          "ContractVehicle Controller"
+        ],
+        "operationId": "getAllAsync_13",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListContractVehicleDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ContractVehicle Controller"
+        ],
+        "operationId": "updateAsync_13",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractVehicleUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseContractVehicleDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ContractVehicle Controller"
+        ],
+        "operationId": "insertAsync_13",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractVehicleCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseContractVehicleDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ContractVehicle Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_13",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ContractVehicleId"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/contracts-room-amenities": {
+      "get": {
+        "tags": [
+          "ContractRoomAmenity Controller"
+        ],
+        "operationId": "getAllAsync_14",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListContractRoomAmenityDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ContractRoomAmenity Controller"
+        ],
+        "operationId": "updateAsync_14",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractRoomAmenityUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseContractRoomAmenityDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ContractRoomAmenity Controller"
+        ],
+        "operationId": "insertAsync_14",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractRoomAmenityCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseContractRoomAmenityDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ContractRoomAmenity Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_14",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ContractRoomAmenityId"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/contracts-interiors": {
+      "get": {
+        "tags": [
+          "ContractInterior Controller"
+        ],
+        "operationId": "getAllAsync_15",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListContractInteriorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ContractInterior Controller"
+        ],
+        "operationId": "updateAsync_15",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractInteriorUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseContractInteriorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ContractInterior Controller"
+        ],
+        "operationId": "insertAsync_15",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractInteriorCreationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseContractInteriorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ContractInterior Controller"
+        ],
+        "operationId": "deleteManyByIdsAsync_15",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ContractInteriorId"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication Controller"
+        ],
+        "operationId": "authenticate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManagerLogInDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/vehicles/{id}": {
+      "get": {
+        "tags": [
+          "Vehicle Controller"
+        ],
+        "operationId": "getByIdAsync",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVehicleDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Vehicle Controller"
+        ],
+        "operationId": "deleteByIdAsync",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/vehicles/list": {
+      "get": {
+        "tags": [
+          "Vehicle Controller"
+        ],
+        "operationId": "getManyWithPagination",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListVehicleDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/rooms/{id}": {
+      "get": {
+        "tags": [
+          "Room Controller"
+        ],
+        "operationId": "getByIdAsync_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRoomDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Room Controller"
+        ],
+        "operationId": "deleteByIdAsync_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/rooms/list": {
+      "get": {
+        "tags": [
+          "Room Controller"
+        ],
+        "operationId": "getManyWithPagination_1",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListRoomDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/room-amenities/{id}": {
+      "get": {
+        "tags": [
+          "RoomAmenity Controller"
+        ],
+        "operationId": "getByIdAsync_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRoomAmenityDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RoomAmenity Controller"
+        ],
+        "operationId": "deleteByIdAsync_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/room-amenities/list": {
+      "get": {
+        "tags": [
+          "RoomAmenity Controller"
+        ],
+        "operationId": "getManyWithPagination_2",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListRoomAmenityDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/roles/{id}": {
+      "get": {
+        "tags": [
+          "Role Controller"
+        ],
+        "operationId": "getByIdAsync_3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRoleDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Role Controller"
+        ],
+        "operationId": "deleteByIdAsync_3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/roles/list": {
+      "get": {
+        "tags": [
+          "Role Controller"
+        ],
+        "operationId": "getManyWithPagination_3",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListRoleDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/roles-permissions/{roleId}/{permissionId}": {
+      "get": {
+        "tags": [
+          "RolePermission Controller"
+        ],
+        "operationId": "getRolePermissionByIdsAsync",
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "permissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRolePermissionDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RolePermission Controller"
+        ],
+        "operationId": "deleteRolePermissionByIdsAsync",
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "permissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/roles-permissions/list": {
+      "get": {
+        "tags": [
+          "RolePermission Controller"
+        ],
+        "operationId": "getManyWithPagination_4",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListRolePermissionDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/repair-room-logs/{id}": {
+      "get": {
+        "tags": [
+          "RepairRoomLog Controller"
+        ],
+        "operationId": "getByIdAsync_4",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRepairRoomLogDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RepairRoomLog Controller"
+        ],
+        "operationId": "deleteByIdAsync_4",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/repair-room-logs/list": {
+      "get": {
+        "tags": [
+          "RepairRoomLog Controller"
+        ],
+        "operationId": "getManyWithPagination_5",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListRepairRoomLogDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/rent-payments/{id}": {
+      "get": {
+        "tags": [
+          "RentPayment Controller"
+        ],
+        "operationId": "getByIdAsync_5",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseRentPaymentDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "RentPayment Controller"
+        ],
+        "operationId": "deleteByIdAsync_5",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/rent-payments/list": {
+      "get": {
+        "tags": [
+          "RentPayment Controller"
+        ],
+        "operationId": "getManyWithPagination_6",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListRentPaymentDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/permissions/{id}": {
+      "get": {
+        "tags": [
+          "Permission Controller"
+        ],
+        "operationId": "getByIdAsync_6",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponsePermissionDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Permission Controller"
+        ],
+        "operationId": "deleteByIdAsync_6",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/permissions/list": {
+      "get": {
+        "tags": [
+          "Permission Controller"
+        ],
+        "operationId": "getManyWithPagination_7",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListPermissionDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/managers/{id}": {
+      "get": {
+        "tags": [
+          "Manager Controller"
+        ],
+        "operationId": "getByIdAsync_7",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseManagerDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Manager Controller"
+        ],
+        "operationId": "deleteByIdAsync_7",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/managers/list": {
+      "get": {
+        "tags": [
+          "Manager Controller"
+        ],
+        "operationId": "getManyWithPagination_8",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListManagerDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/managers-houses/{managerId}/{houseId}": {
+      "get": {
+        "tags": [
+          "ManagerHouse Controller"
+        ],
+        "operationId": "getRolePermissionByIdsAsync_1",
+        "parameters": [
+          {
+            "name": "managerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "houseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseManagerHouseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ManagerHouse Controller"
+        ],
+        "operationId": "deleteRolePermissionByIdsAsync_1",
+        "parameters": [
+          {
+            "name": "managerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "houseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/managers-houses/list": {
+      "get": {
+        "tags": [
+          "ManagerHouse Controller"
+        ],
+        "operationId": "getManyWithPagination_9",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListManagerHouseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/interiors/{id}": {
+      "get": {
+        "tags": [
+          "Interior Controller"
+        ],
+        "operationId": "getByIdAsync_8",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseInteriorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Interior Controller"
+        ],
+        "operationId": "deleteByIdAsync_8",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/interiors/list": {
+      "get": {
+        "tags": [
+          "Interior Controller"
+        ],
+        "operationId": "getManyWithPagination_10",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListInteriorDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/houses/{id}": {
+      "get": {
+        "tags": [
+          "House Controller"
+        ],
+        "operationId": "getByIdAsync_9",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseHouseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "House Controller"
+        ],
+        "operationId": "deleteByIdAsync_9",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/houses/list": {
+      "get": {
+        "tags": [
+          "House Controller"
+        ],
+        "operationId": "getManyWithPagination_11",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListHouseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/contracts/{id}": {
+      "get": {
+        "tags": [
+          "Contract Controller"
+        ],
+        "operationId": "getByIdAsync_10",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseContractDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Contract Controller"
+        ],
+        "operationId": "deleteByIdAsync_10",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/contracts/list": {
+      "get": {
+        "tags": [
+          "Contract Controller"
+        ],
+        "operationId": "getManyWithPagination_12",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListContractDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/contracts-vehicles/{contractId}/{vehicleId}": {
+      "get": {
+        "tags": [
+          "ContractVehicle Controller"
+        ],
+        "operationId": "getContractInteriorByIdsAsync",
+        "parameters": [
+          {
+            "name": "contractId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "vehicleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseContractVehicleDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ContractVehicle Controller"
+        ],
+        "operationId": "deleteContractVehicleByIdsAsync",
+        "parameters": [
+          {
+            "name": "contractId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "vehicleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/contracts-vehicles/list": {
+      "get": {
+        "tags": [
+          "ContractVehicle Controller"
+        ],
+        "operationId": "getManyWithPagination_13",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListContractVehicleDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/contracts-room-amenities/{contractId}/{roomAmenityId}": {
+      "get": {
+        "tags": [
+          "ContractRoomAmenity Controller"
+        ],
+        "operationId": "getContractRoomAmenityByIdsAsync",
+        "parameters": [
+          {
+            "name": "contractId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "roomAmenityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseContractRoomAmenityDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ContractRoomAmenity Controller"
+        ],
+        "operationId": "deleteContractRoomAmenityByIdsAsync",
+        "parameters": [
+          {
+            "name": "contractId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "roomAmenityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/contracts-room-amenities/list": {
+      "get": {
+        "tags": [
+          "ContractRoomAmenity Controller"
+        ],
+        "operationId": "getManyWithPagination_14",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListContractRoomAmenityDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/contracts-interiors/{contractId}/{interiorId}": {
+      "get": {
+        "tags": [
+          "ContractInterior Controller"
+        ],
+        "operationId": "getContractInteriorByIdsAsync_1",
+        "parameters": [
+          {
+            "name": "contractId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "interiorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseContractInteriorDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ContractInterior Controller"
+        ],
+        "operationId": "deleteContractInteriorByIdsAsync",
+        "parameters": [
+          {
+            "name": "contractId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "interiorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/contracts-interiors/list": {
+      "get": {
+        "tags": [
+          "ContractInterior Controller"
+        ],
+        "operationId": "getManyWithPagination_15",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseListContractInteriorDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/rooms/{roomId}/contracts/{contractId}": {
+      "delete": {
+        "tags": [
+          "Room Controller"
+        ],
+        "operationId": "deleteContractFromRoomAsync",
+        "parameters": [
+          {
+            "name": "roomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contractId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1.0/houses/{houseId}/rooms/{roomId}": {
+      "delete": {
+        "tags": [
+          "House Controller"
+        ],
+        "operationId": "deleteRoomFromHousedAsync",
+        "parameters": [
+          {
+            "name": "houseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "roomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedResponseVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "VehicleUpdateDto": {
+        "required": [
+          "vehicleId",
+          "vehicleType"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "vehicleId": {
+            "type": "string"
+          },
+          "vehicleType": {
+            "type": "string"
+          },
+          "vehicleModel": {
+            "type": "string"
+          },
+          "vehicleColor": {
+            "type": "string"
+          },
+          "vehicleLicensePlate": {
+            "type": "string"
+          }
+        }
+      },
+      "FormattedResponseVehicleDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/VehicleDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "VehicleDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "vehicleId": {
+            "type": "string"
+          },
+          "vehicleType": {
+            "type": "string"
+          },
+          "vehicleModel": {
+            "type": "string"
+          },
+          "vehicleColor": {
+            "type": "string"
+          },
+          "vehicleLicensePlate": {
+            "type": "string"
+          }
+        }
+      },
+      "ContractUpdateDto": {
+        "required": [
+          "contractId",
+          "peopleQuantity",
+          "rentPrice"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contractId": {
+            "type": "string"
+          },
+          "peopleQuantity": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "rentPrice": {
+            "minimum": 0,
+            "type": "number",
+            "format": "float"
+          },
+          "signingDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "expirationDate": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "HouseUpdateDto": {
+        "required": [
+          "houseId",
+          "houseName"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "houseId": {
+            "type": "string"
+          },
+          "houseName": {
+            "type": "string"
+          },
+          "rooms": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoomUpdateDto"
+            }
+          }
+        }
+      },
+      "RoomUpdateDto": {
+        "required": [
+          "rentPaymentStatus",
+          "roomId",
+          "roomNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "roomId": {
+            "type": "string"
+          },
+          "roomNumber": {
+            "type": "string"
+          },
+          "rentPaymentStatus": {
+            "type": "string"
+          },
+          "house": {
+            "$ref": "#/components/schemas/HouseUpdateDto"
+          },
+          "contracts": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContractUpdateDto"
+            }
+          }
+        }
+      },
+      "ContractDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contractId": {
+            "type": "string"
+          },
+          "peopleQuantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rentPrice": {
+            "type": "number",
+            "format": "float"
+          },
+          "signingDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "expirationDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "room": {
+            "$ref": "#/components/schemas/RoomDto"
+          }
+        }
+      },
+      "FormattedResponseRoomDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/RoomDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "HouseDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "houseId": {
+            "type": "string"
+          },
+          "houseName": {
+            "type": "string"
+          },
+          "roomQuantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "occupancy": {
+            "type": "number",
+            "format": "float"
+          },
+          "rooms": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoomDto"
+            }
+          }
+        }
+      },
+      "RoomDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "roomId": {
+            "type": "string"
+          },
+          "roomNumber": {
+            "type": "string"
+          },
+          "rentPaymentStatus": {
+            "type": "string"
+          },
+          "house": {
+            "$ref": "#/components/schemas/HouseDto"
+          },
+          "contracts": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContractDto"
+            }
+          }
+        }
+      },
+      "RoomAmenityUpdateDto": {
+        "required": [
+          "roomAmenityId",
+          "roomAmenityName",
+          "roomAmenityType"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "roomAmenityId": {
+            "type": "string"
+          },
+          "roomAmenityType": {
+            "type": "string"
+          },
+          "roomAmenityName": {
+            "type": "string"
+          }
+        }
+      },
+      "FormattedResponseRoomAmenityDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/RoomAmenityDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RoomAmenityDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "roomAmenityId": {
+            "type": "string"
+          },
+          "roomAmenityType": {
+            "type": "string"
+          },
+          "roomAmenityName": {
+            "type": "string"
+          }
+        }
+      },
+      "RoleUpdateDto": {
+        "required": [
+          "description",
+          "roleId",
+          "roleName"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "roleId": {
+            "maximum": 10,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "roleName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "FormattedResponseRoleDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/RoleDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ManagerDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "managerId": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "role": {
+            "$ref": "#/components/schemas/RoleDto"
+          }
+        }
+      },
+      "RoleDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "roleId": {
+            "maximum": 10,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "roleName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "rolePermissions": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RolePermissionDto"
+            }
+          },
+          "managers": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ManagerDto"
+            }
+          }
+        }
+      },
+      "RolePermissionDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "roleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "permissionId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RolePermissionUpdateDto": {
+        "required": [
+          "oldPermissionId",
+          "oldRoleId",
+          "permissionId",
+          "roleId"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "roleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "permissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "oldRoleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "oldPermissionId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "FormattedResponseRolePermissionDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/RolePermissionDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RepairRoomLogUpdateDto": {
+        "required": [
+          "repairRoomLogId",
+          "repairType"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "repairRoomLogId": {
+            "type": "string"
+          },
+          "repairDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "repairType": {
+            "type": "string"
+          },
+          "repairDescription": {
+            "type": "string"
+          },
+          "repairCost": {
+            "minimum": 0,
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "FormattedResponseRepairRoomLogDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/RepairRoomLogDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RepairRoomLogDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "repairRoomLogId": {
+            "type": "string"
+          },
+          "repairDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "repairType": {
+            "type": "string"
+          },
+          "repairDescription": {
+            "type": "string"
+          },
+          "repairCost": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "RentPaymentUpdateDto": {
+        "required": [
+          "rentPaymentId",
+          "totalPrice"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "rentPaymentId": {
+            "type": "string"
+          },
+          "isPaid": {
+            "type": "boolean"
+          },
+          "totalPrice": {
+            "minimum": 0,
+            "type": "number",
+            "format": "float"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
+      "FormattedResponseRentPaymentDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/RentPaymentDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RentPaymentDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "rentPaymentId": {
+            "type": "string"
+          },
+          "isPaid": {
+            "type": "boolean"
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "float"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
+      "PermissionUpdateDto": {
+        "required": [
+          "permissionDescription",
+          "permissionId",
+          "permissionName"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "permissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "permissionName": {
+            "type": "string"
+          },
+          "permissionDescription": {
+            "type": "string"
+          }
+        }
+      },
+      "FormattedResponsePermissionDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PermissionDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PermissionDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "permissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "permissionName": {
+            "type": "string"
+          },
+          "permissionDescription": {
+            "type": "string"
+          }
+        }
+      },
+      "ManagerUpdateDto": {
+        "required": [
+          "email",
+          "managerId",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "managerId": {
+            "type": "string"
+          },
+          "email": {
+            "pattern": "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string"
+          }
+        }
+      },
+      "FormattedResponseManagerDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ManagerDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ManagerHouseUpdateDto": {
+        "required": [
+          "houseId",
+          "managerId",
+          "oldHouseId",
+          "oldManagerId"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "managerId": {
+            "type": "string"
+          },
+          "houseId": {
+            "type": "string"
+          },
+          "oldManagerId": {
+            "type": "string"
+          },
+          "oldHouseId": {
+            "type": "string"
+          }
+        }
+      },
+      "FormattedResponseManagerHouseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ManagerHouseDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ManagerHouseDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "managerId": {
+            "type": "string"
+          },
+          "houseId": {
+            "type": "string"
+          }
+        }
+      },
+      "InteriorUpdateDto": {
+        "required": [
+          "interiorId",
+          "interiorName"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "interiorId": {
+            "type": "string"
+          },
+          "interiorName": {
+            "type": "string"
+          }
+        }
+      },
+      "FormattedResponseInteriorDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/InteriorDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "InteriorDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "interiorId": {
+            "type": "string"
+          },
+          "interiorName": {
+            "type": "string"
+          }
+        }
+      },
+      "FormattedResponseHouseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/HouseDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseContractDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ContractDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ContractVehicleUpdateDto": {
+        "required": [
+          "contractId",
+          "oldContractId",
+          "oldVehicleId",
+          "vehicleId"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contractId": {
+            "type": "string"
+          },
+          "vehicleId": {
+            "type": "string"
+          },
+          "oldContractId": {
+            "type": "string"
+          },
+          "oldVehicleId": {
+            "type": "string"
+          }
+        }
+      },
+      "ContractVehicleDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contractId": {
+            "type": "string"
+          },
+          "vehicleId": {
+            "type": "string"
+          }
+        }
+      },
+      "FormattedResponseContractVehicleDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ContractVehicleDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ContractRoomAmenityUpdateDto": {
+        "required": [
+          "contractId",
+          "roomAmenityId",
+          "roomAmenityPrice"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contractId": {
+            "type": "string"
+          },
+          "roomAmenityId": {
+            "type": "string"
+          },
+          "roomAmenityPrice": {
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "ContractRoomAmenityDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contractId": {
+            "type": "string"
+          },
+          "roomAmenityId": {
+            "type": "string"
+          },
+          "roomAmenityPrice": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "FormattedResponseContractRoomAmenityDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ContractRoomAmenityDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ContractInteriorUpdateDto": {
+        "required": [
+          "contractId",
+          "interiorId",
+          "oldContractId",
+          "oldInteriorId"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contractId": {
+            "type": "string"
+          },
+          "interiorId": {
+            "type": "string"
+          },
+          "oldContractId": {
+            "type": "string"
+          },
+          "oldInteriorId": {
+            "type": "string"
+          }
+        }
+      },
+      "ContractInteriorDto": {
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contractId": {
+            "type": "string"
+          },
+          "interiorId": {
+            "type": "string"
+          }
+        }
+      },
+      "FormattedResponseContractInteriorDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ContractInteriorDto"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "VehicleCreationDto": {
+        "required": [
+          "vehicleType"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "vehicleType": {
+            "type": "string"
+          },
+          "vehicleModel": {
+            "type": "string"
+          },
+          "vehicleColor": {
+            "type": "string"
+          },
+          "vehicleLicensePlate": {
+            "type": "string"
+          }
+        }
+      },
+      "ContractCreationDto": {
+        "required": [
+          "peopleQuantity",
+          "rentPrice"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "peopleQuantity": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "rentPrice": {
+            "minimum": 0,
+            "type": "number",
+            "format": "float"
+          },
+          "signingDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "expirationDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "room": {
+            "$ref": "#/components/schemas/RoomDto"
+          }
+        }
+      },
+      "RoomCreationDto": {
+        "required": [
+          "rentPaymentStatus",
+          "roomNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "roomNumber": {
+            "type": "string"
+          },
+          "rentPaymentStatus": {
+            "type": "string"
+          },
+          "contracts": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContractCreationDto"
+            }
+          }
+        }
+      },
+      "RoomAmenityCreationDto": {
+        "required": [
+          "roomAmenityName",
+          "roomAmenityType"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "roomAmenityType": {
+            "type": "string"
+          },
+          "roomAmenityName": {
+            "type": "string"
+          }
+        }
+      },
+      "RoleCreationDto": {
+        "required": [
+          "description",
+          "roleName"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "roleName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "RolePermissionCreationDto": {
+        "required": [
+          "permissionId",
+          "roleId"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "roleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "permissionId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RepairRoomLogCreationDto": {
+        "required": [
+          "repairType"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "repairDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "repairType": {
+            "type": "string"
+          },
+          "repairDescription": {
+            "type": "string"
+          },
+          "repairCost": {
+            "minimum": 0,
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "RentPaymentCreationDto": {
+        "required": [
+          "isPaid",
+          "totalPrice"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "isPaid": {
+            "type": "boolean"
+          },
+          "totalPrice": {
+            "minimum": 0,
+            "type": "number",
+            "format": "float"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
+      "PermissionCreationDto": {
+        "required": [
+          "permissionDescription",
+          "permissionName"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "permissionName": {
+            "type": "string"
+          },
+          "permissionDescription": {
+            "type": "string"
+          }
+        }
+      },
+      "ManagerCreationDto": {
+        "required": [
+          "email",
+          "password",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "pattern": "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "$ref": "#/components/schemas/RoleDto"
+          }
+        }
+      },
+      "ManagerHouseCreationDto": {
+        "required": [
+          "houseId",
+          "managerId"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "managerId": {
+            "type": "string"
+          },
+          "houseId": {
+            "type": "string"
+          }
+        }
+      },
+      "InteriorCreationDto": {
+        "required": [
+          "interiorName"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "interiorName": {
+            "type": "string"
+          }
+        }
+      },
+      "HouseCreationDto": {
+        "required": [
+          "houseName"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "houseName": {
+            "type": "string"
+          },
+          "rooms": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoomCreationDto"
+            }
+          }
+        }
+      },
+      "ContractVehicleCreationDto": {
+        "required": [
+          "contractId",
+          "vehicleId"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contractId": {
+            "type": "string"
+          },
+          "vehicleId": {
+            "type": "string"
+          }
+        }
+      },
+      "ContractRoomAmenityCreationDto": {
+        "required": [
+          "contractId",
+          "roomAmenityId",
+          "roomAmenityPrice"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contractId": {
+            "type": "string"
+          },
+          "roomAmenityId": {
+            "type": "string"
+          },
+          "roomAmenityPrice": {
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "ContractInteriorCreationDto": {
+        "required": [
+          "contractId",
+          "interiorId"
+        ],
+        "type": "object",
+        "properties": {
+          "createdBy": {
+            "type": "string"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "contractId": {
+            "type": "string"
+          },
+          "interiorId": {
+            "type": "string"
+          }
+        }
+      },
+      "ManagerLogInDto": {
+        "required": [
+          "password",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "FormattedResponseObject": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListVehicleDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VehicleDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListRoomDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoomDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListRoomAmenityDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoomAmenityDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListRoleDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListRolePermissionDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RolePermissionDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListRepairRoomLogDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RepairRoomLogDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListRentPaymentDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RentPaymentDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListPermissionDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListManagerDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ManagerDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListManagerHouseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ManagerHouseDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListInteriorDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InteriorDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListHouseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HouseDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListContractDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContractDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListContractVehicleDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContractVehicleDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListContractRoomAmenityDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContractRoomAmenityDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseListContractInteriorDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContractInteriorDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FormattedResponseVoid": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RolePermissionId": {
+        "type": "object",
+        "properties": {
+          "roleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "permissionId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ManagerHouseId": {
+        "type": "object",
+        "properties": {
+          "managerId": {
+            "type": "string"
+          },
+          "houseId": {
+            "type": "string"
+          }
+        }
+      },
+      "ContractVehicleId": {
+        "type": "object",
+        "properties": {
+          "contractId": {
+            "type": "string"
+          },
+          "vehicleId": {
+            "type": "string"
+          }
+        }
+      },
+      "ContractRoomAmenityId": {
+        "type": "object",
+        "properties": {
+          "contractId": {
+            "type": "string"
+          },
+          "roomAmenityId": {
+            "type": "string"
+          }
+        }
+      },
+      "ContractInteriorId": {
+        "type": "object",
+        "properties": {
+          "contractId": {
+            "type": "string"
+          },
+          "interiorId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

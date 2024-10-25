@@ -63,7 +63,13 @@ docker-compose up
 
 This is recommended method. Because it assures all environment variables and connection to Postgresql will be configured correctly.
 
-### How to test
+### How to try
+
+For now, you can use Swagger or Postman to try it out. Add `swagger-ui/index.html#` at the end of url to open Swagger (supports live and local).
+
+If you prefer Postman, you can import [live collection](doc/live_easyhostel_postman_collection_v1.0.json) or [local collection](doc/local_easyhostel_postman_collection_v1.0.json)
+
+In case of missing or outdated json data, you can still go to Swagger UI and get that data from `/v3/api-docs/EasyHostel API Service` at the head of page. This data can also be imported to Postman.
 
 ## Overview
 

@@ -4,8 +4,6 @@ import com.easyhostel.backend.domain.entity.Permission;
 import com.easyhostel.backend.domain.enums.PermissionEnum;
 import com.easyhostel.backend.domain.repository.interfaces.permission.IPermissionRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,12 +13,16 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class PermissionSeeder implements ApplicationListener<ContextRefreshedEvent> {
+public class PermissionSeeder {
 
     private final IPermissionRepository _permissionRepository;
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+    /**
+     * Initialize method to seed Permission
+     *
+     * @author Nyx
+     */
+    public void init() {
         createPermissions();
     }
 
@@ -38,6 +40,8 @@ public class PermissionSeeder implements ApplicationListener<ContextRefreshedEve
                 var newPermission = Permission.builder()
                         .permissionName(permissionName)
                         .permissionDescription(permissionEnum.getDescription())
+                        .createdBy("auto-gen")
+                        .modifiedBy("auto-gen")
                         .build();
                 _permissionRepository.save(newPermission);
             }

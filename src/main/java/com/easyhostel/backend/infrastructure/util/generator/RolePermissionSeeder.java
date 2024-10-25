@@ -12,8 +12,6 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -27,7 +25,7 @@ import java.util.Optional;
  */
 @Component
 @RequiredArgsConstructor
-public class RolePermissionSeeder implements ApplicationListener<ContextRefreshedEvent> {
+public class RolePermissionSeeder {
 
     private static final Logger log = LoggerFactory.getLogger(RolePermissionSeeder.class);
 
@@ -36,8 +34,12 @@ public class RolePermissionSeeder implements ApplicationListener<ContextRefreshe
     private final IRolePermissionRepository _rolePermissionRepository;
     private final IRolePermissionMapper _rolePermissionMapper;
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+    /**
+     * Initialize method to seed RolePermission
+     *
+     * @author Nyx
+     */
+    public void init() {
         createRolePermissions();
     }
 
@@ -116,6 +118,8 @@ public class RolePermissionSeeder implements ApplicationListener<ContextRefreshe
                     var rolePermissionCreationDto = RolePermissionCreationDto.builder()
                             .roleId(roleId)
                             .permissionId(permission.getPermissionId())
+                            .createdBy("auto-gen")
+                            .modifiedBy("auto-gen")
                             .build();
 
                     var rolePermission = _rolePermissionMapper.mapRolePermissionCreationDtoToRolePermission(rolePermissionCreationDto);

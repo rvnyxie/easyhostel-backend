@@ -9,8 +9,6 @@ import com.easyhostel.backend.domain.repository.interfaces.manager.IManagerRepos
 import com.easyhostel.backend.domain.repository.interfaces.role.IRoleReadonlyRepository;
 import com.easyhostel.backend.infrastructure.service.interfaces.IPasswordService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -22,7 +20,7 @@ import java.util.Optional;
  */
 @Component
 @RequiredArgsConstructor
-public class AccountSeeder implements ApplicationListener<ContextRefreshedEvent> {
+public class AccountSeeder {
 
     private final IManagerRepository _managerRepository;
     private final IRoleReadonlyRepository _roleReadonlyRepository;
@@ -30,13 +28,31 @@ public class AccountSeeder implements ApplicationListener<ContextRefreshedEvent>
     private final IRoleMapper _roleMapper;
     private final IPasswordService _passwordService;
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+    /**
+     * Initialize method to seed accounts
+     *
+     * @author Nyx
+     */
+    public void init() {
+        createAccounts();
+    }
+
+    /**
+     * Create accounts
+     *
+     * @author Nyx
+     */
+    private void createAccounts() {
         createSystemAdministrator();
         createAdministrator();
         createDefaultUser();
     }
 
+    /**
+     * Create SYSADMIN account
+     *
+     * @author Nyx
+     */
     private void createSystemAdministrator() {
         Optional<Manager> optionalManager = _managerRepository.findManagerByUsername("sysadmin");
         Optional<Role> optionalRole = _roleReadonlyRepository.findRoleByRoleName("SYSADMIN");
@@ -50,11 +66,18 @@ public class AccountSeeder implements ApplicationListener<ContextRefreshedEvent>
                 .email("sysadmin@easyhostel.com")
                 .password(_passwordService.encodePassword("sysadmin"))
                 .role(_roleMapper.mapRoleToRoleDto(optionalRole.get()))
+                .createdBy("auto-gen")
+                .modifiedBy("auto-gen")
                 .build();
 
         _managerRepository.save(_managerMapper.mapManagerCreationDtoToManager(sysadminCreationDto));
     }
 
+    /**
+     * Create ADMIN account
+     *
+     * @author Nyx
+     */
     private void createAdministrator() {
         Optional<Manager> optionalManager = _managerRepository.findManagerByUsername("admin");
         Optional<Role> optionalRole = _roleReadonlyRepository.findRoleByRoleName("ADMIN");
@@ -68,11 +91,18 @@ public class AccountSeeder implements ApplicationListener<ContextRefreshedEvent>
                 .email("admin@easyhostel.com")
                 .password(_passwordService.encodePassword("admin"))
                 .role(_roleMapper.mapRoleToRoleDto(optionalRole.get()))
+                .createdBy("auto-gen")
+                .modifiedBy("auto-gen")
                 .build();
 
         _managerRepository.save(_managerMapper.mapManagerCreationDtoToManager(adminCreationDto));
     }
 
+    /**
+     * Create USER account
+     *
+     * @author Nyx
+     */
     private void createDefaultUser() {
         Optional<Manager> optionalManager = _managerRepository.findManagerByUsername("user");
         Optional<Role> optionalRole = _roleReadonlyRepository.findRoleByRoleName("USER");
@@ -86,6 +116,8 @@ public class AccountSeeder implements ApplicationListener<ContextRefreshedEvent>
                 .email("user@easyhostel.com")
                 .password(_passwordService.encodePassword("user"))
                 .role(_roleMapper.mapRoleToRoleDto(optionalRole.get()))
+                .createdBy("auto-gen")
+                .modifiedBy("auto-gen")
                 .build();
 
         _managerRepository.save(_managerMapper.mapManagerCreationDtoToManager(defaultUserCreationDto));

@@ -4,8 +4,6 @@ import com.easyhostel.backend.domain.entity.Role;
 import com.easyhostel.backend.domain.enums.RoleType;
 import com.easyhostel.backend.domain.repository.interfaces.role.IRoleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -19,15 +17,24 @@ import java.util.Optional;
  */
 @Component
 @RequiredArgsConstructor
-public class RoleSeeder implements ApplicationListener<ContextRefreshedEvent> {
+public class RoleSeeder {
 
     private final IRoleRepository _roleRepository;
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+    /**
+     * Initialize method to seed Roles
+     *
+     * @author Nyx
+     */
+    public void init() {
         loadRoles();
     }
 
+    /**
+     * Create default Roles
+     *
+     * @author Nyx
+     */
     private void loadRoles() {
         RoleType[] roleTypes = new RoleType[] { RoleType.SYSADMIN , RoleType.ADMIN, RoleType.USER };
         var roleDescriptionMap = Map.of(
@@ -43,10 +50,13 @@ public class RoleSeeder implements ApplicationListener<ContextRefreshedEvent> {
                 var roleToCreate = Role.builder()
                         .roleName(roleType.name())
                         .description(roleDescriptionMap.get(roleType))
+                        .createdBy("auto-gen")
+                        .modifiedBy("auto-gen")
                         .build();
 
                 _roleRepository.save(roleToCreate);
             });
         });
     }
+
 }

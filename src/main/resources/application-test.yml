@@ -14,12 +14,13 @@ spring:
     show-sql: false
 server:
   port: 8080
+  url: http://localhost
 open:
   api:
     title: EasyHostel API
     version: ${api.version}
     description: API Documentation for EasyHostel Application
-    serverUrl: http://localhost:${server.port}
+    serverUrl: ${server.url}:${server.port}
     serverName: Test Server
 logging:
   level:
